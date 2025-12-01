@@ -1,10 +1,264 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<title>Результаты</title>
+    <meta charset="UTF-8">
+    <title>Результаты корректурной пробы</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f7;
+            color: #222;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            max-width: 720px;
+            width: 100%;
+            padding: 24px 16px 40px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 24px 20px 28px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin: 0 0 16px;
+        }
+
+        .summary {
+            margin-bottom: 18px;
+            font-size: 0.98rem;
+        }
+
+        .result-grid {
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 16px;
+            background: #fafafa;
+            font-size: 0.95rem;
+        }
+
+        .result-grid h2 {
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        dl {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+            row-gap: 6px;
+            column-gap: 12px;
+            margin: 0;
+        }
+
+        dt {
+            font-weight: 500;
+        }
+
+        dd {
+            margin: 0;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .buttons {
+            margin-top: 18px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border-radius: 999px;
+            padding: 8px 16px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: #fff;
+        }
+
+        .btn-secondary {
+            background: #e5e7eb;
+            color: #111827;
+        }
+
+        .note {
+            margin-top: 16px;
+            font-size: 0.85rem;
+            color: #777;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 18px 14px 22px;
+            }
+            dl {
+                grid-template-columns: minmax(0, 1.8fr) minmax(0, 1.2fr);
+            }
+        }
+    </style>
 </head>
 <body>
-<p>Файл results.html — встав сюда свой контент.</p>
+<div class="container">
+    <div class="card">
+        <h1>Результаты корректурной пробы</h1>
+        <p class="summary" id="summary-text">
+            Загрузка результатов…
+        </p>
+
+        <div class="result-grid">
+            <h2>Показатели выполнения</h2>
+            <dl>
+                <dt>Всего отмеченных букв</dt>
+                <dd id="total-marked">—</dd>
+
+                <dt>Правильные отметки</dt>
+                <dd id="correct-marked">—</dd>
+
+                <dt>Ошибочные отметки</dt>
+                <dd id="wrong-marked">—</dd>
+
+                <dt>Всего целевых букв в тексте</dt>
+                <dd id="total-targets">—</dd>
+            </dl>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-primary" id="restart-btn">Пройти заново</button>
+            <button class="btn btn-secondary" id="keep-data-btn">Оставить результаты (не очищать)</button>
+            <button class="btn btn-secondary" id="clear-data-btn">Очистить данные</button>
+        </div>
+
+        <p class="note">
+            Показатели приведены для экспресс-оценки. Для профессиональной интерпретации результатов корректурной пробы
+            используйте специализированные методические рекомендации.
+        </p>
+    </div>
+</div>
+
+<script>
+    const STORAGE_KEY = "korrektur_test_state_v1";
+
+    // Ті ж самі рядки, що й на головній сторінці. ВАЖЛИВО: вони повинні збігатися 1-в-1.
+    const ROWS = [
+        "А А О Л А Н А К Р А М А С А",
+        "О О А Л О О Р О Н О П О Л О",
+        "К К Н Л К О К К А К Р К Л К",
+        "М М М А Н М О М М Л М П М М",
+        "С С А С С Н С К С О С Л С С",
+        "Н Н Н О Н А Н К Н Р Н Л Н Н"
+    ];
+
+    function loadState() {
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (!raw) return null;
+            return JSON.parse(raw);
+        } catch (e) {
+            console.error("Cannot parse stored state", e);
+            return null;
+        }
+    }
+
+    function countTargetsAndResults(state) {
+        let totalTargets = 0;
+        let totalMarked = 0;
+        let correctMarked = 0;
+        let wrongMarked = 0;
+
+        // рахуємо загальну кількість «цільових» букв
+        ROWS.forEach((rowStr, rowIndex) => {
+            const letters = rowStr.split(/\s+/);
+            const sample = letters[0];
+
+            letters.forEach((letter, colIndex) => {
+                if (colIndex === 0) return;
+                if (letter === sample) {
+                    totalTargets++;
+                }
+
+                const id = `${rowIndex}-${colIndex}`;
+                if (state.selected && state.selected[id]) {
+                    totalMarked++;
+                    if (letter === sample) {
+                        correctMarked++;
+                    } else {
+                        wrongMarked++;
+                    }
+                }
+            });
+        });
+
+        return {
+            totalTargets,
+            totalMarked,
+            correctMarked,
+            wrongMarked
+        };
+    }
+
+    function formatSummary(results) {
+        if (!results) {
+            return "Данные теста не найдены. Возможно, страница была открыта напрямую без прохождения пробы.";
+        }
+
+        const { totalTargets, totalMarked, correctMarked, wrongMarked } = results;
+
+        return [
+            `Всего целевых букв было: ${totalTargets}.`,
+            `Вы отметили ${totalMarked} букв, из них правильных — ${correctMarked}, ошибочных — ${wrongMarked}.`
+        ].join(" ");
+    }
+
+    (function init() {
+        const state = loadState();
+
+        if (!state || !state.selected) {
+            document.getElementById("summary-text").textContent =
+                "Данные теста не найдены. Попробуйте пройти корректурную пробу ещё раз.";
+            return;
+        }
+
+        const results = countTargetsAndResults(state);
+
+        document.getElementById("summary-text").textContent = formatSummary(results);
+        document.getElementById("total-marked").textContent = results.totalMarked;
+        document.getElementById("correct-marked").textContent = results.correctMarked;
+        document.getElementById("wrong-marked").textContent = results.wrongMarked;
+        document.getElementById("total-targets").textContent = results.totalTargets;
+
+        // Кнопки
+        const restartBtn = document.getElementById("restart-btn");
+        const clearDataBtn = document.getElementById("clear-data-btn");
+        const keepDataBtn = document.getElementById("keep-data-btn");
+
+        restartBtn.addEventListener("click", () => {
+            // очищаємо стан і повертаємось на тест
+            localStorage.removeItem(STORAGE_KEY);
+            window.location.href = "index.html";
+        });
+
+        clearDataBtn.addEventListener("click", () => {
+            localStorage.removeItem(STORAGE_KEY);
+            alert("Данные теста очищены.");
+        });
+
+        keepDataBtn.addEventListener("click", () => {
+            alert("Данные оставлены в браузере. Вы можете вернуться к ним позже с этого устройства.");
+        });
+    })();
+</script>
 </body>
 </html>
