@@ -225,83 +225,26 @@ p {
 
 /* ===== HERO ===== */
 
-.hero {
-  background: var(--blue-color);
-  color: var(--white);
-  overflow: hidden;
-  position: relative;
-}
-
-.hero .container {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  align-items: center;
-  gap: 40px;
-  padding-top: 88px;
-  padding-bottom: 72px;
-}
-
-.hero-kicker {
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--accent-pale);
-  margin-bottom: 18px;
-}
-
-.hero h1 {
-  color: var(--white);
-  font-size: 52px;
-  margin-bottom: 20px;
-}
-
-.hero h1 span {
-  color: var(--accent-color);
-}
-
-.hero p.lead {
-  color: rgba(255, 255, 255, 0.85);
-  max-width: 460px;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  background: rgba(255, 255, 255, 0.14);
-  border-radius: 999px;
-  padding: 8px 18px 8px 8px;
-  margin-bottom: 28px;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.hero-badge img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background: var(--white);
-}
-
-.hero-art {
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.hero-art img {
-  max-width: 420px;
-  width: 100%;
-  filter: drop-shadow(0 30px 45px rgba(0, 0, 0, 0.25));
-}
-
 /* ===== ABOUT ===== */
 
 .about {
   background: var(--light-color);
+}
+
+.about--blue {
+  background: var(--blue-color);
+}
+
+.about--blue .about-role {
+  color: var(--white);
+}
+
+.about--blue h2 {
+  color: var(--white);
+}
+
+.about--blue .about-subtitle {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .about .container {
@@ -679,12 +622,8 @@ footer .footer-brand img {
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 960px) {
-  h1, .hero h1 { font-size: 38px; }
+  h1 { font-size: 38px; }
   h2 { font-size: 28px; }
-
-  .hero .container { grid-template-columns: 1fr; padding-top: 56px; }
-  .hero-art { order: -1; }
-  .hero-art img { max-width: 280px; }
 
   .about .container { grid-template-columns: 1fr; }
   .about-photo { max-width: 360px; margin: 0 auto; }
@@ -701,7 +640,7 @@ footer .footer-brand img {
 
 @media (max-width: 560px) {
   .container { padding: 0 18px; }
-  h1, .hero h1 { font-size: 30px; }
+  h1 { font-size: 30px; }
   h2 { font-size: 24px; }
   .clients-grid { grid-template-columns: repeat(2, 1fr); }
   .vacancy-grid { grid-template-columns: 1fr; }
