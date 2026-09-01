@@ -404,20 +404,22 @@ p {
 }
 
 .testimonial-grid {
-  column-count: 2;
-  column-gap: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
 }
 
 .testimonial-shot {
-  break-inside: avoid;
-  margin-bottom: 20px;
   border-radius: var(--radius-md);
   overflow: hidden;
+  line-height: 0;
 }
 
 .testimonial-shot img {
-  width: 100%;
   display: block;
+  height: auto;
+  max-width: 100%;
 }
 
 /* ===== AUDIO TESTIMONIALS ===== */
@@ -644,6 +646,6 @@ footer .footer-brand img {
   h2 { font-size: 24px; }
   .clients-grid { grid-template-columns: repeat(2, 1fr); }
   .vacancy-grid { grid-template-columns: 1fr; }
-  .testimonial-grid { column-count: 1; }
   .block { padding: 48px 0; }
+  .testimonial-shot img { width: 100% !important; }
 }
