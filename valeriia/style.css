@@ -316,13 +316,15 @@ p {
   height: 32px;
   border-radius: 50%;
   background: var(--accent-pale);
-  color: var(--primary-color);
+  color: #1a1a1a;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-family: var(--font-heading);
-  font-size: 14px;
+}
+
+.about-facts .dot svg {
+  width: 16px;
+  height: 16px;
 }
 
 .about-facts p {
