@@ -57,6 +57,24 @@
     });
   });
 
+  const introVideo = document.getElementById("intro-video");
+  const introOverlay = document.querySelector(".facts-video-overlay");
+  const introPlayBtn = document.querySelector(".facts-video-play");
+
+  if (introVideo && introOverlay && introPlayBtn) {
+    introPlayBtn.addEventListener("click", () => {
+      introVideo.controls = true;
+      introVideo.play();
+      introOverlay.style.display = "none";
+    });
+
+    introVideo.addEventListener("ended", () => {
+      introVideo.controls = false;
+      introVideo.currentTime = 0;
+      introOverlay.style.display = "flex";
+    });
+  }
+
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 })();
