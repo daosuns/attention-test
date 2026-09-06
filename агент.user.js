@@ -539,7 +539,24 @@
   // Панель
   // ═══════════════════════════════════════════════════════════════════
 
+  // work.ua має власні стилі для полів і галочок — вони перебивають наші
+  // й роблять галочку невидимою. Ставимо захист саме для нашої панелі.
+  var стилі = document.createElement('style');
+  стилі.textContent =
+    '#ар-панель, #ар-панель * { box-sizing:border-box; font-family:inherit; }' +
+    '#ар-панель label { font-weight:400 !important; margin:0 !important; ' +
+      'text-transform:none !important; letter-spacing:normal !important; }' +
+    '#ар-панель input[type=checkbox] {' +
+      '-webkit-appearance:checkbox !important; appearance:checkbox !important;' +
+      'width:14px !important; height:14px !important; min-width:14px !important;' +
+      'opacity:1 !important; position:static !important; display:inline-block !important;' +
+      'margin:3px 0 0 0 !important; padding:0 !important; visibility:visible !important;' +
+      'clip:auto !important; pointer-events:auto !important; }' +
+    '#ар-панель button { font-family:inherit; line-height:normal; }';
+  document.head.appendChild(стилі);
+
   var П = document.createElement('div');
+  П.id = 'ар-панель';
   П.style.cssText =
     'position:fixed;right:16px;bottom:16px;z-index:2147483000;width:340px;' +
     'background:#111827;color:#f9fafb;border-radius:12px;padding:16px;' +
@@ -547,10 +564,14 @@
     'box-shadow:0 10px 40px rgba(0,0,0,.45)';
 
   П.innerHTML =
-    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">' +
-      '<b style="font-size:15px">Агент-рекрутер</b>' +
+    '<div style="display:flex;align-items:center;gap:10px">' +
+      '<b style="font-size:15px;flex:1">Агент-рекрутер</b>' +
       '<span id="ар-шестерня" style="cursor:pointer;opacity:.6" title="Налаштування">⚙︎</span>' +
+      '<span id="ар-згорнути" style="cursor:pointer;opacity:.6;font-size:17px;' +
+        'line-height:1;user-select:none" title="Згорнути">–</span>' +
     '</div>' +
+    '<div id="ар-міні" style="display:none;font-size:12px;opacity:.75;margin-top:6px"></div>' +
+    '<div id="ар-тіло" style="margin-top:10px">' +
     '<div id="ар-робота">' +
       '<select id="ар-пошук" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff;margin-bottom:8px"></select>' +
       '<label style="display:block;opacity:.7;font-size:12px">Максимум сторінок за запуск (0 = усі)</label>' +
@@ -565,13 +586,17 @@
       '<div id="ар-статус" style="margin-top:10px;font-weight:600"></div>' +
       '<div id="ар-журнал" style="margin-top:8px;max-height:150px;overflow-y:auto;font-size:12px;opacity:.75;border-top:1px solid #374151;padding-top:8px"></div>' +
     '</div>' +
-    '<div id="ар-налаштування" style="display:none"></div>';
+    '<div id="ар-налаштування" style="display:none"></div>' +
+    '</div>';
 
   document.body.appendChild(П);
 
   var $ = function (id) { return П.querySelector('#' + id); };
 
-  function статус(т) { $('ар-статус').textContent = т; }
+  function статус(т) {
+    $('ар-статус').textContent = т;
+    $('ар-міні').textContent = т;   // щоб було видно й у згорнутому вигляді
+  }
 
   function журнал(т) {
     var р = document.createElement('div');
@@ -673,6 +698,22 @@
       }
     };
   }
+
+  // ── Згортання панелі ─────────────────────────────────────────────
+  function застосуватиЗгортання(згорнуто) {
+    $('ар-тіло').style.display    = згорнуто ? 'none'  : 'block';
+    $('ар-міні').style.display    = згорнуто ? 'block' : 'none';
+    $('ар-шестерня').style.display = згорнуто ? 'none' : 'inline';
+    $('ар-згорнути').textContent  = згорнуто ? '+' : '–';
+    $('ар-згорнути').title        = згорнуто ? 'Розгорнути' : 'Згорнути';
+    П.style.width   = згорнуто ? '210px' : '340px';
+    П.style.padding = згорнуто ? '12px 14px' : '16px';
+    GM_setValue('згорнуто', згорнуто);
+  }
+
+  $('ар-згорнути').onclick = function () {
+    застосуватиЗгортання($('ар-тіло').style.display !== 'none');
+  };
 
   $('ар-шестерня').onclick = function () {
     var відкрито = $('ар-налаштування').style.display !== 'none';
@@ -798,5 +839,6 @@
     }
   };
 
+  застосуватиЗгортання(GM_getValue('згорнуто', false) === true);
   завантажитиПошуки();
 })();
