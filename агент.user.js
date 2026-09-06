@@ -561,6 +561,7 @@
       '</label>' +
       '<button id="ар-старт" style="width:100%;padding:10px;border:0;border-radius:8px;background:#2563eb;color:#fff;font-size:14px;font-weight:600;cursor:pointer">Старт</button>' +
       '<button id="ар-стоп" style="width:100%;padding:7px;margin-top:6px;border:0;border-radius:8px;background:#374151;color:#fff;cursor:pointer;display:none">Зупинити</button>' +
+      '<button id="ар-очистити" style="width:100%;padding:6px;margin-top:6px;border:1px solid #7f1d1d;border-radius:8px;background:transparent;color:#fca5a5;font-size:12px;cursor:pointer">Очистити історію по вакансії</button>' +
       '<div id="ар-статус" style="margin-top:10px;font-weight:600"></div>' +
       '<div id="ар-журнал" style="margin-top:8px;max-height:150px;overflow-y:auto;font-size:12px;opacity:.75;border-top:1px solid #374151;padding-top:8px"></div>' +
     '</div>' +
@@ -760,6 +761,41 @@
   $('ар-стоп').onclick = function () {
     зупинити = true;
     статус('Зупиняюсь після поточної сторінки…');
+  };
+
+  $('ар-очистити').onclick = async function () {
+    var пошук = пошуки[Number($('ар-пошук').value)];
+    if (!пошук) { статус('Спершу обери вакансію'); return; }
+
+    var згода = confirm(
+      'Очистити історію по вакансії «' + пошук.назва + '»?\n\n' +
+      'Агент забуде, кого вже показував, і зможе оцінити цих людей заново — ' +
+      'наприклад, за новим описом ідеального кандидата.\n\n' +
+      'Закладка на сторінці теж скинеться: наступний запуск почнеться з першої.\n\n' +
+      'Історія інших вакансій не постраждає.\n' +
+      'Аркуш «Кандидати» НЕ чіпається — старі рядки з твоїми нотатками ' +
+      'лишаться на місці, а нові додадуться поруч.'
+    );
+    if (!згода) return;
+
+    this.disabled = true;
+    статус('Чищу історію…');
+
+    try {
+      var в = await доТаблиці('очистити', { пошук: пошук.назва });
+      GM_setValue('прогрес::' + пошук.назва, 0);
+      оновитиПрогрес();
+
+      var скільки = в.видалено;
+      статус(скільки
+        ? 'Історію очищено: забуто ' + скільки + ' кандидатів.'
+        : 'В «Історії» по цій вакансії нічого не було.');
+      журнал('Очищено історію по «' + пошук.назва + '»: ' + скільки);
+    } catch (e) {
+      статус('✗ ' + e.message);
+    } finally {
+      this.disabled = false;
+    }
   };
 
   завантажитиПошуки();
