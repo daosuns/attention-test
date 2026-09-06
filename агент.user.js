@@ -145,6 +145,39 @@
     return new Promise(function (r) { setTimeout(r, мс); });
   }
 
+  /**
+   * Питає в самого Google, які моделі доступні цьому ключу.
+   * Так список ніколи не застаріє — Google міняє назви моделей часто.
+   */
+  async function списокМоделей() {
+    var н = налаштування();
+    if (!н.ключGemini) throw new Error('Спершу впиши ключ Gemini');
+
+    var в = await запит({
+      метод: 'GET',
+      адреса: 'https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&key=' +
+              encodeURIComponent(н.ключGemini)
+    });
+
+    if (в.код !== 200) throw new Error('Google відповів кодом ' + в.код);
+
+    var моделі = (JSON.parse(в.текст).models || [])
+      .filter(function (м) {
+        return (м.supportedGenerationMethods || []).indexOf('generateContent') > -1;
+      })
+      .map(function (м) { return String(м.name).replace(/^models\//, ''); })
+      .filter(function (і) { return і.indexOf('gemini') === 0 && і.indexOf('-tts') === -1; });
+
+    // Легкі моделі вгору: у них щедріші безкоштовні ліміти
+    моделі.sort(function (a, b) {
+      var вагаA = (a.indexOf('lite') > -1 ? 0 : a.indexOf('flash') > -1 ? 1 : 2);
+      var вагаB = (b.indexOf('lite') > -1 ? 0 : b.indexOf('flash') > -1 ? 1 : 2);
+      return вагаA - вагаB || a.localeCompare(b);
+    });
+
+    return моделі;
+  }
+
   // ═══════════════════════════════════════════════════════════════════
   // Читання work.ua
   // ═══════════════════════════════════════════════════════════════════
@@ -522,8 +555,9 @@
       '<select id="ар-пошук" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff;margin-bottom:8px"></select>' +
       '<label style="display:block;opacity:.7;font-size:12px">Максимум сторінок за запуск (0 = усі)</label>' +
       '<input id="ар-сторінки" type="number" min="0" value="3" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff;margin:4px 0 8px">' +
-      '<label style="display:flex;align-items:center;gap:6px;font-size:12px;opacity:.75;margin-bottom:10px">' +
-        '<input id="ар-спочатку" type="checkbox"> почати спочатку, а не продовжувати' +
+      '<div id="ар-прогрес" style="font-size:12px;opacity:.7;margin-bottom:8px"></div>' +
+      '<label style="display:flex;align-items:flex-start;gap:6px;font-size:12px;opacity:.75;margin-bottom:10px">' +
+        '<input id="ар-спочатку" type="checkbox" style="margin-top:3px"><span id="ар-спочатку-підпис"></span>' +
       '</label>' +
       '<button id="ар-старт" style="width:100%;padding:10px;border:0;border-radius:8px;background:#2563eb;color:#fff;font-size:14px;font-weight:600;cursor:pointer">Старт</button>' +
       '<button id="ар-стоп" style="width:100%;padding:7px;margin-top:6px;border:0;border-radius:8px;background:#374151;color:#fff;cursor:pointer;display:none">Зупинити</button>' +
@@ -550,24 +584,72 @@
     ['адресаТаблиці',       'Адреса веб-застосунку таблиці', 'text'],
     ['ключТаблиці',         'Таємний ключ (як у Код.gs)',    'text'],
     ['ключGemini',          'Ключ Gemini з AI Studio',       'password'],
-    ['модель',              'Модель Gemini',                 'text'],
     ['відкриватиРезюмеВід', 'Відкривати повне резюме від балу', 'number']
   ];
+
+  var ПІДКАЗКИ_МОДЕЛЕЙ = {
+    lite:  'найдешевша, найщедріші безкоштовні ліміти, оцінює грубіше',
+    flash: 'золота середина — швидка й достатньо уважна',
+    pro:   'найрозумніша, але ліміти найменші — на сотні сторінок не вистачить'
+  };
+
+  function підказкаПроМодель(назва) {
+    if (назва.indexOf('lite') > -1)  return ПІДКАЗКИ_МОДЕЛЕЙ.lite;
+    if (назва.indexOf('flash') > -1) return ПІДКАЗКИ_МОДЕЛЕЙ.flash;
+    if (назва.indexOf('pro') > -1)   return ПІДКАЗКИ_МОДЕЛЕЙ.pro;
+    return '';
+  }
 
   function намалюватиНалаштування() {
     var н = налаштування();
     var html = '';
+
     ПОЛЯ.forEach(function (п) {
       html += '<label style="display:block;opacity:.7;font-size:12px;margin-top:8px">' + п[1] + '</label>' +
               '<input data-поле="' + п[0] + '" type="' + п[2] + '" value="' +
               String(н[п[0]]).replace(/"/g, '&quot;') +
               '" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff">';
     });
-    html += '<button id="ар-зберегти" style="width:100%;padding:9px;margin-top:12px;border:0;border-radius:8px;background:#10b981;color:#fff;font-weight:600;cursor:pointer">Зберегти</button>' +
+
+    html += '<label style="display:block;opacity:.7;font-size:12px;margin-top:8px">Модель Gemini</label>' +
+            '<select id="ар-модель" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff">' +
+              '<option value="' + String(н.модель).replace(/"/g, '&quot;') + '">' + н.модель + '</option>' +
+            '</select>' +
+            '<div id="ар-про-модель" style="font-size:11px;opacity:.6;margin-top:3px">' +
+              підказкаПроМодель(н.модель) +
+            '</div>' +
+            '<button id="ар-моделі" style="width:100%;padding:6px;margin-top:6px;border:0;border-radius:6px;background:#374151;color:#fff;font-size:12px;cursor:pointer">Оновити список моделей</button>' +
+            '<button id="ар-зберегти" style="width:100%;padding:9px;margin-top:12px;border:0;border-radius:8px;background:#10b981;color:#fff;font-weight:600;cursor:pointer">Зберегти</button>' +
             '<button id="ар-перевірити" style="width:100%;padding:7px;margin-top:6px;border:0;border-radius:8px;background:#374151;color:#fff;cursor:pointer">Перевірити звʼязок</button>' +
             '<div id="ар-перевірка" style="margin-top:8px;font-size:12px;opacity:.8"></div>';
 
     $('ар-налаштування').innerHTML = html;
+
+    $('ар-модель').onchange = function () {
+      $('ар-про-модель').textContent = підказкаПроМодель(this.value);
+    };
+
+    $('ар-моделі').onclick = async function () {
+      $('ар-перевірка').textContent = 'Питаю Google, які моделі тобі доступні…';
+      try {
+        // Ключ міг щойно змінитись і ще не бути збереженим
+        var поле = $('ар-налаштування').querySelector('[data-поле="ключGemini"]');
+        if (поле && поле.value.trim()) GM_setValue('ключGemini', поле.value.trim());
+
+        var моделі = await списокМоделей();
+        var поточна = $('ар-модель').value;
+        if (моделі.indexOf(поточна) === -1) моделі.unshift(поточна);
+
+        $('ар-модель').innerHTML = моделі.map(function (м) {
+          return '<option value="' + м + '"' + (м === поточна ? ' selected' : '') + '>' + м + '</option>';
+        }).join('');
+
+        $('ар-про-модель').textContent = підказкаПроМодель(поточна);
+        $('ар-перевірка').textContent = '✓ Доступно моделей: ' + моделі.length;
+      } catch (e) {
+        $('ар-перевірка').textContent = '✗ ' + e.message;
+      }
+    };
 
     $('ар-зберегти').onclick = function () {
       $('ар-налаштування').querySelectorAll('[data-поле]').forEach(function (inp) {
@@ -575,6 +657,7 @@
         GM_setValue(inp.getAttribute('data-поле'),
                     inp.type === 'number' ? Number(значення) : значення);
       });
+      GM_setValue('модель', $('ар-модель').value);
       $('ар-перевірка').textContent = 'Збережено ✓';
       завантажитиПошуки();
     };
@@ -600,6 +683,29 @@
   // ── Список пошуків ───────────────────────────────────────────────
   var пошуки = [];
 
+  /** Показує, де агент зупинився минулого разу для обраної вакансії */
+  function оновитиПрогрес() {
+    var пошук = пошуки[Number($('ар-пошук').value)];
+    if (!пошук) {
+      $('ар-прогрес').textContent = '';
+      $('ар-спочатку-підпис').textContent = 'почати з першої сторінки';
+      return;
+    }
+
+    var пройдено = GM_getValue('прогрес::' + пошук.назва, 0) || 0;
+
+    if (пройдено > 0) {
+      $('ар-прогрес').textContent = '↻ Минулого разу дійшли до сторінки ' + пройдено +
+                                    '. Старт продовжить із ' + (пройдено + 1) + '-ї.';
+      $('ар-спочатку-підпис').textContent =
+        'забути це і почати з першої сторінки (тих, хто вже в «Історії», ' +
+        'усе одно пропустимо — тож повторів не буде)';
+    } else {
+      $('ар-прогрес').textContent = '↻ Цей пошук ще не запускався — почнемо з першої сторінки.';
+      $('ар-спочатку-підпис').textContent = 'почати з першої сторінки';
+    }
+  }
+
   async function завантажитиПошуки() {
     var н = налаштування();
     if (!н.адресаТаблиці) {
@@ -614,6 +720,8 @@
         return '<option value="' + i + '">' + п.назва + '</option>';
       }).join('');
 
+      оновитиПрогрес();
+
       статус(пошуки.length
         ? 'Готова. Активних пошуків: ' + пошуки.length
         : 'В аркуші «Пошуки» немає рядків із «Активний = так»');
@@ -621,6 +729,8 @@
       статус('✗ ' + e.message);
     }
   }
+
+  $('ар-пошук').onchange = оновитиПрогрес;
 
   // ── Кнопки ───────────────────────────────────────────────────────
   $('ар-старт').onclick = function () {
@@ -642,6 +752,8 @@
       .then(function () {
         $('ар-старт').style.display = 'block';
         $('ар-стоп').style.display = 'none';
+        $('ар-спочатку').checked = false;
+        оновитиПрогрес();
       });
   };
 
