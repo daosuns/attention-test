@@ -658,19 +658,22 @@
   П.id = 'ар-панель';
   П.style.cssText =
     'position:fixed;right:16px;bottom:16px;z-index:2147483000;width:340px;' +
+    // Панель ніколи не має перерости екран: інакше шапку з кнопками
+    // обрізає вгорі й повернутись до роботи стає нічим
+    'max-height:calc(100vh - 32px);display:flex;flex-direction:column;' +
     'background:#111827;color:#f9fafb;border-radius:12px;padding:16px;' +
     'font:13px/1.55 -apple-system,Segoe UI,Roboto,sans-serif;' +
     'box-shadow:0 10px 40px rgba(0,0,0,.45)';
 
   П.innerHTML =
-    '<div style="display:flex;align-items:center;gap:10px">' +
+    '<div style="display:flex;align-items:center;gap:10px;flex:0 0 auto">' +
       '<b style="font-size:15px;flex:1">Агент-рекрутер</b>' +
       '<span id="ар-шестерня" style="cursor:pointer;opacity:.6" title="Налаштування">⚙︎</span>' +
       '<span id="ар-згорнути" style="cursor:pointer;opacity:.6;font-size:17px;' +
         'line-height:1;user-select:none" title="Згорнути">–</span>' +
     '</div>' +
     '<div id="ар-міні" style="display:none;font-size:12px;opacity:.75;margin-top:6px"></div>' +
-    '<div id="ар-тіло" style="margin-top:10px">' +
+    '<div id="ар-тіло" style="margin-top:10px;flex:1 1 auto;overflow-y:auto;min-height:0">' +
     '<div id="ар-робота">' +
       '<select id="ар-пошук" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff;margin-bottom:8px"></select>' +
       '<label style="display:block;opacity:.7;font-size:12px">Скільки нових кандидатів зібрати</label>' +
@@ -729,9 +732,14 @@
     return '';
   }
 
+  var КНОПКА_НАЗАД =
+    '<button class="ар-назад" style="width:100%;padding:8px;border:1px solid #4b5563;' +
+    'border-radius:8px;background:transparent;color:#d1d5db;font-size:13px;' +
+    'cursor:pointer">← Назад до роботи</button>';
+
   function намалюватиНалаштування() {
     var н = налаштування();
-    var html = '';
+    var html = КНОПКА_НАЗАД;
 
     ПОЛЯ.forEach(function (п) {
       html += '<label style="display:block;opacity:.7;font-size:12px;margin-top:8px">' + п[1] + '</label>' +
@@ -761,9 +769,14 @@
               'line-height:1.45;border-top:1px solid #374151;padding-top:8px"></div>' +
             '<button id="ар-зберегти" style="width:100%;padding:9px;margin-top:12px;border:0;border-radius:8px;background:#10b981;color:#fff;font-weight:600;cursor:pointer">Зберегти</button>' +
             '<button id="ар-перевірити" style="width:100%;padding:7px;margin-top:6px;border:0;border-radius:8px;background:#374151;color:#fff;cursor:pointer">Перевірити звʼязок</button>' +
-            '<div id="ар-перевірка" style="margin-top:8px;font-size:12px;opacity:.8"></div>';
+            '<div id="ар-перевірка" style="margin-top:8px;font-size:12px;opacity:.8"></div>' +
+            '<div style="margin-top:10px">' + КНОПКА_НАЗАД + '</div>';
 
     $('ар-налаштування').innerHTML = html;
+
+    $('ар-налаштування').querySelectorAll('.ар-назад').forEach(function (к) {
+      к.onclick = function () { показатиНалаштування(false); };
+    });
 
     $('ар-модель').onchange = function () {
       $('ар-про-модель').textContent = підказкаПроМодель(this.value);
@@ -865,12 +878,24 @@
     застосуватиЗгортання($('ар-тіло').style.display !== 'none');
   };
 
+  function показатиНалаштування(показати) {
+    $('ар-налаштування').style.display = показати ? 'block' : 'none';
+    $('ар-робота').style.display       = показати ? 'none'  : 'block';
+    $('ар-шестерня').style.opacity     = показати ? '1' : '.6';
+    if (показати) намалюватиНалаштування();
+    $('ар-тіло').scrollTop = 0;
+  }
+
   $('ар-шестерня').onclick = function () {
-    var відкрито = $('ар-налаштування').style.display !== 'none';
-    $('ар-налаштування').style.display = відкрито ? 'none' : 'block';
-    $('ар-робота').style.display = відкрито ? 'block' : 'none';
-    if (!відкрито) намалюватиНалаштування();
+    показатиНалаштування($('ар-налаштування').style.display === 'none');
   };
+
+  // Escape — універсальна кнопка «назад»
+  document.addEventListener('keydown', function (е) {
+    if (е.key === 'Escape' && $('ар-налаштування').style.display !== 'none') {
+      показатиНалаштування(false);
+    }
+  });
 
   // ── Список пошуків ───────────────────────────────────────────────
   var пошуки = [];
