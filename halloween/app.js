@@ -130,56 +130,45 @@
 
   /* -------------------------------------------------------- Муркотіння */
 
-  // Звук синтезується в браузері, без аудіофайлу: приглушений шум, що пульсує ~26 разів на секунду.
+  // Запис муркотіння (assets/purr.mp3) грає по колу; гучність плавно вмикаємо, коли котика гладять.
+  // Файл завантажується лише після кнопки «Погладити котика», тож перший екран не важчає.
   var purr = (function () {
     var Ctx = window.AudioContext || window.webkitAudioContext;
     var ctx = null;
     var out = null;
     var on = false;
 
-    function lfo(freq, depth, target) {
-      var osc = ctx.createOscillator();
-      var gain = ctx.createGain();
-      osc.frequency.value = freq;
-      gain.gain.value = depth;
-      osc.connect(gain);
-      gain.connect(target);
-      osc.start();
+    function load() {
+      fetch('assets/purr.mp3?v=1').then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.arrayBuffer();
+      }).then(function (data) {
+        // Стара форма з колбеками — її розуміють і старі Safari.
+        ctx.decodeAudioData(data, start, function (err) { console.error(err); });
+      }).then(null, function (err) { console.error(err); });
     }
 
-    function build() {
-      ctx = new Ctx();
-      var len = ctx.sampleRate * 2;
-      var buffer = ctx.createBuffer(1, len, ctx.sampleRate);
+    function start(buffer) {
+      var source = ctx.createBufferSource();
+      source.buffer = buffer;
+      source.loop = true;
+      // Пропускаємо тишу, яку MP3-кодек додає на краях, щоб коло не «клацало».
       var data = buffer.getChannelData(0);
-      for (var i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
-      var noise = ctx.createBufferSource();
-      noise.buffer = buffer;
-      noise.loop = true;
+      var first = 0;
+      var last = data.length - 1;
+      while (first < last && Math.abs(data[first]) < 1e-4) first++;
+      while (last > first && Math.abs(data[last]) < 1e-4) last--;
+      source.loopStart = first / buffer.sampleRate;
+      source.loopEnd = (last + 1) / buffer.sampleRate;
+      source.connect(out);
+      source.start(0, source.loopStart);
+      if (on) fade(true);
+    }
 
-      var low = ctx.createBiquadFilter();
-      low.type = 'lowpass';
-      low.frequency.value = 520;
-      var high = ctx.createBiquadFilter();
-      high.type = 'highpass';
-      high.frequency.value = 90;
-
-      var pulse = ctx.createGain();   // «р-р-р»: гучність пульсує 26 разів на секунду
-      pulse.gain.value = 0.5;
-      lfo(26, 0.5, pulse.gain);
-      var breath = ctx.createGain();  // вдих-видих: повільно гучніше й тихіше
-      breath.gain.value = 0.75;
-      lfo(0.8, 0.25, breath.gain);
-
-      out = ctx.createGain();
-      out.gain.value = 0;
-      noise.connect(low);
-      low.connect(high);
-      high.connect(pulse);
-      pulse.connect(breath);
-      breath.connect(out);
-      out.connect(ctx.destination);
-      noise.start();
+    function fade(play) {
+      var t = ctx.currentTime;
+      out.gain.cancelScheduledValues(t);
+      out.gain.setTargetAtTime(play ? 1 : 0, t, play ? 0.08 : 0.15);
     }
 
     return {
@@ -187,16 +176,20 @@
       unlock: function () {
         if (!Ctx) return;
         try {
-          if (!ctx) build();
+          if (!ctx) {
+            ctx = new Ctx();
+            out = ctx.createGain();
+            out.gain.value = 0;
+            out.connect(ctx.destination);
+            load();
+          }
           if (ctx.state === 'suspended') ctx.resume();
         } catch (e) { Ctx = null; }
       },
       set: function (play) {
         if (!ctx || play === on) return;
         on = play;
-        var t = ctx.currentTime;
-        out.gain.cancelScheduledValues(t);
-        out.gain.setTargetAtTime(play ? 2.2 : 0, t, play ? 0.08 : 0.15);
+        fade(play);
       }
     };
   })();
