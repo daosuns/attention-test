@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Погладьте котика — подарунок від HRme School</title>
+  <meta name="description" content="Цього Хелоуїну чорний котик приносить не прикмети, а подарунки. Залиште контакти й погладьте його.">
+  <meta name="theme-color" content="#150b33">
+
+  <!-- Прев'ю для Telegram і Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="uk_UA">
+  <meta property="og:site_name" content="HRme School">
+  <meta property="og:url" content="https://halloween.hrme.site/">
+  <meta property="og:title" content="Погладьте котика й отримайте подарунок від HRme School">
+  <meta property="og:description" content="Цього Хелоуїну чорний котик приносить не прикмети, а подарунки. Залиште контакти й погладьте його.">
+  <meta property="og:image" content="https://halloween.hrme.site/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Чорний котик з жовтими очима на нічному хелоуїнському небі">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body data-view="form">
+
+  <!-- Нічне небо -->
+  <div class="sky" aria-hidden="true">
+    <div class="stars"></div>
+    <div class="moon"></div>
+    <img class="web" src="assets/web.svg" alt="" width="260" height="260">
+    <div class="twinkles">
+      <i style="--x:8%;--y:22%;--d:0s"></i>
+      <i style="--x:28%;--y:9%;--d:1.2s"></i>
+      <i style="--x:46%;--y:28%;--d:2.1s"></i>
+      <i style="--x:63%;--y:6%;--d:.6s"></i>
+      <i style="--x:91%;--y:38%;--d:1.7s"></i>
+      <i style="--x:14%;--y:55%;--d:2.6s"></i>
+      <i style="--x:85%;--y:64%;--d:.9s"></i>
+      <i style="--x:38%;--y:72%;--d:3s"></i>
+    </div>
+    <div class="bat-fly b1"><svg class="bat" viewBox="0 0 60 30"><use href="#bat"/></svg></div>
+    <div class="bat-fly b2"><svg class="bat" viewBox="0 0 60 30"><use href="#bat"/></svg></div>
+    <div class="bat-fly b3"><svg class="bat" viewBox="0 0 60 30"><use href="#bat"/></svg></div>
+    <svg class="hills" viewBox="0 0 1440 220" preserveAspectRatio="none">
+      <path fill="#22145a" d="M0 120 C 180 60, 360 70, 520 110 S 860 170, 1040 100 S 1320 60, 1440 90 V220 H0 Z"/>
+      <path fill="#120a30" d="M0 170 C 220 120, 420 150, 640 160 S 1000 120, 1200 150 S 1380 170, 1440 160 V220 H0 Z"/>
+    </svg>
+  </div>
+
+  <!-- Спільні значки -->
+  <svg width="0" height="0" class="defs" aria-hidden="true" focusable="false">
+    <symbol id="bat" viewBox="0 0 60 30">
+      <path d="M30 11c-1-2.5-2.2-4-3-4.5l.6 3.6c-3.2-.8-6.5-3.6-10.6-3.1 1.4 1.6 1.5 3.5.4 4.6-2.1-1.3-5.2-1.6-7.4-.4.9 1 1.2 2.3.7 3.6C7.6 13.6 3.5 13.2 0 14.5c6.5 1.4 12.6 5.7 17.6 7 1.2-1.9 3.2-2.6 5.2-1.9 1 1.9 3.3 3.3 7.2 4.4 3.9-1.1 6.2-2.5 7.2-4.4 2-.7 4 0 5.2 1.9 5-1.3 11.1-5.6 17.6-7-3.5-1.3-7.6-.9-10.7.3-.5-1.3-.2-2.6.7-3.6-2.2-1.2-5.3-.9-7.4.4-1.1-1.1-1-3 .4-4.6-4.1-.5-7.4 2.3-10.6 3.1l.6-3.6c-.8.5-2 2-3 4.5z"/>
+    </symbol>
+    <symbol id="heart" viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </symbol>
+  </svg>
+
+  <header class="topbar">
+    <span class="brand-dot" aria-hidden="true"></span>
+    <span data-t="brand">HRme School</span>
+  </header>
+
+  <main class="page">
+
+    <!-- Котик (спільний для всіх екранів) -->
+    <div class="stage">
+      <p class="stage-hint" data-t="petHint"></p>
+      <div class="pet-zone" id="petZone">
+        <svg class="cat" id="cat" viewBox="0 0 300 330" role="img" aria-label="Чорний котик">
+          <defs>
+            <radialGradient id="catFur" cx="42%" cy="28%" r="85%">
+              <stop offset="0" stop-color="#2b2148"/>
+              <stop offset=".55" stop-color="#160f26"/>
+              <stop offset="1" stop-color="#0c0716"/>
+            </radialGradient>
+            <linearGradient id="scrollPaper" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fff8ec"/>
+              <stop offset="1" stop-color="#ecd2ac"/>
+            </linearGradient>
+            <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="7"/>
+            </filter>
+          </defs>
+
+          <ellipse class="shadow" cx="150" cy="318" rx="96" ry="9" fill="#05020d" opacity=".45"/>
+
+          <g class="all">
+            <g class="pose">
+              <!-- Хвіст -->
+              <g class="tail">
+                <path class="tail-rim" d="M198 296 C 258 300, 288 256, 270 212 C 260 188, 272 164, 292 170" fill="none" stroke="#9d86f0" stroke-opacity=".4" stroke-width="25" stroke-linecap="round"/>
+                <path class="tail-fur" d="M198 296 C 258 300, 288 256, 270 212 C 260 188, 272 164, 292 170" fill="none" stroke="#130c21" stroke-width="21" stroke-linecap="round"/>
+              </g>
+
+              <!-- Тулуб -->
+              <path d="M150 156 C 97 156, 77 222, 83 266 C 87 299, 112 313, 150 313 C 188 313, 213 299, 217 266 C 223 222, 203 156, 150 156 Z" fill="url(#catFur)" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2"/>
+              <path d="M128 206 Q150 194 172 206 Q166 244 150 254 Q134 244 128 206 Z" fill="#2c2349" opacity=".55"/>
+
+              <!-- Сувій у лапках -->
+              <g class="scroll-held">
+                <rect x="94" y="275" width="112" height="28" rx="14" fill="url(#scrollPaper)" stroke="#c9a77a" stroke-width="1.5"/>
+                <ellipse cx="96" cy="289" rx="7" ry="14" fill="#e5c497" stroke="#c9a77a" stroke-width="1.5"/>
+                <ellipse cx="204" cy="289" rx="7" ry="14" fill="#e5c497" stroke="#c9a77a" stroke-width="1.5"/>
+                <rect x="142" y="275" width="16" height="28" fill="#ffd51e"/>
+                <circle cx="150" cy="289" r="7.5" fill="#7b5be1" stroke="#ffd51e" stroke-width="2"/>
+              </g>
+
+              <!-- Лапки -->
+              <g class="paws" fill="#160f26" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2">
+                <ellipse cx="123" cy="305" rx="22" ry="13"/>
+                <ellipse cx="177" cy="305" rx="22" ry="13"/>
+              </g>
+              <g fill="none" stroke="#3d3263" stroke-width="2" stroke-linecap="round">
+                <path d="M116 302 v7 M126 302 v7"/>
+                <path d="M174 302 v7 M184 302 v7"/>
+              </g>
+
+              <!-- Голова -->
+              <g class="head">
+                <g class="ear ear-l">
+                  <path d="M76 96 L 84 26 Q 87 15 97 21 L 138 56 Z" fill="#160f26" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M91 80 L 95 39 L 123 61 Z" fill="#c9b6ff" opacity=".6"/>
+                </g>
+                <g class="ear ear-r">
+                  <path d="M224 96 L 216 26 Q 213 15 203 21 L 162 56 Z" fill="#160f26" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2" stroke-linejoin="round"/>
+                  <path d="M209 80 L 205 39 L 177 61 Z" fill="#c9b6ff" opacity=".6"/>
+                </g>
+                <path d="M150 52 C 206 52, 232 84, 232 120 C 232 160, 198 186, 150 186 C 102 186, 68 160, 68 120 C 68 84, 94 52, 150 52 Z" fill="url(#catFur)" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2"/>
+
+                <!-- Сяйво очей -->
+                <g class="eye-glow" filter="url(#softGlow)">
+                  <circle cx="118" cy="118" r="27"/>
+                  <circle cx="182" cy="118" r="27"/>
+                </g>
+
+                <!-- Відкриті очі -->
+                <g class="eyes-open">
+                  <ellipse class="eye" cx="118" cy="118" rx="21" ry="23"/>
+                  <ellipse class="eye" cx="182" cy="118" rx="21" ry="23"/>
+                  <ellipse cx="121" cy="121" rx="11" ry="16" fill="#0c0716"/>
+                  <ellipse cx="179" cy="121" rx="11" ry="16" fill="#0c0716"/>
+                  <circle cx="127" cy="111" r="5" fill="#fff"/>
+                  <circle cx="185" cy="111" r="5" fill="#fff"/>
+                  <circle cx="115" cy="129" r="2.3" fill="#fff" opacity=".85"/>
+                  <circle cx="173" cy="129" r="2.3" fill="#fff" opacity=".85"/>
+                </g>
+
+                <!-- Мружиться від задоволення -->
+                <g class="eyes-happy" fill="none" stroke="#ffd51e" stroke-width="6" stroke-linecap="round">
+                  <path d="M99 123 Q 118 101 137 123"/>
+                  <path d="M163 123 Q 182 101 201 123"/>
+                </g>
+
+                <!-- Спить -->
+                <g class="eyes-sleep" fill="none" stroke="#d9cdff" stroke-width="5" stroke-linecap="round">
+                  <path d="M101 116 Q 118 132 135 116"/>
+                  <path d="M165 116 Q 182 132 199 116"/>
+                </g>
+
+                <g class="blush" fill="#f2a7c3">
+                  <ellipse cx="96" cy="148" rx="11" ry="6"/>
+                  <ellipse cx="204" cy="148" rx="11" ry="6"/>
+                </g>
+                <path d="M142 141 Q 150 137 158 141 Q 155 148 150 150 Q 145 148 142 141 Z" fill="#f2a7c3"/>
+                <path d="M150 150 Q 150 158 142 158 M150 150 Q 150 158 158 158" fill="none" stroke="#d9cdff" stroke-width="2.5" stroke-linecap="round"/>
+                <g stroke="#d9cdff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round">
+                  <path d="M114 149 L 60 141 M114 155 L 62 162"/>
+                  <path d="M186 149 L 240 141 M186 155 L 238 162"/>
+                </g>
+              </g>
+
+              <!-- Нашийник з дзвіночком -->
+              <path d="M104 177 Q 150 199 196 177" fill="none" stroke="#7b5be1" stroke-width="9" stroke-linecap="round"/>
+              <circle cx="150" cy="193" r="9" fill="#ffd51e" stroke="#c9a500" stroke-width="1.5"/>
+              <path d="M146 196 h8" stroke="#8a6f00" stroke-width="2" stroke-linecap="round"/>
+            </g>
+          </g>
+        </svg>
+        <div class="bubble" id="bubble" aria-hidden="true"></div>
+        <img class="hand" id="hand" src="assets/hand.svg" alt="" width="56" height="56">
+        <div class="fx" id="fx" aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <!-- Екран 1: привітання і форма -->
+    <section class="screen" data-screen="form">
+      <h1 data-t="title"></h1>
+      <p class="lead" data-t="subtitle"></p>
+
+      <form class="card" id="form" novalidate>
+        <div class="field">
+          <label for="email" data-t="emailLabel"></label>
+          <input id="email" name="email" type="email" inputmode="email" autocomplete="email"
+                 autocapitalize="off" spellcheck="false" maxlength="254" required
+                 data-ph="emailPlaceholder" aria-describedby="email-err">
+          <p class="err" id="email-err" aria-live="polite"></p>
+        </div>
+
+        <div class="field">
+          <label for="phone" data-t="phoneLabel"></label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel"
+                 maxlength="30" required data-ph="phonePlaceholder" aria-describedby="phone-err">
+          <p class="err" id="phone-err" aria-live="polite"></p>
+        </div>
+
+        <fieldset class="field" id="channel" aria-describedby="channel-err">
+          <legend data-t="channelLabel"></legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="channel" value="telegram"><span data-t="channelTelegram"></span></label>
+            <label class="chip"><input type="radio" name="channel" value="viber"><span data-t="channelViber"></span></label>
+            <label class="chip"><input type="radio" name="channel" value="email"><span data-t="channelEmail"></span></label>
+          </div>
+          <p class="err" id="channel-err" aria-live="polite"></p>
+        </fieldset>
+
+        <div class="field">
+          <label class="check">
+            <input type="checkbox" id="consent" name="consent" aria-describedby="consent-err">
+            <span class="box" aria-hidden="true"></span>
+            <span data-t="consent"></span>
+          </label>
+          <p class="err" id="consent-err" aria-live="polite"></p>
+        </div>
+
+        <!-- Пастка для ботів: людям не видно -->
+        <div class="hp" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button class="btn" type="submit" id="submitBtn">
+          <span class="spinner" aria-hidden="true"></span>
+          <span class="btn-label" data-t="submit"></span>
+        </button>
+        <p class="form-error" id="formError" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- Екран 2: гладження -->
+    <section class="screen" data-screen="pet">
+      <div class="meter">
+        <div class="meter-head">
+          <span data-t="petMeter"></span>
+          <span class="hearts" id="hearts">
+            <svg class="heart" viewBox="0 0 24 24"><use href="#heart"/></svg>
+            <svg class="heart" viewBox="0 0 24 24"><use href="#heart"/></svg>
+            <svg class="heart" viewBox="0 0 24 24"><use href="#heart"/></svg>
+            <svg class="heart" viewBox="0 0 24 24"><use href="#heart"/></svg>
+            <svg class="heart" viewBox="0 0 24 24"><use href="#heart"/></svg>
+          </span>
+        </div>
+        <div class="meter-track" id="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="meter-fill" id="meterFill"></div>
+        </div>
+      </div>
+      <button class="btn-link" type="button" id="fallbackBtn" data-t="petFallback" hidden></button>
+    </section>
+
+    <!-- Екран 3: ефект -->
+    <section class="screen" data-screen="effect">
+      <p class="effect-text" id="effectText" aria-live="polite"></p>
+    </section>
+
+    <!-- Екран 4: подарунок -->
+    <section class="screen" data-screen="prize">
+      <div class="scroll" id="scroll">
+        <div class="rod rod-top" aria-hidden="true"></div>
+        <div class="paper">
+          <p class="prize-intro" id="prizeIntro"></p>
+          <p class="prize-title" id="prizeTitle"></p>
+          <p class="prize-subtitle" id="prizeSubtitle"></p>
+          <button class="btn" type="button" id="claimBtn">
+            <span class="spinner" aria-hidden="true"></span>
+            <span class="btn-label" data-t="claimButton"></span>
+          </button>
+          <p class="claimed-note" id="claimedNote" data-t="alreadyClaimed" hidden></p>
+          <p class="form-error" id="claimError" role="alert"></p>
+        </div>
+        <div class="rod rod-bottom" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- Розіграш завершено -->
+    <section class="screen" data-screen="closed">
+      <div class="card closed-card">
+        <p data-t="closedText"></p>
+        <a class="btn" id="closedLink" href="https://t.me/hr_tarasevych" target="_blank" rel="noopener" data-t="closedLinkText"></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" data-t="footer"></footer>
+
+  <!-- Поп-ап -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalText">
+      <svg class="modal-icon" viewBox="0 0 120 80" aria-hidden="true">
+        <path class="wing wing-l" d="M34 34 C 14 18, 4 26, 2 34 C 10 32, 14 38, 8 44 C 18 42, 22 48, 18 54 C 26 50, 32 48, 34 46 Z" fill="#d9cdff"/>
+        <path class="wing wing-r" d="M86 34 C 106 18, 116 26, 118 34 C 110 32, 106 38, 112 44 C 102 42, 98 48, 102 54 C 94 50, 88 48, 86 46 Z" fill="#d9cdff"/>
+        <rect x="30" y="22" width="60" height="42" rx="6" fill="#ffefdb" stroke="#7b5be1" stroke-width="3"/>
+        <path d="M32 26 L 60 46 L 88 26" fill="none" stroke="#7b5be1" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M60 58 c-6-4-9-6.5-9-9.5 0-2 1.5-3.5 3.5-3.5 1.6 0 2.8.8 3.5 2 .7-1.2 1.9-2 3.5-2 2 0 3.5 1.5 3.5 3.5 0 3-3 5.5-9 9.5z" fill="#ffd51e"/>
+      </svg>
+      <h2 id="modalTitle" data-t="popupTitle"></h2>
+      <p id="modalText" data-t="popupText"></p>
+      <button class="btn" type="button" id="modalBtn" data-t="popupButton"></button>
+    </div>
+  </div>
+
+  <script src="texts.js?v=1"></script>
+  <script src="config.js?v=1"></script>
+  <script src="app.js?v=1"></script>
+</body>
+</html>

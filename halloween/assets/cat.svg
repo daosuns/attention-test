@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="330" viewBox="0 0 300 330" role="img" aria-label="Чорний котик">
+  <style>.eyes-happy,.eyes-sleep,.eye-glow,.scroll-held{display:none}.eye{fill:#ffd51e}</style>
+  <defs>
+    <radialGradient id="catFur" cx="42%" cy="28%" r="85%">
+      <stop offset="0" stop-color="#2b2148"/>
+      <stop offset=".55" stop-color="#160f26"/>
+      <stop offset="1" stop-color="#0c0716"/>
+    </radialGradient>
+    <linearGradient id="scrollPaper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff8ec"/>
+      <stop offset="1" stop-color="#ecd2ac"/>
+    </linearGradient>
+    <filter id="softGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+  </defs>
+
+  <ellipse class="shadow" cx="150" cy="318" rx="96" ry="9" fill="#05020d" opacity=".45"/>
+
+  <g class="all">
+    <g class="pose">
+      <!-- Хвіст -->
+      <g class="tail">
+        <path class="tail-rim" d="M198 296 C 258 300, 288 256, 270 212 C 260 188, 272 164, 292 170" fill="none" stroke="#9d86f0" stroke-opacity=".4" stroke-width="25" stroke-linecap="round"/>
+        <path class="tail-fur" d="M198 296 C 258 300, 288 256, 270 212 C 260 188, 272 164, 292 170" fill="none" stroke="#130c21" stroke-width="21" stroke-linecap="round"/>
+      </g>
+
+      <!-- Тулуб -->
+      <path d="M150 156 C 97 156, 77 222, 83 266 C 87 299, 112 313, 150 313 C 188 313, 213 299, 217 266 C 223 222, 203 156, 150 156 Z" fill="url(#catFur)" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2"/>
+      <path d="M128 206 Q150 194 172 206 Q166 244 150 254 Q134 244 128 206 Z" fill="#2c2349" opacity=".55"/>
+
+      <!-- Сувій у лапках -->
+      <g class="scroll-held">
+        <rect x="94" y="275" width="112" height="28" rx="14" fill="url(#scrollPaper)" stroke="#c9a77a" stroke-width="1.5"/>
+        <ellipse cx="96" cy="289" rx="7" ry="14" fill="#e5c497" stroke="#c9a77a" stroke-width="1.5"/>
+        <ellipse cx="204" cy="289" rx="7" ry="14" fill="#e5c497" stroke="#c9a77a" stroke-width="1.5"/>
+        <rect x="142" y="275" width="16" height="28" fill="#ffd51e"/>
+        <circle cx="150" cy="289" r="7.5" fill="#7b5be1" stroke="#ffd51e" stroke-width="2"/>
+      </g>
+
+      <!-- Лапки -->
+      <g class="paws" fill="#160f26" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2">
+        <ellipse cx="123" cy="305" rx="22" ry="13"/>
+        <ellipse cx="177" cy="305" rx="22" ry="13"/>
+      </g>
+      <g fill="none" stroke="#3d3263" stroke-width="2" stroke-linecap="round">
+        <path d="M116 302 v7 M126 302 v7"/>
+        <path d="M174 302 v7 M184 302 v7"/>
+      </g>
+
+      <!-- Голова -->
+      <g class="head">
+        <g class="ear ear-l">
+          <path d="M76 96 L 84 26 Q 87 15 97 21 L 138 56 Z" fill="#160f26" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M91 80 L 95 39 L 123 61 Z" fill="#c9b6ff" opacity=".6"/>
+        </g>
+        <g class="ear ear-r">
+          <path d="M224 96 L 216 26 Q 213 15 203 21 L 162 56 Z" fill="#160f26" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M209 80 L 205 39 L 177 61 Z" fill="#c9b6ff" opacity=".6"/>
+        </g>
+        <path d="M150 52 C 206 52, 232 84, 232 120 C 232 160, 198 186, 150 186 C 102 186, 68 160, 68 120 C 68 84, 94 52, 150 52 Z" fill="url(#catFur)" stroke="#9d86f0" stroke-opacity=".4" stroke-width="2"/>
+
+        <!-- Сяйво очей -->
+        <g class="eye-glow" filter="url(#softGlow)">
+          <circle cx="118" cy="118" r="27"/>
+          <circle cx="182" cy="118" r="27"/>
+        </g>
+
+        <!-- Відкриті очі -->
+        <g class="eyes-open">
+          <ellipse class="eye" cx="118" cy="118" rx="21" ry="23"/>
+          <ellipse class="eye" cx="182" cy="118" rx="21" ry="23"/>
+          <ellipse cx="121" cy="121" rx="11" ry="16" fill="#0c0716"/>
+          <ellipse cx="179" cy="121" rx="11" ry="16" fill="#0c0716"/>
+          <circle cx="127" cy="111" r="5" fill="#fff"/>
+          <circle cx="185" cy="111" r="5" fill="#fff"/>
+          <circle cx="115" cy="129" r="2.3" fill="#fff" opacity=".85"/>
+          <circle cx="173" cy="129" r="2.3" fill="#fff" opacity=".85"/>
+        </g>
+
+        <!-- Мружиться від задоволення -->
+        <g class="eyes-happy" fill="none" stroke="#ffd51e" stroke-width="6" stroke-linecap="round">
+          <path d="M99 123 Q 118 101 137 123"/>
+          <path d="M163 123 Q 182 101 201 123"/>
+        </g>
+
+        <!-- Спить -->
+        <g class="eyes-sleep" fill="none" stroke="#d9cdff" stroke-width="5" stroke-linecap="round">
+          <path d="M101 116 Q 118 132 135 116"/>
+          <path d="M165 116 Q 182 132 199 116"/>
+        </g>
+
+        <g class="blush" fill="#f2a7c3">
+          <ellipse cx="96" cy="148" rx="11" ry="6"/>
+          <ellipse cx="204" cy="148" rx="11" ry="6"/>
+        </g>
+        <path d="M142 141 Q 150 137 158 141 Q 155 148 150 150 Q 145 148 142 141 Z" fill="#f2a7c3"/>
+        <path d="M150 150 Q 150 158 142 158 M150 150 Q 150 158 158 158" fill="none" stroke="#d9cdff" stroke-width="2.5" stroke-linecap="round"/>
+        <g stroke="#d9cdff" stroke-opacity=".6" stroke-width="2" stroke-linecap="round">
+          <path d="M114 149 L 60 141 M114 155 L 62 162"/>
+          <path d="M186 149 L 240 141 M186 155 L 238 162"/>
+        </g>
+      </g>
+
+      <!-- Нашийник з дзвіночком -->
+      <path d="M104 177 Q 150 199 196 177" fill="none" stroke="#7b5be1" stroke-width="9" stroke-linecap="round"/>
+      <circle cx="150" cy="193" r="9" fill="#ffd51e" stroke="#c9a500" stroke-width="1.5"/>
+      <path d="M146 196 h8" stroke="#8a6f00" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>
