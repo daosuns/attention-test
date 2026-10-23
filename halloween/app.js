@@ -12,7 +12,7 @@
   var STORAGE_KEY = 'hrme-halloween-2026';
   var CONSULTATION_ID = 'consultation';
   var REQUEST_TIMEOUT_MS = 20000;
-  var WAIT_BEFORE_PETTING_MS = 2500; // якщо сервер думає довше — даємо гладити, поки чекаємо
+  var WAIT_BEFORE_PETTING_MS = 600;  // далі даємо гладити, а відповідь сервера приходить, поки гладять
   var NO_PROGRESS_MS = 6000;
   var PET_FACTOR_TOUCH = 4;          // скільки «ширин котика» треба провести пальцем
   var PET_FACTOR_MOUSE = 6;          // мишка рухається швидше, тож шлях довший
@@ -128,6 +128,83 @@
 
   function motion(ms) { return reduceMotion ? Math.min(ms, 250) : ms; }
 
+  /* -------------------------------------------------------- Муркотіння */
+
+  // Звук синтезується в браузері, без аудіофайлу: приглушений шум, що пульсує ~26 разів на секунду.
+  var purr = (function () {
+    var Ctx = window.AudioContext || window.webkitAudioContext;
+    var ctx = null;
+    var out = null;
+    var on = false;
+
+    function lfo(freq, depth, target) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.frequency.value = freq;
+      gain.gain.value = depth;
+      osc.connect(gain);
+      gain.connect(target);
+      osc.start();
+    }
+
+    function build() {
+      ctx = new Ctx();
+      var len = ctx.sampleRate * 2;
+      var buffer = ctx.createBuffer(1, len, ctx.sampleRate);
+      var data = buffer.getChannelData(0);
+      for (var i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+      var noise = ctx.createBufferSource();
+      noise.buffer = buffer;
+      noise.loop = true;
+
+      var low = ctx.createBiquadFilter();
+      low.type = 'lowpass';
+      low.frequency.value = 520;
+      var high = ctx.createBiquadFilter();
+      high.type = 'highpass';
+      high.frequency.value = 90;
+
+      var pulse = ctx.createGain();   // «р-р-р»: гучність пульсує 26 разів на секунду
+      pulse.gain.value = 0.5;
+      lfo(26, 0.5, pulse.gain);
+      var breath = ctx.createGain();  // вдих-видих: повільно гучніше й тихіше
+      breath.gain.value = 0.75;
+      lfo(0.8, 0.25, breath.gain);
+
+      out = ctx.createGain();
+      out.gain.value = 0;
+      noise.connect(low);
+      low.connect(high);
+      high.connect(pulse);
+      pulse.connect(breath);
+      breath.connect(out);
+      out.connect(ctx.destination);
+      noise.start();
+    }
+
+    return {
+      // Браузери вмикають звук лише після дії людини, тому викликаємо з кліку чи дотику.
+      unlock: function () {
+        if (!Ctx) return;
+        try {
+          if (!ctx) build();
+          if (ctx.state === 'suspended') ctx.resume();
+        } catch (e) { Ctx = null; }
+      },
+      set: function (play) {
+        if (!ctx || play === on) return;
+        on = play;
+        var t = ctx.currentTime;
+        out.gain.cancelScheduledValues(t);
+        out.gain.setTargetAtTime(play ? 2.2 : 0, t, play ? 0.08 : 0.15);
+      }
+    };
+  })();
+
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) purr.set(false);
+  });
+
   /* ------------------------------------------------------------- Форма */
 
   var EMAIL_RE = /^[^\s@=+\-][^\s@]*@[^\s@]+\.[^\s@.]{2,}$/;
@@ -205,6 +282,7 @@
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (submitBtn.disabled) return;
+    purr.unlock();
     var d = readForm();
     var errors = validate(d);
     showFieldErrors(errors);
@@ -258,6 +336,7 @@
 
   function handleFailure(res) {
     flow++;
+    purr.set(false);
     setBusy(submitBtn, false, 'submit');
     if (res && res.status === 'closed') {
       showClosed();
@@ -349,9 +428,11 @@
 
     cat.classList.add('is-petting');
     say(T.petting);
+    purr.set(true);
     clearTimeout(pet.pettingTimer);
     pet.pettingTimer = setTimeout(function () {
       cat.classList.remove('is-petting');
+      purr.set(false);
       if (pet.active) say('');
     }, 450);
 
@@ -381,6 +462,7 @@
 
   if (window.PointerEvent) {
     zone.addEventListener('pointerdown', function (e) {
+      purr.unlock();
       if (!pet.active || e.pointerType === 'mouse') return;
       var p = localPoint(e.clientX, e.clientY);
       moveHand(p);
@@ -403,6 +485,7 @@
   } else {
     // Старі браузери без Pointer Events.
     zone.addEventListener('touchstart', function (e) {
+      purr.unlock();
       if (!pet.active) return;
       var t = e.touches[0];
       var p = localPoint(t.clientX, t.clientY);
@@ -421,7 +504,10 @@
     zone.addEventListener('mouseleave', function () { pet.last = null; });
   }
 
-  $('fallbackBtn').addEventListener('click', finishPetting);
+  $('fallbackBtn').addEventListener('click', function () {
+    purr.unlock();
+    finishPetting();
+  });
 
   /* ---------------------------------------------------------------- Ефект */
 
@@ -430,6 +516,7 @@
     setView('effect');
     setCat(['is-purring']);
     say(T.purring);
+    purr.set(true);
     $('effectText').textContent = '';
 
     // Котик муркоче щонайменше трохи — і доти, доки не прийде відповідь сервера.
@@ -441,6 +528,7 @@
       var gold = res.prize.id === CONSULTATION_ID;
       setCat(['is-arching', 'is-glowing'].concat(gold ? ['is-gold'] : []));
       say('');
+      purr.set(false);
       $('effectText').textContent = T.scrollComing || '';
       burst(gold);
 
@@ -507,6 +595,7 @@
   function showPrize(data, mode, animate) {
     flow++;
     stopPetting();
+    purr.set(false);
     current = { token: data.token, prize: data.prize, claimed: !!data.claimed };
     var gold = data.prize.id === CONSULTATION_ID;
 
@@ -597,6 +686,7 @@
 
   function showClosed() {
     stopPetting();
+    purr.set(false);
     setView('closed');
     setCat(['is-asleep']);
     say(T.sleeping || 'Z-z-z…');

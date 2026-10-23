@@ -261,8 +261,8 @@ body[data-view="pet"] .pet-zone { cursor: url("assets/hand.svg") 20 20, grab; }
 }
 
 /* Чекаємо відповідь сервера: ворушить вухами */
-.cat.is-waiting .ear-l { animation: twitch-l 1.1s ease-in-out infinite; }
-.cat.is-waiting .ear-r { animation: twitch-r 1.1s ease-in-out .35s infinite; }
+.cat.is-waiting .ear-l { animation: twitch-l .7s ease-in-out infinite; }
+.cat.is-waiting .ear-r { animation: twitch-r .7s ease-in-out .2s infinite; }
 @keyframes twitch-l {
   0%, 55%, 100% { transform: none; }
   68% { transform: rotate(-14deg); }
@@ -281,7 +281,11 @@ body[data-view="pet"] .pet-zone { cursor: url("assets/hand.svg") 20 20, grab; }
 .cat.is-purring .eyes-happy { opacity: 1; }
 .cat.is-petting .blush,
 .cat.is-purring .blush { opacity: .85; }
-.cat.is-petting .head { transform: rotate(-6deg); }
+.cat.is-petting .head { animation: nuzzle .9s ease-in-out infinite; }
+@keyframes nuzzle {
+  0%, 100% { transform: rotate(-7deg); }
+  50% { transform: rotate(5deg) translateY(-2px); }
+}
 
 /* Муркоче */
 .cat.is-purring .all { animation: purr .12s linear infinite; }
