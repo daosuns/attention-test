@@ -236,6 +236,35 @@
     background: var(--поле); padding: 2px 6px; border-radius: 3px; word-break: break-word;
   }
 
+  /* ── Блок із паролем ───────────────────────────────────── */
+
+  .пароль-блок {
+    border: 1px solid var(--лінія); border-left: 3px solid var(--акцент);
+    border-radius: 0 6px 6px 0; background: var(--картка);
+    padding: 16px 18px; margin: 0 0 18px; max-width: 66ch;
+  }
+  .пароль-мітка {
+    display: block; font-family: "JetBrains Mono", monospace; font-size: 11px;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--акцент);
+    margin-bottom: 10px;
+  }
+  .пароль-рядок { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+  #пароль {
+    flex: 1 1 210px; min-width: 0;
+    font-family: "JetBrains Mono", monospace; font-size: 15px;
+    padding: 10px 12px; border: 1px solid var(--лінія); border-radius: 6px;
+    background: var(--поле); color: var(--чорнило);
+  }
+  #пароль:focus-visible { outline: 2px solid var(--акцент); outline-offset: 1px; }
+  #інший-пароль {
+    font: 500 13.5px/1 "Commissioner", sans-serif; padding: 10px 14px;
+    border: 1px solid var(--лінія); border-radius: 6px;
+    background: var(--поле); color: var(--чорнило); cursor: pointer;
+  }
+  #інший-пароль:hover { background: var(--лінія); }
+  .пароль-пояснення { font-size: 14.5px; color: var(--тьмяне); margin: 11px 0 0; }
+  .пароль-пояснення b { color: var(--чорнило); }
+
   /* ── Блок із кодом ─────────────────────────────────────── */
 
   .код-блок {
@@ -503,13 +532,28 @@
 
       <p>Вставимо в таблицю код, який відповідатиме помічнику. Писати нічого не треба.</p>
 
+      <div class="пароль-блок">
+        <label class="пароль-мітка" for="пароль">Спершу — пароль до твоєї таблиці</label>
+        <div class="пароль-рядок">
+          <input id="пароль" type="text" spellcheck="false" autocomplete="off">
+          <button type="button" id="інший-пароль">Інший</button>
+          <button type="button" class="копія" data-поле="пароль">Скопіювати пароль</button>
+        </div>
+        <p class="пароль-пояснення">
+          Я згенерувала випадковий — лиши його або впиши свій.
+          <b>Запиши його: той самий пароль знадобиться в кроці 7.</b>
+          Кнопка нижче скопіює код уже разом із ним, тож у самому коді
+          міняти нічого не доведеться.
+        </p>
+      </div>
+
       <div class="код-блок">
         <div class="код-шапка">
           <span class="код-назва">Код для таблиці · Apps Script</span>
           <button class="копія" data-код="код-таблиці">Скопіювати код</button>
         </div>
         <details>
-          <summary>Подивитись, що в ньому (не обов'язково)</summary>
+          <summary>Подивитись код</summary>
           <pre id="код-таблиці">/**
  * Агент-рекрутер для work.ua — частина, що живе в Google Таблиці.
  *
@@ -938,15 +982,8 @@ function перевіритиАркуші() {
 
       <ol class="дії">
         <li>У своїй таблиці: <span class="шлях">Розширення → Apps Script</span>. Відкриється нова вкладка.</li>
-        <li>Зліва у списку «Файли» натисни <b>+</b> → <b>Скрипт</b>. Назви <span class="шлях">агент</span>.</li>
+        <li>Зліва у списку «Файли» буде один файл — <span class="шлях">Код.gs</span>. Клацни на нього.</li>
         <li>У великому полі праворуч виділи все (<kbd>Cmd A</kbd> / <kbd>Ctrl A</kbd>), видали, встав скопійоване.</li>
-        <li>
-          Знайди вгорі рядок із паролем і заміни на свій — довгий і випадковий:
-          <div class="екран" style="margin-top:9px">
-            <pre>var КЛЮЧ = 'zmini-mene-bud-laska';</pre>
-          </div>
-          <b>Запиши пароль</b> — за кілька хвилин знадобиться ще раз.
-        </li>
         <li>Збережи: <kbd>Cmd S</kbd> / <kbd>Ctrl S</kbd>.</li>
         <li>У списку біля кнопки «Виконати» обери <span class="шлях">перевіритиАркуші</span> → <b>▷ Виконати</b>.</li>
         <li>
@@ -1065,7 +1102,7 @@ function перевіритиАркуші() {
           <button class="копія" data-код="код-браузера">Скопіювати код</button>
         </div>
         <details>
-          <summary>Подивитись, що в ньому (не обов'язково)</summary>
+          <summary>Подивитись код</summary>
           <pre id="код-браузера">// ==UserScript==
 // @name         Агент-рекрутер для work.ua
 // @namespace    workua-helper
@@ -2299,45 +2336,112 @@ function перевіритиАркуші() {
   (function () {
     'use strict';
 
-    // ── Кнопки «Скопіювати код» ──────────────────────────
-    document.querySelectorAll('button.копія').forEach(function (кнопка) {
-      кнопка.addEventListener('click', function () {
-        var поле = document.getElementById(кнопка.dataset.код);
-        if (!поле) return;
+    // ── Пароль до таблиці ────────────────────────────────
+    // Підставляється в код при копіюванні, щоб у самому коді нічого
+    // не доводилось правити руками — саме там люди й помилялись.
+    var ЗАГЛУШКА = 'zmini-mene-bud-laska';
+    var КЛЮЧ_ПАРОЛЯ = 'агент-рекрутер:пароль';
+    var полеПароля = document.getElementById('пароль');
 
-        var текст = поле.textContent;
-        var початковий = 'Скопіювати код';
-
-        function сказати(що, стан) {
-          кнопка.textContent = що;
-          if (стан) { кнопка.dataset.стан = стан; } else { delete кнопка.dataset.стан; }
-          setTimeout(function () { сказати(початковий, null); }, 2500);
+    function вигадатиПароль() {
+      var абетка = 'abcdefghijkmnopqrstuvwxyz23456789';  // без схожих l, 1, o, 0
+      var шматки = [];
+      for (var ш = 0; ш < 4; ш++) {
+        var шматок = '';
+        for (var і = 0; і < 4; і++) {
+          шматок += абетка[Math.floor(Math.random() * абетка.length)];
         }
+        шматки.push(шматок);
+      }
+      return шматки.join('-');
+    }
 
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(текст).then(
-            function () { сказати('Скопійовано ✓', 'ok'); },
-            function () { виділити(поле, сказати); }
-          );
-        } else {
-          виділити(поле, сказати);
-        }
+    function памʼятатиПароль() {
+      try { localStorage.setItem(КЛЮЧ_ПАРОЛЯ, полеПароля.value); } catch (e) {}
+    }
+
+    if (полеПароля) {
+      var збережений = '';
+      try { збережений = localStorage.getItem(КЛЮЧ_ПАРОЛЯ) || ''; } catch (e) {}
+      полеПароля.value = збережений || вигадатиПароль();
+      памʼятатиПароль();
+      показатиКодЗПаролем();
+
+      полеПароля.addEventListener('input', function () {
+        памʼятатиПароль();
+        показатиКодЗПаролем();
       });
-    });
+      document.getElementById('інший-пароль').addEventListener('click', function () {
+        полеПароля.value = вигадатиПароль();
+        памʼятатиПароль();
+        показатиКодЗПаролем();
+        полеПароля.focus();
+        полеПароля.select();
+      });
+    }
 
-    // Запасний шлях: розгортаємо код і виділяємо, щоб скопіювати вручну
-    function виділити(поле, сказати) {
-      var деталі = поле.closest('details');
+    // Тримаємо видимий код у згоді з полем пароля: що людина бачить,
+    // те й скопіює — інакше блок «Подивитись код» показував би неправду
+    var блокКоду = document.getElementById('код-таблиці');
+    var вихідний = блокКоду ? блокКоду.textContent : '';
+
+    function показатиКодЗПаролем() {
+      if (!блокКоду) return;
+      var пароль = (полеПароля && полеПароля.value.trim()) || ЗАГЛУШКА;
+      блокКоду.textContent = вихідний.split(ЗАГЛУШКА).join(пароль);
+    }
+
+    // ── Копіювання ───────────────────────────────────────
+
+    function відгук(кнопка, що, початковий) {
+      clearTimeout(кнопка._таймер);
+      кнопка.textContent = що;
+      кнопка.dataset.стан = 'ok';
+      кнопка._таймер = setTimeout(function () {
+        кнопка.textContent = початковий;
+        delete кнопка.dataset.стан;
+      }, 2500);
+    }
+
+    // Запасний шлях, коли браузер не дає доступу до буфера:
+    // розгортаємо блок і виділяємо текст, щоб лишилось тільки Cmd C
+    function виділити(вузол) {
+      var деталі = вузол.closest && вузол.closest('details');
       if (деталі) деталі.open = true;
 
+      if (вузол.select) { вузол.focus(); вузол.select(); return; }
+
       var діапазон = document.createRange();
-      діапазон.selectNodeContents(поле);
+      діапазон.selectNodeContents(вузол);
       var вибір = window.getSelection();
       вибір.removeAllRanges();
       вибір.addRange(діапазон);
-
-      сказати('Виділено — тисни Cmd C', 'ok');
     }
+
+    function копіювати(текст, вузол, кнопка, початковий) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(текст).then(
+          function () { відгук(кнопка, 'Скопійовано ✓', початковий); },
+          function () { виділити(вузол); відгук(кнопка, 'Виділено — тисни Cmd C', початковий); }
+        );
+      } else {
+        виділити(вузол);
+        відгук(кнопка, 'Виділено — тисни Cmd C', початковий);
+      }
+    }
+
+    document.querySelectorAll('button.копія').forEach(function (кнопка) {
+      var початковий = кнопка.textContent;
+
+      кнопка.addEventListener('click', function () {
+        if (кнопка.dataset.поле) {
+          копіювати(полеПароля.value, полеПароля, кнопка, початковий);
+          return;
+        }
+        var поле = document.getElementById(кнопка.dataset.код);
+        if (поле) копіювати(поле.textContent, поле, кнопка, початковий);
+      });
+    });
 
     // ── Галочки кроків ───────────────────────────────────
     var КЛЮЧ = 'агент-рекрутер:кроки';
