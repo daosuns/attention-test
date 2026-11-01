@@ -2,11 +2,9 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;0,7..72,700;1,7..72,400&family=Commissioner:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,600;7..72,700&family=Commissioner:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 
 <style>
-  /* ── Палітра: чорнило з зеленуватим зсувом, папір із холодком, ─────
-     акцент — глибокий зелений «іди», попередження — паленa охра ──── */
   :root {
     --папір:        #F6F7F5;
     --картка:       #FFFFFF;
@@ -20,46 +18,30 @@
     --увага-тло:    #F7EBE1;
     --екран:        #16242A;
     --екран-текст:  #DCE6E2;
-
-    --шир-текст: 66ch;
     color-scheme: light;
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
-      --папір:       #101A1D;
-      --картка:      #172428;
-      --поле:        #1E2E33;
-      --чорнило:     #E4ECE9;
-      --тьмяне:      #93A5A6;
-      --лінія:       #2A3B40;
-      --акцент:      #5CC3A7;
-      --акцент-тло:  #16332E;
-      --увага:       #E0A277;
-      --увага-тло:   #33241A;
-      --екран:       #0A1214;
-      --екран-текст: #CBDAD5;
+      --папір: #101A1D; --картка: #172428; --поле: #1E2E33;
+      --чорнило: #E4ECE9; --тьмяне: #93A5A6; --лінія: #2A3B40;
+      --акцент: #5CC3A7; --акцент-тло: #16332E;
+      --увага: #E0A277; --увага-тло: #33241A;
+      --екран: #0A1214; --екран-текст: #CBDAD5;
       color-scheme: dark;
     }
   }
 
   :root[data-theme="dark"] {
-    --папір:       #101A1D;
-    --картка:      #172428;
-    --поле:        #1E2E33;
-    --чорнило:     #E4ECE9;
-    --тьмяне:      #93A5A6;
-    --лінія:       #2A3B40;
-    --акцент:      #5CC3A7;
-    --акцент-тло:  #16332E;
-    --увага:       #E0A277;
-    --увага-тло:   #33241A;
-    --екран:       #0A1214;
-    --екран-текст: #CBDAD5;
+    --папір: #101A1D; --картка: #172428; --поле: #1E2E33;
+    --чорнило: #E4ECE9; --тьмяне: #93A5A6; --лінія: #2A3B40;
+    --акцент: #5CC3A7; --акцент-тло: #16332E;
+    --увага: #E0A277; --увага-тло: #33241A;
+    --екран: #0A1214; --екран-текст: #CBDAD5;
     color-scheme: dark;
   }
 
-  * { box-sizing: border-box; }
+  * { box-sizing: border-box; min-width: 0; }
 
   body {
     margin: 0;
@@ -67,32 +49,36 @@
     color: var(--чорнило);
     font: 400 16.5px/1.65 "Commissioner", -apple-system, "Segoe UI", sans-serif;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
   .обгортка {
-    max-width: 1120px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 24px 96px;
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0 48px;
+    padding: 0 20px 96px;
   }
 
-  @media (min-width: 1000px) {
-    .обгортка { grid-template-columns: 216px minmax(0, 1fr); }
+  @media (min-width: 1040px) {
+    .обгортка {
+      display: grid;
+      grid-template-columns: 210px minmax(0, 1fr);
+      column-gap: 44px;
+    }
+    .шапка { grid-column: 1 / -1; }
+    .рейка { grid-column: 1; }
+    main    { grid-column: 2; }
   }
 
-  /* ── Шапка ────────────────────────────────────────────────────── */
+  /* ── Шапка ─────────────────────────────────────────────── */
 
   .шапка {
-    grid-column: 1 / -1;
-    padding: 56px 0 32px;
+    padding: 52px 0 30px;
     border-bottom: 2px solid var(--чорнило);
-    margin-bottom: 40px;
+    margin-bottom: 36px;
   }
 
   .надпис {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-family: "JetBrains Mono", monospace;
     font-size: 11.5px;
     letter-spacing: .13em;
     text-transform: uppercase;
@@ -103,7 +89,7 @@
   h1 {
     font-family: "Literata", Georgia, serif;
     font-weight: 700;
-    font-size: clamp(34px, 5.5vw, 52px);
+    font-size: clamp(32px, 5.2vw, 50px);
     line-height: 1.08;
     letter-spacing: -.02em;
     margin: 0 0 18px;
@@ -111,19 +97,13 @@
   }
 
   .підзаголовок {
-    font-size: 18.5px;
-    line-height: 1.55;
+    font-size: 18px;
     color: var(--тьмяне);
-    max-width: 58ch;
+    max-width: 56ch;
     margin: 0;
   }
 
-  .мета {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 26px;
-  }
+  .мета { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 24px; }
 
   .чип {
     font-family: "JetBrains Mono", monospace;
@@ -135,408 +115,237 @@
     background: var(--картка);
   }
 
-  /* ── Бічна колонка з кроками ──────────────────────────────────── */
+  /* ── Рейка ─────────────────────────────────────────────── */
 
   .рейка { display: none; }
 
-  @media (min-width: 1000px) {
-    .рейка {
-      display: block;
-      grid-column: 1;
-      align-self: start;
-      position: sticky;
-      top: 24px;
-      padding-bottom: 24px;
-    }
+  @media (min-width: 1040px) {
+    .рейка { display: block; align-self: start; position: sticky; top: 22px; }
   }
 
   .рейка h2 {
     font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    color: var(--тьмяне);
-    font-weight: 500;
-    margin: 0 0 14px;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--тьмяне); font-weight: 500; margin: 0 0 12px;
   }
 
-  .рейка ol {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-  }
+  .рейка ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
 
   .рейка a {
-    display: grid;
-    grid-template-columns: 22px 1fr;
-    gap: 8px;
-    align-items: baseline;
-    padding: 6px 8px;
-    border-radius: 4px;
-    text-decoration: none;
-    color: var(--тьмяне);
-    font-size: 14px;
-    line-height: 1.35;
+    display: grid; grid-template-columns: 20px 1fr; gap: 8px; align-items: baseline;
+    padding: 6px 8px; border-radius: 4px; text-decoration: none;
+    color: var(--тьмяне); font-size: 14px; line-height: 1.3;
     border-left: 2px solid transparent;
   }
-
   .рейка a:hover { background: var(--поле); color: var(--чорнило); }
   .рейка a:focus-visible { outline: 2px solid var(--акцент); outline-offset: 1px; }
-
-  .рейка .н {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 12px;
-    color: var(--акцент);
-  }
-
-  .рейка a.готово {
-    border-left-color: var(--акцент);
-    color: var(--чорнило);
-  }
-  .рейка a.готово .н::after { content: "✓"; }
+  .рейка .н { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--акцент); }
+  .рейка a.готово { border-left-color: var(--акцент); color: var(--чорнило); }
   .рейка a.готово .н { font-size: 0; }
-  .рейка a.готово .н::after { font-size: 13px; }
+  .рейка a.готово .н::after { content: "✓"; font-size: 13px; }
 
   .лічильник {
-    margin-top: 16px;
-    padding-top: 14px;
-    border-top: 1px solid var(--лінія);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 12px;
-    color: var(--тьмяне);
+    margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--лінія);
+    font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--тьмяне);
   }
 
-  /* ── Основна колонка ──────────────────────────────────────────── */
+  /* ── Текстова колонка ──────────────────────────────────── */
 
-  main { grid-column: 1; min-width: 0; }
-  @media (min-width: 1000px) { main { grid-column: 2; } }
-
-  main > * { max-width: var(--шир-текст); }
-  main > .широке { max-width: none; }
+  main p, main > ul, main > ol { max-width: 66ch; }
 
   h2.розділ {
     font-family: "Literata", Georgia, serif;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: .04em;
-    text-transform: uppercase;
+    font-size: 15px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
     color: var(--тьмяне);
-    margin: 56px 0 20px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--лінія);
-    max-width: none;
+    margin: 52px 0 18px; padding-bottom: 8px; border-bottom: 1px solid var(--лінія);
   }
 
   p { margin: 0 0 16px; }
-  strong { font-weight: 600; }
-
   a { color: var(--акцент); text-underline-offset: 3px; }
 
-  /* ── Вступний блок про будову ─────────────────────────────────── */
-
   .будова {
-    display: grid;
-    gap: 1px;
-    background: var(--лінія);
-    border: 1px solid var(--лінія);
-    border-radius: 5px;
-    overflow: hidden;
-    margin: 0 0 28px;
+    display: grid; gap: 1px; background: var(--лінія);
+    border: 1px solid var(--лінія); border-radius: 5px; overflow: hidden;
+    margin: 0 0 26px;
   }
   @media (min-width: 620px) { .будова { grid-template-columns: repeat(3, 1fr); } }
-
-  .будова > div { background: var(--картка); padding: 18px 20px; }
-
+  .будова > div { background: var(--картка); padding: 17px 19px; }
   .будова dt {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    color: var(--акцент);
-    margin-bottom: 7px;
+    font-family: "JetBrains Mono", monospace; font-size: 11px;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--акцент); margin-bottom: 7px;
   }
   .будова dd { margin: 0; font-size: 15px; line-height: 1.5; color: var(--тьмяне); }
   .будова dd b { color: var(--чорнило); font-weight: 600; }
 
-  /* ── Крок ─────────────────────────────────────────────────────── */
+  /* ── Крок ──────────────────────────────────────────────── */
 
-  .крок {
-    scroll-margin-top: 20px;
-    padding: 30px 0 4px;
-    border-top: 1px solid var(--лінія);
-    max-width: none;
-  }
+  .крок { scroll-margin-top: 18px; padding: 28px 0 4px; border-top: 1px solid var(--лінія); }
   .крок:first-of-type { border-top: 0; }
-  .крок > * { max-width: var(--шир-текст); }
-  .крок > .широке { max-width: none; }
 
-  .крок-шапка {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-    margin-bottom: 18px;
-  }
+  .крок-шапка { display: flex; align-items: flex-start; gap: 13px; margin-bottom: 16px; }
 
   .галка {
-    appearance: none;
-    -webkit-appearance: none;
-    flex: 0 0 auto;
-    width: 26px;
-    height: 26px;
-    margin: 4px 0 0;
-    border: 1.5px solid var(--лінія);
-    border-radius: 4px;
-    background: var(--картка);
-    cursor: pointer;
-    display: grid;
-    place-items: center;
-    transition: background .12s, border-color .12s;
+    appearance: none; -webkit-appearance: none;
+    flex: 0 0 auto; width: 26px; height: 26px; margin: 4px 0 0;
+    border: 1.5px solid var(--лінія); border-radius: 4px; background: var(--картка);
+    cursor: pointer; display: grid; place-items: center;
   }
-  .галка::after {
-    content: "✓";
-    font-size: 15px;
-    line-height: 1;
-    color: transparent;
-  }
+  .галка::after { content: "✓"; font-size: 15px; line-height: 1; color: transparent; }
   .галка:checked { background: var(--акцент); border-color: var(--акцент); }
   .галка:checked::after { color: #fff; }
   .галка:focus-visible { outline: 2px solid var(--акцент); outline-offset: 2px; }
 
   .крок h3 {
     font-family: "Literata", Georgia, serif;
-    font-size: clamp(22px, 3vw, 27px);
-    font-weight: 600;
-    line-height: 1.22;
-    margin: 0;
-    letter-spacing: -.01em;
-    text-wrap: balance;
-    flex: 1;
+    font-size: clamp(21px, 2.8vw, 26px); font-weight: 600; line-height: 1.22;
+    margin: 0; letter-spacing: -.01em; text-wrap: balance; flex: 1;
   }
-
   .крок h3 .номер {
-    font-family: "JetBrains Mono", monospace;
-    font-size: .62em;
-    font-weight: 400;
-    color: var(--акцент);
-    margin-right: 10px;
-    letter-spacing: 0;
+    font-family: "JetBrains Mono", monospace; font-size: .62em; font-weight: 400;
+    color: var(--акцент); margin-right: 10px;
   }
-
   .хвилини {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11.5px;
-    color: var(--тьмяне);
-    white-space: nowrap;
-    padding-top: 12px;
+    font-family: "JetBrains Mono", monospace; font-size: 11.5px;
+    color: var(--тьмяне); white-space: nowrap; padding-top: 11px;
   }
-
-  .крок.виконано h3,
-  .крок.виконано p { opacity: .5; }
-
-  /* ── Дії всередині кроку ──────────────────────────────────────── */
+  .крок.виконано h3, .крок.виконано p { opacity: .5; }
 
   ol.дії {
-    counter-reset: дія;
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 13px;
+    counter-reset: дія; list-style: none; padding: 0; margin: 0 0 20px;
+    display: flex; flex-direction: column; gap: 13px; max-width: 66ch;
   }
-
   ol.дії > li {
-    counter-increment: дія;
-    display: grid;
-    grid-template-columns: 26px 1fr;
-    gap: 12px;
-    align-items: baseline;
+    counter-increment: дія; display: grid; grid-template-columns: 24px 1fr;
+    gap: 11px; align-items: baseline;
   }
-
   ol.дії > li::before {
     content: counter(дія);
-    font-family: "JetBrains Mono", monospace;
-    font-size: 12.5px;
-    color: var(--тьмяне);
-    text-align: right;
-    font-variant-numeric: tabular-nums;
+    font-family: "JetBrains Mono", monospace; font-size: 12.5px;
+    color: var(--тьмяне); text-align: right; font-variant-numeric: tabular-nums;
   }
-
-  ol.дії ul {
-    margin: 8px 0 0;
-    padding-left: 18px;
-    color: var(--тьмяне);
-    font-size: 15px;
-  }
+  ol.дії ul { margin: 8px 0 0; padding-left: 18px; color: var(--тьмяне); font-size: 15px; }
   ol.дії ul li { margin-bottom: 5px; }
 
   kbd {
-    font-family: "JetBrains Mono", monospace;
-    font-size: .85em;
-    padding: 2px 6px;
-    border: 1px solid var(--лінія);
-    border-bottom-width: 2px;
-    border-radius: 4px;
-    background: var(--картка);
-    white-space: nowrap;
+    font-family: "JetBrains Mono", monospace; font-size: .85em;
+    padding: 2px 6px; border: 1px solid var(--лінія); border-bottom-width: 2px;
+    border-radius: 4px; background: var(--картка); white-space: nowrap;
   }
-
   .шлях {
-    font-family: "JetBrains Mono", monospace;
-    font-size: .88em;
-    background: var(--поле);
-    padding: 2px 6px;
-    border-radius: 3px;
-    word-break: break-word;
+    font-family: "JetBrains Mono", monospace; font-size: .88em;
+    background: var(--поле); padding: 2px 6px; border-radius: 3px; word-break: break-word;
   }
 
-  /* ── Що ти побачиш ────────────────────────────────────────────── */
+  /* ── Блок із кодом ─────────────────────────────────────── */
+
+  .код-блок {
+    border: 1.5px solid var(--акцент); border-radius: 7px;
+    background: var(--картка); margin: 0 0 22px; overflow: hidden;
+  }
+
+  .код-шапка {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+    padding: 14px 16px; background: var(--акцент-тло);
+  }
+  .код-назва {
+    font-family: "JetBrains Mono", monospace; font-size: 12.5px;
+    color: var(--акцент); flex: 1; min-width: 150px;
+  }
+
+  button.копія {
+    font: 600 14px/1 "Commissioner", sans-serif;
+    padding: 10px 18px; border: 0; border-radius: 6px;
+    background: var(--акцент); color: #fff; cursor: pointer;
+  }
+  button.копія:hover { filter: brightness(1.1); }
+  button.копія:focus-visible { outline: 2px solid var(--чорнило); outline-offset: 2px; }
+  button.копія[data-стан="ok"] { background: #16242A; }
+
+  .код-блок details { border-top: 1px solid var(--лінія); }
+  .код-блок summary {
+    padding: 10px 16px; cursor: pointer; font-size: 13.5px; color: var(--тьмяне);
+    user-select: none;
+  }
+  .код-блок summary:focus-visible { outline: 2px solid var(--акцент); outline-offset: -2px; }
+  .код-блок pre {
+    margin: 0; padding: 14px 16px; max-height: 340px; overflow: auto;
+    background: var(--екран); color: var(--екран-текст);
+    font-family: "JetBrains Mono", monospace; font-size: 11.5px; line-height: 1.55;
+    white-space: pre;
+  }
+
+  /* ── Екран / застереження / порада ─────────────────────── */
 
   .екран {
-    background: var(--екран);
-    color: var(--екран-текст);
-    border-radius: 6px;
-    padding: 16px 18px;
-    margin: 0 0 20px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 13px;
-    line-height: 1.6;
-    overflow-x: auto;
+    background: var(--екран); color: var(--екран-текст); border-radius: 6px;
+    padding: 15px 17px; margin: 0 0 20px;
+    font-family: "JetBrains Mono", monospace; font-size: 12.5px; line-height: 1.6;
+    overflow-x: auto; max-width: 66ch;
   }
   .екран .підпис {
-    display: block;
-    font-size: 10.5px;
-    letter-spacing: .12em;
-    text-transform: uppercase;
-    opacity: .55;
-    margin-bottom: 10px;
+    display: block; font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase;
+    opacity: .55; margin-bottom: 9px;
   }
   .екран pre { margin: 0; white-space: pre-wrap; word-break: break-word; }
 
-  /* ── Застереження ─────────────────────────────────────────────── */
-
-  .увага {
-    border-left: 3px solid var(--увага);
-    background: var(--увага-тло);
-    padding: 14px 18px;
-    margin: 0 0 20px;
-    border-radius: 0 5px 5px 0;
-    font-size: 15.5px;
+  .увага, .порада, .слот {
+    padding: 14px 18px; margin: 0 0 20px; border-radius: 0 5px 5px 0;
+    font-size: 15.5px; max-width: 66ch;
   }
+  .увага  { border-left: 3px solid var(--увага);  background: var(--увага-тло); }
+  .порада { border-left: 3px solid var(--акцент); background: var(--акцент-тло); }
   .увага b { color: var(--увага); }
-  .увага p:last-child { margin-bottom: 0; }
-
-  .порада {
-    border-left: 3px solid var(--акцент);
-    background: var(--акцент-тло);
-    padding: 14px 18px;
-    margin: 0 0 20px;
-    border-radius: 0 5px 5px 0;
-    font-size: 15.5px;
-  }
-  .порада p:last-child { margin-bottom: 0; }
-
-  /* ── Слот, який заповнює ведуча ───────────────────────────────── */
+  .увага p:last-child, .порада p:last-child { margin-bottom: 0; }
 
   .слот {
-    border: 1.5px dashed var(--акцент);
-    background: var(--акцент-тло);
-    border-radius: 5px;
-    padding: 13px 16px;
-    margin: 0 0 20px;
-    font-size: 15px;
+    border: 1.5px dashed var(--акцент); background: var(--акцент-тло); border-radius: 5px;
   }
   .слот .мітка {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10.5px;
-    letter-spacing: .11em;
-    text-transform: uppercase;
-    color: var(--акцент);
-    display: block;
-    margin-bottom: 5px;
+    font-family: "JetBrains Mono", monospace; font-size: 10.5px;
+    letter-spacing: .11em; text-transform: uppercase; color: var(--акцент);
+    display: block; margin-bottom: 5px;
   }
 
-  /* ── Таблиці ──────────────────────────────────────────────────── */
+  /* ── Таблиці ───────────────────────────────────────────── */
 
   .таблиця-обгортка { overflow-x: auto; margin: 0 0 22px; }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    font-size: 15px;
-    min-width: 480px;
-  }
-  th, td {
-    text-align: left;
-    padding: 11px 14px 11px 0;
-    border-bottom: 1px solid var(--лінія);
-    vertical-align: top;
-  }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; min-width: 460px; }
+  th, td { text-align: left; padding: 11px 14px 11px 0; border-bottom: 1px solid var(--лінія); vertical-align: top; }
   th {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    letter-spacing: .09em;
-    text-transform: uppercase;
-    color: var(--тьмяне);
-    font-weight: 500;
-    border-bottom-color: var(--чорнило);
+    font-family: "JetBrains Mono", monospace; font-size: 11px;
+    letter-spacing: .09em; text-transform: uppercase; color: var(--тьмяне);
+    font-weight: 500; border-bottom-color: var(--чорнило);
   }
   td:last-child, th:last-child { padding-right: 0; }
-  td b { font-weight: 600; }
 
-  /* ── Приклад опису кандидата ──────────────────────────────────── */
+  /* ── Порівняння описів ─────────────────────────────────── */
 
-  .порівняння {
-    display: grid;
-    gap: 16px;
-    margin: 0 0 22px;
-  }
-  @media (min-width: 700px) { .порівняння { grid-template-columns: 1fr 1fr; } }
-
+  .порівняння { display: grid; gap: 15px; margin: 0 0 22px; }
+  @media (min-width: 720px) { .порівняння { grid-template-columns: 1fr 1fr; } }
   .порівняння > div {
-    border: 1px solid var(--лінія);
-    border-radius: 5px;
-    padding: 16px 18px;
-    background: var(--картка);
+    border: 1px solid var(--лінія); border-radius: 5px; padding: 16px 18px; background: var(--картка);
   }
   .порівняння .мітка {
-    font-family: "JetBrains Mono", monospace;
-    font-size: 11px;
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    display: block;
-    margin-bottom: 10px;
+    font-family: "JetBrains Mono", monospace; font-size: 11px;
+    letter-spacing: .1em; text-transform: uppercase; display: block; margin-bottom: 10px;
   }
   .погано .мітка { color: var(--увага); }
-  .добре .мітка { color: var(--акцент); }
+  .добре  .мітка { color: var(--акцент); }
   .порівняння p { font-size: 15px; margin: 0 0 10px; }
   .порівняння p:last-child { margin: 0; }
   .порівняння .чому { color: var(--тьмяне); font-size: 14px; font-style: italic; }
 
-  /* ── Підсумок ─────────────────────────────────────────────────── */
+  /* ── Фініш ─────────────────────────────────────────────── */
 
   .фініш {
-    border: 2px solid var(--чорнило);
-    border-radius: 6px;
-    padding: 26px 28px;
-    margin: 48px 0 0;
-    background: var(--картка);
+    border: 2px solid var(--чорнило); border-radius: 6px;
+    padding: 25px 27px; margin: 46px 0 0; background: var(--картка);
   }
-  .фініш h3 {
-    font-family: "Literata", Georgia, serif;
-    font-size: 24px;
-    margin: 0 0 14px;
-    font-weight: 600;
-  }
+  .фініш h3 { font-family: "Literata", Georgia, serif; font-size: 23px; margin: 0 0 13px; font-weight: 600; }
   .фініш ul { margin: 0; padding-left: 20px; }
   .фініш li { margin-bottom: 7px; }
 
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
-  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 
 <div class="обгортка">
@@ -560,15 +369,15 @@
 
   <nav class="рейка" aria-label="Кроки збірки">
     <h2>Кроки</h2>
-    <ol id="рейка-список">
+    <ol>
       <li><a href="#крок-1"><span class="н">1</span><span>Скопіювати таблицю</span></a></li>
-      <li><a href="#крок-2"><span class="н">2</span><span>Отримати ключ Gemini</span></a></li>
+      <li><a href="#крок-2"><span class="н">2</span><span>Ключ Gemini</span></a></li>
       <li><a href="#крок-3"><span class="н">3</span><span>Оживити таблицю</span></a></li>
-      <li><a href="#крок-4"><span class="н">4</span><span>Поставити Tampermonkey</span></a></li>
-      <li><a href="#крок-5"><span class="н">5</span><span>Поставити агента</span></a></li>
-      <li><a href="#крок-6"><span class="н">6</span><span>Познайомити їх</span></a></li>
-      <li><a href="#крок-7"><span class="н">7</span><span>Поставити завдання</span></a></li>
-      <li><a href="#крок-8"><span class="н">8</span><span>Перший запуск</span></a></li>
+      <li><a href="#крок-4"><span class="н">4</span><span>Опублікувати таблицю</span></a></li>
+      <li><a href="#крок-5"><span class="н">5</span><span>Tampermonkey</span></a></li>
+      <li><a href="#крок-6"><span class="н">6</span><span>Поставити агента</span></a></li>
+      <li><a href="#крок-7"><span class="н">7</span><span>Познайомити їх</span></a></li>
+      <li><a href="#крок-8"><span class="н">8</span><span>Завдання і запуск</span></a></li>
     </ol>
     <p class="лічильник" id="лічильник">Пройдено 0 з 8</p>
   </nav>
@@ -576,30 +385,23 @@
   <main>
 
     <p>
-      Ця інструкція розрахована на людину <strong>без технічного досвіду</strong>.
-      Нічого писати самій не доведеться — усе, що треба, це скопіювати
-      готові шматки тексту у правильні місця.
+      Інструкція розрахована на людину <strong>без технічного досвіду</strong>.
+      Писати нічого не доведеться: увесь потрібний код — просто тут, на сторінці,
+      з кнопкою «Скопіювати».
     </p>
 
-    <p>
-      Позначай кроки галочкою, коли робиш їх — сторінка запам'ятає, де ти зупинилась.
-    </p>
+    <p>Познач крок галочкою, коли зробиш — сторінка запам'ятає, де ти зупинилась.</p>
 
     <h2 class="розділ">З чого складається помічник</h2>
 
-    <p>
-      Три частини, і кожна вміє те, чого не вміють інші. Розуміти це не обов'язково,
-      але з цим легше, коли щось піде не так.
-    </p>
-
-    <dl class="будова широке">
+    <dl class="будова">
       <div>
         <dt>Браузер</dt>
         <dd><b>Руки.</b> Ходить по work.ua під твоїм обліковим записом і збирає кандидатів.</dd>
       </div>
       <div>
         <dt>Gemini</dt>
-        <dd><b>Голова.</b> Читає резюме і вирішує, наскільки людина тобі підходить.</dd>
+        <dd><b>Голова.</b> Читає резюме і вирішує, наскільки людина підходить.</dd>
       </div>
       <div>
         <dt>Таблиця</dt>
@@ -609,37 +411,26 @@
 
     <p>
       Чому саме браузер, а не сама таблиця: work.ua не пускає до себе сервери Google —
-      відповідає «перевірка надійності підключення». А твій браузер він пускає,
-      бо це ти. Тому помічник і живе всередині браузера.
+      відповідає «перевірка надійності підключення». А твій браузер пускає, бо це ти.
     </p>
 
     <h2 class="розділ">Що знадобиться</h2>
 
-    <div class="таблиця-обгортка широке">
+    <div class="таблиця-обгортка">
       <table>
-        <thead>
-          <tr><th>Що</th><th>Навіщо</th><th>Чи є в тебе</th></tr>
-        </thead>
+        <thead><tr><th>Що</th><th>Примітка</th></tr></thead>
         <tbody>
           <tr>
             <td><b>Обліковий запис Google</b></td>
-            <td>Таблиця і безкоштовний ключ до Gemini</td>
-            <td>Звичайна пошта <span class="шлях">@gmail.com</span>. Робочу краще не брати — корпоративні налаштування можуть заблокувати крок 3</td>
+            <td>Звичайна пошта <span class="шлях">@gmail.com</span>. Робочу краще не брати — корпоративні заборони блокують крок 4</td>
           </tr>
           <tr>
             <td><b>Chrome або Edge</b></td>
-            <td>У ньому працюватиме помічник</td>
             <td>Edge уже стоїть на Windows. На Mac постав Chrome. Safari не підійде</td>
           </tr>
           <tr>
-            <td><b>Акаунт роботодавця на work.ua</b></td>
-            <td>Щоб потім відкривати контакти відібраних</td>
-            <td>Для самої збірки не обов'язковий</td>
-          </tr>
-          <tr>
-            <td><b>40 хвилин</b></td>
-            <td>Один раз, назавжди</td>
-            <td>Далі запуск — одна кнопка</td>
+            <td><b>Акаунт роботодавця work.ua</b></td>
+            <td>Для збірки не обов'язковий. Знадобиться потім, щоб відкривати контакти</td>
           </tr>
         </tbody>
       </table>
@@ -647,7 +438,7 @@
 
     <h2 class="розділ">Збірка</h2>
 
-    <!-- ── КРОК 1 ─────────────────────────────────────────────── -->
+    <!-- 1 ─────────────────────────────────────────────────── -->
     <section class="крок" id="крок-1">
       <div class="крок-шапка">
         <input type="checkbox" class="галка" data-крок="1" aria-label="Крок 1 виконано">
@@ -655,10 +446,7 @@
         <span class="хвилини">3 хв</span>
       </div>
 
-      <p>
-        Таблиця вже готова: у ній є всі потрібні аркуші й пояснення всередині.
-        Тобі треба зробити свою власну копію — щоб писати в неї, а не в спільну.
-      </p>
+      <p>Таблиця вже готова — з усіма аркушами й поясненнями всередині. Зроби свою копію.</p>
 
       <div class="слот">
         <span class="мітка">Посилання на таблицю-зразок</span>
@@ -666,122 +454,514 @@
       </div>
 
       <ol class="дії">
-        <li>Відкрий посилання. Таблиця відкриється тільки на перегляд — це нормально.</li>
-        <li>У верхньому меню: <span class="шлях">Файл → Створити копію</span></li>
-        <li>Назви як зручно, наприклад «Мій агент-рекрутер», і натисни <b>Копіювати</b>.</li>
-        <li>Відкриється <b>твоя</b> копія. Далі працюємо тільки з нею.</li>
+        <li>Відкрий посилання — таблиця відкриється тільки на перегляд, це нормально.</li>
+        <li><span class="шлях">Файл → Створити копію</span> → назви «Мій агент-рекрутер» → <b>Копіювати</b>.</li>
+        <li>Далі працюй тільки зі <b>своєю</b> копією.</li>
       </ol>
 
       <div class="екран">
         <span class="підпис">Унизу таблиці має бути п'ять вкладок</span>
-        <pre>Інструкція  ·  Пошуки  ·  Кандидати  ·  Історія  ·  Журнал</pre>
+        <pre>Інструкція · Пошуки · Кандидати · Історія · Журнал</pre>
       </div>
-
-      <p>
-        <b>Пошуки</b> — сюди ти вписуєш вакансію й опис ідеального кандидата.
-        <b>Кандидати</b> — зразок колонок, за яким помічник створюватиме окремий аркуш
-        під кожну вакансію. <b>Історія</b> — службова, щоб не приносити ту саму людину двічі.
-        <b>Журнал</b> — що помічник робив і які були помилки.
-      </p>
     </section>
 
-    <!-- ── КРОК 2 ─────────────────────────────────────────────── -->
+    <!-- 2 ─────────────────────────────────────────────────── -->
     <section class="крок" id="крок-2">
       <div class="крок-шапка">
         <input type="checkbox" class="галка" data-крок="2" aria-label="Крок 2 виконано">
-        <h3><span class="номер">02</span>Отримати ключ Gemini</h3>
+        <h3><span class="номер">02</span>Ключ Gemini</h3>
         <span class="хвилини">5 хв</span>
       </div>
 
       <p>
-        Gemini — це штучний інтелект від Google, який читатиме резюме й виставлятиме бали.
-        Ключ — це такий довгий пароль, за яким Google розуміє, що звертаєшся саме ти.
-        Він <strong>безкоштовний, картка не потрібна</strong>.
+        Gemini — штучний інтелект від Google, який читатиме резюме. Ключ — довгий пароль,
+        за яким Google впізнає тебе. <strong>Безкоштовний, картка не потрібна.</strong>
       </p>
 
       <ol class="дії">
-        <li>Відкрий <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a></li>
-        <li>Увійди своїм обліковим записом Google, якщо попросить.</li>
-        <li>Натисни <b>Create API key</b> (або «Створити ключ API»).</li>
-        <li>Якщо запитає про проєкт — обери будь-який запропонований або створи новий, назва не має значення.</li>
-        <li>З'явиться довгий рядок літер і цифр. Натисни <b>Copy</b> і встав його кудись, де не загубиш — у нотатки, у чернетку листа.</li>
+        <li>Відкрий <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a> і увійди.</li>
+        <li>Натисни <b>Create API key</b>. Якщо спитає про проєкт — обери будь-який.</li>
+        <li>З'явиться довгий рядок. <b>Copy</b> — і поклади в нотатки, щоб не загубити.</li>
       </ol>
 
       <div class="увага">
-        <p>
-          <b>Ключ — як пароль.</b> Не надсилай його в чати, не публікуй у спільних документах,
-          не показуй на екрані під час демонстрації. Якщо випадково показала — поверніться
-          на ту саму сторінку, видаліть ключ і створіть новий, це займає хвилину.
-        </p>
+        <p><b>Ключ — це пароль.</b> Не надсилай його в чати і не показуй на екрані. Якщо показала — видали на тій самій сторінці й створи новий, це хвилина.</p>
       </div>
 
       <div class="порада">
-        <p>
-          Ключ зберігається <b>тільки у твоєму браузері</b>. Він не потрапляє ні в таблицю,
-          ні на work.ua, ні до ведучої воркшопу.
-        </p>
+        <p>Ключ зберігається <b>тільки у твоєму браузері</b>. Він не потрапляє ні в таблицю, ні на work.ua, ні до ведучої.</p>
       </div>
     </section>
 
-    <!-- ── КРОК 3 ─────────────────────────────────────────────── -->
+    <!-- 3 ─────────────────────────────────────────────────── -->
     <section class="крок" id="крок-3">
       <div class="крок-шапка">
         <input type="checkbox" class="галка" data-крок="3" aria-label="Крок 3 виконано">
         <h3><span class="номер">03</span>Оживити таблицю</h3>
-        <span class="хвилини">10 хв</span>
+        <span class="хвилини">7 хв</span>
       </div>
 
-      <p>
-        Це найдовший крок і єдиний, що виглядає страшнувато. Насправді тут теж
-        нічого писати не треба — тільки вставити готовий текст і натиснути кілька кнопок.
-      </p>
+      <p>Вставимо в таблицю код, який відповідатиме помічнику. Писати нічого не треба.</p>
 
-      <div class="слот">
-        <span class="мітка">Файл «1 — код для таблиці»</span>
-        Вставити сюди посилання, яке дасть ведуча
+      <div class="код-блок">
+        <div class="код-шапка">
+          <span class="код-назва">Код для таблиці · Apps Script</span>
+          <button class="копія" data-код="код-таблиці">Скопіювати код</button>
+        </div>
+        <details>
+          <summary>Подивитись, що в ньому (не обов'язково)</summary>
+          <pre id="код-таблиці">/**
+ * Агент-рекрутер для work.ua — частина, що живе в Google Таблиці.
+ *
+ * Вона НЕ ходить на work.ua (Cloudflare не пускає сервери Google — див. README).
+ * Її робота — віддавати завдання з аркуша «Пошуки», казати, кого вже бачили,
+ * і записувати результат у «Кандидати», «Історію» та «Журнал».
+ *
+ * Ходить на work.ua і звертається до Gemini той, хто працює в браузері —
+ * скрипт «агент.user.js» у Tampermonkey.
+ *
+ * ── Як увімкнути ─────────────────────────────────────────────────────
+ * 1. Заміни значення КЛЮЧ нижче на свій вигаданий пароль.
+ * 2. Розгорнути → Новий розгорток → тип «Веб-застосунок»
+ *    Виконувати як: Я
+ *    Хто має доступ: Усі
+ * 3. Скопіюй адресу веб-застосунку і встав її в налаштування скрипта
+ *    у браузері разом із тим самим КЛЮЧЕМ.
+ */
+
+// ⚠️ ЗАМІНИ на свій вигаданий пароль. Той самий треба вписати в браузері.
+var КЛЮЧ = 'zmini-mene-bud-laska';
+
+/**
+ * true  — кожна вакансія отримує власний аркуш із своєю назвою.
+ *         Аркуш створюється сам за зразком «Кандидатів».
+ * false — усі кандидати падають в один аркуш «Кандидати», як було раніше.
+ */
+var ОКРЕМИЙ_АРКУШ_НА_ВАКАНСІЮ = true;
+
+var НАЗВИ = {
+  пошуки:    'Пошуки',
+  кандидати: 'Кандидати',
+  історія:   'Історія',
+  журнал:    'Журнал'
+};
+
+// За цими заголовками впізнаємо, у якому рядку шапка кожного аркуша
+var ЯКОРІ = {
+  'Пошуки':    'Назва пошуку',
+  'Кандидати': 'Бал',
+  'Історія':   'Посилання на резюме',
+  'Журнал':    'Дата й час'
+};
+
+// ─────────────────────────────────────────────────────────────────────
+// Вхідна точка
+// ─────────────────────────────────────────────────────────────────────
+
+function doPost(e) {
+  try {
+    var запит = JSON.parse(e.postData.contents);
+
+    if (запит.ключ !== КЛЮЧ) {
+      return відповідь({ ok: false, помилка: 'Невірний ключ' });
+    }
+
+    switch (запит.дія) {
+      case 'пошуки':
+        return відповідь({ ok: true, пошуки: дайПошуки() });
+
+      case 'історія':
+        return відповідь({ ok: true, номери: дайІсторію(запит.пошук) });
+
+      case 'зберегти':
+        var підсумок = зберегти(запит.пошук, запит.кандидати || []);
+        return відповідь({ ok: true, записано: підсумок.записано, аркуш: підсумок.аркуш });
+
+      case 'очистити':
+        return відповідь({ ok: true, видалено: очиститиІсторію(запит.пошук) });
+
+      case 'журнал':
+        записатиЖурнал(запит.рядок || {});
+        return відповідь({ ok: true });
+
+      case 'статус':
+        оновитиСтатус(запит.пошук, запит.статус);
+        return відповідь({ ok: true });
+
+      default:
+        return відповідь({ ok: false, помилка: 'Невідома дія: ' + запит.дія });
+    }
+  } catch (err) {
+    return відповідь({ ok: false, помилка: String(err) });
+  }
+}
+
+// Щоб можна було перевірити в браузері, що застосунок живий
+function doGet() {
+  return відповідь({ ok: true, привіт: 'Агент-рекрутер на звʼязку' });
+}
+
+function відповідь(обʼєкт) {
+  return ContentService
+    .createTextOutput(JSON.stringify(обʼєкт))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// Робота з аркушами
+// ─────────────────────────────────────────────────────────────────────
+
+function аркуш(назва) {
+  var sh = SpreadsheetApp.getActive().getSheetByName(назва);
+  if (!sh) throw new Error('Не знайдено аркуш «' + назва + '»');
+  return sh;
+}
+
+/**
+ * Шукає рядок шапки (у перших 10 рядках) і повертає:
+ *   { рядок: N, колонки: { 'Назва пошуку': 0, ... } }
+ * Завдяки цьому колонки можна переставляти місцями — код не зламається.
+ */
+function шапкаЗа(sh, якір, підпис) {
+  var скільки = Math.min(10, sh.getLastRow());
+  if (скільки === 0) throw new Error('Аркуш «' + підпис + '» порожній');
+
+  var зона = sh.getRange(1, 1, скільки, sh.getLastColumn()).getValues();
+
+  for (var р = 0; р &lt; зона.length; р++) {
+    var клітинки = зона[р].map(function (з) { return String(з).trim(); });
+    if (клітинки.indexOf(якір) !== -1) {
+      var карта = {};
+      клітинки.forEach(function (з, i) { if (з) карта[з] = i; });
+      return { sh: sh, рядок: р + 1, колонки: карта };
+    }
+  }
+  throw new Error('В аркуші «' + підпис + '» не знайдено колонку «' + якір + '»');
+}
+
+function шапка(назваАркуша) {
+  return шапкаЗа(аркуш(назваАркуша), ЯКОРІ[назваАркуша], назваАркуша);
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// Окремий аркуш під кожну вакансію
+// ─────────────────────────────────────────────────────────────────────
+
+var СЛУЖБОВІ = ['Пошуки', 'Кандидати', 'Історія', 'Журнал', 'Інструкція'];
+
+/** Google не дозволяє в назві аркуша деякі символи, і назва не може повторювати службову */
+function безпечнаНазва(назва) {
+  var чиста = String(назва || '').replace(/[\[\]\*\?\/\\:]/g, '-').trim().slice(0, 90);
+  if (!чиста) чиста = 'Без назви';
+  if (СЛУЖБОВІ.indexOf(чиста) !== -1) чиста += ' (вакансія)';
+  return чиста;
+}
+
+/**
+ * Повертає аркуш цієї вакансії, створюючи його за потреби.
+ * Колонки беруться з «Кандидатів», тож структура завжди однакова —
+ * включно з «Мій статус» і «Мої нотатки».
+ */
+function аркушВакансії(назваПошуку) {
+  var ss = SpreadsheetApp.getActive();
+  var назва = безпечнаНазва(назваПошуку);
+
+  var наявний = ss.getSheetByName(назва);
+  if (наявний) return наявний;
+
+  var зразок = шапка(НАЗВИ.кандидати);
+  var заголовки = зразок.sh
+    .getRange(зразок.рядок, 1, 1, зразок.sh.getLastColumn())
+    .getValues()[0];
+
+  var sh = ss.insertSheet(назва);
+  var зона = sh.getRange(1, 1, 1, заголовки.length);
+  зона.setValues([заголовки]);
+  зона.setFontWeight('bold').setBackground('#efefef');
+  sh.setFrozenRows(1);
+
+  // Щоб можна було сортувати за балом одним кліком
+  try {
+    sh.getRange(1, 1, sh.getMaxRows(), заголовки.length).createFilter();
+  } catch (e) { /* фільтр уже є або аркуш не дозволяє — не критично */ }
+
+  return sh;
+}
+
+function зробитиРядок(карта, значення) {
+  var ширина = 0;
+  for (var к in карта) ширина = Math.max(ширина, карта[к] + 1);
+
+  var рядок = new Array(ширина).fill('');
+  for (var назва in значення) {
+    if (карта.hasOwnProperty(назва)) рядок[карта[назва]] = значення[назва];
+  }
+  return рядок;
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// Пошуки
+// ─────────────────────────────────────────────────────────────────────
+
+function дайПошуки() {
+  var ш = шапка(НАЗВИ.пошуки);
+  var к = ш.колонки;
+  var останній = ш.sh.getLastRow();
+  if (останній &lt;= ш.рядок) return [];
+
+  var дані = ш.sh.getRange(ш.рядок + 1, 1, останній - ш.рядок, ш.sh.getLastColumn()).getValues();
+  var список = [];
+
+  for (var i = 0; i &lt; дані.length; i++) {
+    var р = дані[i];
+    var назва = String(р[к['Назва пошуку']] || '').trim();
+    var адреса = String(р[к['Посилання на пошук (з адресного рядка work.ua)']] || '').trim();
+    var активний = String(р[к['Активний']] || '').trim().toLowerCase();
+
+    if (!назва || !адреса) continue;
+    if (['так', 'yes', 'y', '+', '1', 'true'].indexOf(активний) === -1) continue;
+
+    список.push({
+      назва: назва,
+      адреса: адреса,
+      ідеальний: String(р[к['Ідеальний кандидат — опиши своїми словами']] || '').trim(),
+      стопСигнали: String(р[к['Стоп-сигнали — що дискваліфікує']] || '').trim(),
+      мінімальнийБал: Number(р[к['Мінімальний бал для запису']]) || 0
+    });
+  }
+  return список;
+}
+
+function оновитиСтатус(назваПошуку, текстСтатусу) {
+  var ш = шапка(НАЗВИ.пошуки);
+  var к = ш.колонки;
+  var останній = ш.sh.getLastRow();
+  if (останній &lt;= ш.рядок) return;
+
+  var стовпчикНазв = ш.sh
+    .getRange(ш.рядок + 1, к['Назва пошуку'] + 1, останній - ш.рядок, 1)
+    .getValues();
+
+  for (var i = 0; i &lt; стовпчикНазв.length; i++) {
+    if (String(стовпчикНазв[i][0]).trim() !== назваПошуку) continue;
+
+    var номерРядка = ш.рядок + 1 + i;
+    if (к['Останній запуск'] !== undefined) {
+      ш.sh.getRange(номерРядка, к['Останній запуск'] + 1).setValue(зараз());
+    }
+    if (к['Статус останнього запуску'] !== undefined) {
+      ш.sh.getRange(номерРядка, к['Статус останнього запуску'] + 1).setValue(текстСтатусу);
+    }
+    return;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// Історія — кого вже показували
+// ─────────────────────────────────────────────────────────────────────
+
+function дайІсторію(назваПошуку) {
+  var ш = шапка(НАЗВИ.історія);
+  var к = ш.колонки;
+  var останній = ш.sh.getLastRow();
+  if (останній &lt;= ш.рядок) return [];
+
+  var дані = ш.sh.getRange(ш.рядок + 1, 1, останній - ш.рядок, ш.sh.getLastColumn()).getValues();
+  var номери = [];
+
+  for (var i = 0; i &lt; дані.length; i++) {
+    var посилання = String(дані[i][к['Посилання на резюме']] || '');
+    var зПошуку = String(дані[i][к['З якого пошуку']] || '').trim();
+
+    // Дублі рахуємо в межах однієї вакансії: та сама людина може
+    // бути доречною для іншої позиції
+    if (назваПошуку &amp;&amp; зПошуку &amp;&amp; зПошуку !== назваПошуку) continue;
+
+    var m = посилання.match(/\/resumes\/(\d+)/);
+    if (m) номери.push(m[1]);
+  }
+  return номери;
+}
+
+/**
+ * Прибирає з «Історії» рядки однієї вакансії — щоб агент міг оцінити
+ * тих самих людей заново (наприклад, після того як переписали опис
+ * ідеального кандидата).
+ *
+ * Історія інших вакансій не чіпається. Аркуш «Кандидати» теж не чіпається:
+ * там можуть бути твої нотатки, і вирішувати їхню долю має людина.
+ *
+ * Працює через перезапис, а не через видалення рядків по одному —
+ * інакше на кількох тисячах рядків Apps Script не встигне за свої 6 хвилин.
+ */
+function очиститиІсторію(назваПошуку) {
+  if (!назваПошуку) throw new Error('Не вказано, яку вакансію чистити');
+
+  var ш = шапка(НАЗВИ.історія);
+  var к = ш.колонки;
+  var останній = ш.sh.getLastRow();
+  if (останній &lt;= ш.рядок) return 0;
+
+  var висота = останній - ш.рядок;
+  var ширина = ш.sh.getLastColumn();
+  var дані = ш.sh.getRange(ш.рядок + 1, 1, висота, ширина).getValues();
+
+  var лишити = дані.filter(function (р) {
+    return String(р[к['З якого пошуку']]).trim() !== назваПошуку;
+  });
+
+  var видалено = дані.length - лишити.length;
+  if (!видалено) return 0;
+
+  ш.sh.getRange(ш.рядок + 1, 1, висота, ширина).clearContent();
+  if (лишити.length) {
+    ш.sh.getRange(ш.рядок + 1, 1, лишити.length, ширина).setValues(лишити);
+  }
+
+  return видалено;
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// Запис результату
+// ─────────────────────────────────────────────────────────────────────
+
+/**
+ * кандидати: масив обʼєктів
+ *   { номер, посилання, бал, чому, посада, місто, вік, досвід, зарплата, записати }
+ * «записати: false» означає — до «Кандидатів» не потрапляє (не пройшов
+ * за балом), але в «Історію» все одно йде, щоб удруге його не оцінювати.
+ */
+function зберегти(назваПошуку, кандидати) {
+  if (!кандидати.length) return { записано: 0, аркуш: '' };
+
+  var дата = зараз();
+
+  var шК = ОКРЕМИЙ_АРКУШ_НА_ВАКАНСІЮ
+    ? шапкаЗа(аркушВакансії(назваПошуку), ЯКОРІ[НАЗВИ.кандидати], назваПошуку)
+    : шапка(НАЗВИ.кандидати);
+
+  var шІ = шапка(НАЗВИ.історія);
+
+  var рядкиКандидатів = [];
+  var рядкиІсторії = [];
+
+  for (var i = 0; i &lt; кандидати.length; i++) {
+    var к = кандидати[i];
+
+    if (к.записати) {
+      рядкиКандидатів.push(зробитиРядок(шК.колонки, {
+        'Дата знахідки':         дата,
+        'Пошук':                 назваПошуку,
+        'Бал':                   к.бал,
+        'Чому такий бал':        к.чому,
+        'Посада':                к.посада,
+        'Місто':                 к.місто,
+        'Вік':                   к.вік,
+        'Досвід':                к.досвід,
+        'Зарплатні очікування':  к.зарплата,
+        'Посилання на резюме':   к.посилання
+        // «Мій статус» і «Мої нотатки» лишаються порожніми — вони твої
+      }));
+    }
+
+    рядкиІсторії.push(зробитиРядок(шІ.колонки, {
+      'Посилання на резюме': к.посилання,
+      'Дата першої появи':   дата,
+      'З якого пошуку':      назваПошуку
+    }));
+  }
+
+  if (рядкиКандидатів.length) {
+    шК.sh.getRange(шК.sh.getLastRow() + 1, 1, рядкиКандидатів.length, рядкиКандидатів[0].length)
+      .setValues(рядкиКандидатів);
+  }
+  if (рядкиІсторії.length) {
+    шІ.sh.getRange(шІ.sh.getLastRow() + 1, 1, рядкиІсторії.length, рядкиІсторії[0].length)
+      .setValues(рядкиІсторії);
+  }
+
+  return { записано: рядкиКандидатів.length, аркуш: шК.sh.getName() };
+}
+
+function записатиЖурнал(р) {
+  var ш = шапка(НАЗВИ.журнал);
+  var рядок = зробитиРядок(ш.колонки, {
+    'Дата й час':               зараз(),
+    'Пошук':                    р.пошук || '',
+    'Сторінок пройдено':        р.сторінок || 0,
+    'Переглянуто резюме':       р.переглянуто || 0,
+    'З них нових':              р.нових || 0,
+    'Записано в «Кандидати»':   р.записано || 0,
+    'Помилки':                  р.помилки || ''
+  });
+  ш.sh.getRange(ш.sh.getLastRow() + 1, 1, 1, рядок.length).setValues([рядок]);
+}
+
+function зараз() {
+  return Utilities.formatDate(
+    new Date(),
+    SpreadsheetApp.getActive().getSpreadsheetTimeZone() || 'Europe/Kyiv',
+    'dd.MM.yyyy HH:mm'
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// Перевірка — запусти вручну, щоб переконатись, що аркуші на місці
+// ─────────────────────────────────────────────────────────────────────
+
+function перевіритиАркуші() {
+  ['Пошуки', 'Кандидати', 'Історія', 'Журнал'].forEach(function (назва) {
+    try {
+      var ш = шапка(назва);
+      Logger.log('✓ «' + назва + '»: шапка в рядку ' + ш.рядок +
+                 ', колонок ' + Object.keys(ш.колонки).length);
+    } catch (e) {
+      Logger.log('✗ «' + назва + '»: ' + e.message);
+    }
+  });
+
+  Logger.log(ОКРЕМИЙ_АРКУШ_НА_ВАКАНСІЮ
+    ? 'Режим: кожна вакансія пише у свій власний аркуш'
+    : 'Режим: усі вакансії пишуть в один аркуш «Кандидати»');
+
+  var пошуки = дайПошуки();
+  Logger.log('Активних пошуків: ' + пошуки.length);
+  пошуки.forEach(function (п) {
+    var куди = ОКРЕМИЙ_АРКУШ_НА_ВАКАНСІЮ ? безпечнаНазва(п.назва) : 'Кандидати';
+    var існує = SpreadsheetApp.getActive().getSheetByName(куди) ? '' : ' — буде створено при першому записі';
+    Logger.log('  • ' + п.назва + ' (мінімальний бал ' + п.мінімальнийБал + ')');
+    Logger.log('      пише в аркуш «' + куди + '»' + існує);
+  });
+}</pre>
+        </details>
       </div>
 
       <ol class="дії">
-        <li>Відкрий цей файл — він відкриється як звичайний текст. Виділи все
-          (<kbd>Cmd A</kbd> або <kbd>Ctrl A</kbd>) і скопіюй (<kbd>Cmd C</kbd> / <kbd>Ctrl C</kbd>).</li>
-
-        <li>Повернись у <b>свою</b> таблицю. У меню: <span class="шлях">Розширення → Apps Script</span>.
-          Відкриється нова вкладка з редактором коду.</li>
-
-        <li>Зліва, у списку «Файли», натисни <b>+</b> → <b>Скрипт</b>. Назви його <span class="шлях">агент</span>.</li>
-
-        <li>У полі праворуч виділи все (<kbd>Cmd A</kbd>), видали і встав скопійований текст.</li>
-
+        <li>У своїй таблиці: <span class="шлях">Розширення → Apps Script</span>. Відкриється нова вкладка.</li>
+        <li>Зліва у списку «Файли» натисни <b>+</b> → <b>Скрипт</b>. Назви <span class="шлях">агент</span>.</li>
+        <li>У великому полі праворуч виділи все (<kbd>Cmd A</kbd> / <kbd>Ctrl A</kbd>), видали, встав скопійоване.</li>
         <li>
-          Знайди вгорі рядок із паролем і заміни його на свій — вигадай щось довше за
-          одне слово:
-          <div class="екран" style="margin-top:10px">
+          Знайди вгорі рядок із паролем і заміни на свій — довгий і випадковий:
+          <div class="екран" style="margin-top:9px">
             <pre>var КЛЮЧ = 'zmini-mene-bud-laska';</pre>
           </div>
-          <b>Запиши цей пароль</b> — за кілька хвилин він знадобиться ще раз.
+          <b>Запиши пароль</b> — за кілька хвилин знадобиться ще раз.
         </li>
-
-        <li>Збережи: <kbd>Cmd S</kbd> або <kbd>Ctrl S</kbd>.</li>
-
+        <li>Збережи: <kbd>Cmd S</kbd> / <kbd>Ctrl S</kbd>.</li>
+        <li>У списку біля кнопки «Виконати» обери <span class="шлях">перевіритиАркуші</span> → <b>▷ Виконати</b>.</li>
         <li>
-          Перевіримо, що все на місці. Угорі, у списку поруч із кнопкою «Виконати»,
-          обери <span class="шлях">перевіритиАркуші</span> і натисни <b>▷ Виконати</b>.
-        </li>
-
-        <li>
-          <b>Перший раз Google попросить дозвіл.</b> Буде страшний екран — це нормально,
-          додаток твій власний, ти його щойно створила:
+          Перший раз Google попросить дозвіл. Екран страшний, але додаток твій власний:
           <ul>
             <li>«Потрібна авторизація» → <b>Переглянути дозволи</b></li>
             <li>Обери свій обліковий запис</li>
-            <li>«Google не перевірив цей додаток» → внизу зліва дрібне <b>Додатково</b></li>
+            <li>«Google не перевірив цей додаток» → дрібне <b>Додатково</b> внизу зліва</li>
             <li>→ <b>Перейти до сторінки (небезпечно)</b> → <b>Дозволити</b></li>
           </ul>
         </li>
       </ol>
 
       <div class="екран">
-        <span class="підпис">Унизу, у «Журналі виконання», має з'явитись</span>
+        <span class="підпис">Унизу, в «Журналі виконання», має з'явитись</span>
 <pre>✓ «Пошуки»: шапка в рядку 1, колонок 8
 ✓ «Кандидати»: шапка в рядку 1, колонок 12
 ✓ «Історія»: шапка в рядку 1, колонок 4
@@ -789,131 +969,1160 @@
 Режим: кожна вакансія пише у свій власний аркуш
 Активних пошуків: 0</pre>
       </div>
+    </section>
 
-      <p>Тепер публікуємо — щоб браузер міг достукатись до таблиці.</p>
+    <!-- 4 ─────────────────────────────────────────────────── -->
+    <section class="крок" id="крок-4">
+      <div class="крок-шапка">
+        <input type="checkbox" class="галка" data-крок="4" aria-label="Крок 4 виконано">
+        <h3><span class="номер">04</span>Опублікувати таблицю</h3>
+        <span class="хвилини">3 хв</span>
+      </div>
 
-      <ol class="дії" start="9">
-        <li>Угорі справа синя кнопка <b>Розгорнути</b> → <b>Новий розгорток</b>.</li>
+      <p>Щоб браузер міг достукатись до таблиці, її треба опублікувати.</p>
+
+      <ol class="дії">
+        <li>У тому ж вікні Apps Script, угорі справа: <b>Розгорнути → Новий розгорток</b>.</li>
         <li>Клацни <b>шестерню</b> біля «Виберіть тип» → <b>Веб-застосунок</b>.</li>
         <li>
-          Заповни два поля:
+          Два поля:
           <ul>
             <li><b>Виконувати як:</b> Я</li>
             <li><b>Хто має доступ:</b> <b>Усі</b> ← без цього нічого не працюватиме</li>
           </ul>
         </li>
-        <li>Натисни <b>Розгорнути</b> і пройди дозволи ще раз, якщо попросить.</li>
+        <li><b>Розгорнути</b> → пройди дозволи, якщо попросить.</li>
         <li>
-          З'явиться <b>«Адреса веб-застосунку»</b> — довге посилання, що починається на
-          <span class="шлях">https://script.google.com/macros/s/…</span>
-          Скопіюй його і поклади поруч із паролем.
+          Скопіюй <b>«Адресу веб-застосунку»</b> — довге посилання на
+          <span class="шлях">script.google.com/macros/s/…</span> — і поклади поруч із паролем.
         </li>
       </ol>
 
       <div class="увага">
         <p>
-          <b>Якщо «Хто має доступ» не дає обрати «Усі»</b> — у тебе корпоративний
-          обліковий запис Google із забороною адміністратора. Зроби копію таблиці
-          на особистій пошті <span class="шлях">@gmail.com</span> і повтори крок 3 там.
+          <b>Якщо «Усі» нема в списку</b> — це корпоративний обліковий запис із забороною
+          адміністратора. Зроби копію таблиці на особистій пошті <span class="шлях">@gmail.com</span>
+          і повтори кроки 3–4 там.
+        </p>
+      </div>
+
+      <div class="порада">
+        <p>
+          Цей крок доведеться повторювати щоразу, коли міняєш код таблиці — але не
+          «Новий розгорток», а <b>Керування розгортками → ✏️ → Версія: Нова версія → Розгорнути</b>.
+          Адреса при цьому не змінюється.
         </p>
       </div>
     </section>
 
-    <!-- ── КРОК 4 ─────────────────────────────────────────────── -->
-    <section class="крок" id="крок-4">
+    <!-- 5 ─────────────────────────────────────────────────── -->
+    <section class="крок" id="крок-5">
       <div class="крок-шапка">
-        <input type="checkbox" class="галка" data-крок="4" aria-label="Крок 4 виконано">
-        <h3><span class="номер">04</span>Поставити Tampermonkey</h3>
+        <input type="checkbox" class="галка" data-крок="5" aria-label="Крок 5 виконано">
+        <h3><span class="номер">05</span>Поставити Tampermonkey</h3>
         <span class="хвилини">3 хв</span>
       </div>
 
       <p>
-        Tampermonkey — безкоштовна надбудова до браузера з офіційного магазину Chrome.
-        Найближча аналогія — <strong>макрос в Excel</strong>: ти один раз даєш браузеру
-        письмову інструкцію, а далі тиснеш кнопку, і він робить сам.
+        Безкоштовна надбудова до браузера з офіційного магазину Chrome. Найближча
+        аналогія — <strong>макрос в Excel</strong>: один раз даєш браузеру письмову
+        інструкцію, далі тиснеш кнопку, і він робить сам.
       </p>
 
       <ol class="дії">
         <li>Відкрий <a href="https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo" target="_blank" rel="noopener">Tampermonkey у магазині Chrome</a>.</li>
-        <li>Синя кнопка <b>Встановити</b> → <b>Додати розширення</b>.</li>
-        <li>
-          У правому верхньому куті з'явиться <b>чорно-сіра мордочка мавпочки</b>.
-          Якщо сховалась під значком пазла — натисни пазл і закріпи її шпилькою.
-        </li>
+        <li><b>Встановити</b> → <b>Додати розширення</b>.</li>
+        <li>У правому верхньому куті з'явиться <b>мавпочка</b>. Сховалась під пазлом — закріпи шпилькою.</li>
       </ol>
 
       <div class="увага">
         <p>
-          <b>Обов'язково: дати дозвіл на користувацькі скрипти.</b> Без цього Tampermonkey
-          виглядатиме встановленим, але нічого не робитиме — і жодної помилки не покаже.
+          <b>Обов'язково: дозволити користувацькі скрипти.</b> Без цього Tampermonkey
+          виглядатиме встановленим, але нічого не робитиме — і помилки не покаже.
         </p>
         <p>
-          Встав в адресний рядок <span class="шлях">chrome://extensions</span> →
-          знайди Tampermonkey → <b>Деталі</b> → увімкни перемикач
-          <b>«Дозволити користувацькі скрипти»</b> (Allow user scripts).
+          Встав в адресний рядок <span class="шлях">chrome://extensions</span> → знайди
+          Tampermonkey → <b>Деталі</b> → увімкни <b>«Дозволити користувацькі скрипти»</b>.
         </p>
         <p>
-          Якщо такого перемикача немає — увімкни <b>«Режим розробника»</b> у правому
-          верхньому куті тієї ж сторінки. В Edge адреса <span class="шлях">edge://extensions</span>,
-          перемикач зліва внизу.
+          Такого перемикача немає — увімкни <b>«Режим розробника»</b> у правому верхньому
+          куті тієї ж сторінки. В Edge: <span class="шлях">edge://extensions</span>, перемикач зліва внизу.
         </p>
       </div>
     </section>
 
-    <!-- ── КРОК 5 ─────────────────────────────────────────────── -->
-    <section class="крок" id="крок-5">
+    <!-- 6 ─────────────────────────────────────────────────── -->
+    <section class="крок" id="крок-6">
       <div class="крок-шапка">
-        <input type="checkbox" class="галка" data-крок="5" aria-label="Крок 5 виконано">
-        <h3><span class="номер">05</span>Поставити агента</h3>
+        <input type="checkbox" class="галка" data-крок="6" aria-label="Крок 6 виконано">
+        <h3><span class="номер">06</span>Поставити агента</h3>
         <span class="хвилини">3 хв</span>
       </div>
 
-      <div class="слот">
-        <span class="мітка">Файл «2 — код для браузера»</span>
-        Вставити сюди посилання, яке дасть ведуча
+      <div class="код-блок">
+        <div class="код-шапка">
+          <span class="код-назва">Код для браузера · Tampermonkey</span>
+          <button class="копія" data-код="код-браузера">Скопіювати код</button>
+        </div>
+        <details>
+          <summary>Подивитись, що в ньому (не обов'язково)</summary>
+          <pre id="код-браузера">// ==UserScript==
+// @name         Агент-рекрутер для work.ua
+// @namespace    workua-helper
+// @version      1.0
+// @description  Гортає пошук резюме на work.ua, оцінює кандидатів через Gemini і складає їх у Google Таблицю
+// @match        https://www.work.ua/*
+// @match        https://work.ua/*
+// @run-at       document-idle
+// @grant        GM_xmlhttpRequest
+// @grant        GM_setValue
+// @grant        GM_getValue
+// @connect      script.google.com
+// @connect      script.googleusercontent.com
+// @connect      generativelanguage.googleapis.com
+// ==/UserScript==
+
+(function () {
+  'use strict';
+
+  // ═══════════════════════════════════════════════════════════════════
+  // Налаштування
+  // ═══════════════════════════════════════════════════════════════════
+
+  var ЗА_ЗАМОВЧУВАННЯМ = {
+    адресаТаблиці: '',
+    ключТаблиці: '',
+    ключGemini: '',
+    модель: 'gemini-3.5-flash-lite',
+    // Вмикається, тільки якщо основна модель перевантажена і не відповіла
+    // після чотирьох спроб. Порожнє поле вимикає підміну.
+    модельЗапасна: 'gemini-3.5-flash',
+    відкриватиРезюмеВід: 50,   // з якого чорнового балу відкривати повне резюме
+    паузаСторінки: 1200,       // мс між сторінками work.ua
+    максСторінокЗаЗапуск: 200, // запобіжник, щоб обхід не крутився вічно
+    // Безкоштовний тариф рахує ЗАПИТИ, а не обсяг, тому пачки великі —
+    // токенів усе одно витрачається мала частина дозволеного.
+    // 5 секунд — це 12 запитів на хвилину: вкладається в 15 RPM у
+    // gemini-3.5-flash-lite і не впирається в TPM навіть на важких пачках.
+    // Для моделі з тіснішими лімітами число варто підняти, але й без цього
+    // агент не зламається: на 429 він перечекає і повторить.
+    паузаGeminiСек: 5,
+    пачкаКарток: 25,           // скільки карток за один запит до Gemini
+    пачкаРезюме: 10            // скільки повних резюме за один запит
+  };
+
+  // Для цих полів порожнє значення — свідомий вибір, а не «не заповнено»
+  var МОЖНА_ПОРОЖНЄ = ['модельЗапасна'];
+
+  function налаштування() {
+    var н = {};
+    for (var к in ЗА_ЗАМОВЧУВАННЯМ) {
+      var з = GM_getValue(к, ЗА_ЗАМОВЧУВАННЯМ[к]);
+      var порожнє = (з === '' || з === undefined || з === null);
+      н[к] = (порожнє &amp;&amp; МОЖНА_ПОРОЖНЄ.indexOf(к) === -1) ? ЗА_ЗАМОВЧУВАННЯМ[к]
+           : (з === undefined || з === null) ? ЗА_ЗАМОВЧУВАННЯМ[к]
+           : з;
+    }
+    return н;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // Мережа
+  // ═══════════════════════════════════════════════════════════════════
+
+  function запит(параметри) {
+    return new Promise(function (готово, зламалось) {
+      GM_xmlhttpRequest({
+        method: параметри.метод || 'GET',
+        url: параметри.адреса,
+        headers: параметри.заголовки || {},
+        data: параметри.тіло,
+        timeout: 60000,
+        onload: function (в) { готово({ код: в.status, текст: в.responseText }); },
+        onerror: function () { зламалось(new Error('Немає зв’язку з ' + параметри.адреса)); },
+        ontimeout: function () { зламалось(new Error('Занадто довго чекали відповіді')); }
+      });
+    });
+  }
+
+  /** Звертання до Apps Script у таблиці */
+  async function доТаблиці(дія, дані) {
+    var н = налаштування();
+    if (!н.адресаТаблиці) throw new Error('Не вказано адресу таблиці в налаштуваннях');
+
+    var тіло = Object.assign({ дія: дія, ключ: н.ключТаблиці }, дані || {});
+
+    var в = await запит({
+      метод: 'POST',
+      адреса: н.адресаТаблиці,
+      // text/plain — щоб браузер не питав у Apps Script зайвого дозволу
+      заголовки: { 'Content-Type': 'text/plain;charset=utf-8' },
+      тіло: JSON.stringify(тіло)
+    });
+
+    var відповідь;
+    try {
+      відповідь = JSON.parse(в.текст);
+    } catch (e) {
+      throw new Error('Таблиця відповіла незрозуміло. Найчастіше це означає, що ' +
+                      'у розгортку не стоїть «Хто має доступ: Усі».');
+    }
+
+    if (!відповідь.ok) throw new Error('Таблиця: ' + відповідь.помилка);
+    return відповідь;
+  }
+
+  /** Звертання до Gemini */
+  var часОстанньогоGemini = 0;
+
+  // Скільки чекати перед повторною спробою, у секундах
+  var ЧЕКАННЯ_ПЕРЕВАНТАЖЕННЯ = [5, 15, 40, 90];  // модель зайнята (500-504)
+  var ЧЕКАННЯ_ЛІМІТУ         = [35, 75];         // забагато запитів (429)
+
+  /** Одна спроба звернутись до конкретної моделі */
+  async function однаСпроба(модель, ключ, підказка, схема, паузаСек) {
+    var зачекати = паузаСек * 1000 - (Date.now() - часОстанньогоGemini);
+    if (зачекати &gt; 0) await пауза(зачекати);
+    часОстанньогоGemini = Date.now();
+
+    return запит({
+      метод: 'POST',
+      адреса: 'https://generativelanguage.googleapis.com/v1beta/models/' +
+              encodeURIComponent(модель) + ':generateContent?key=' + encodeURIComponent(ключ),
+      заголовки: { 'Content-Type': 'application/json' },
+      тіло: JSON.stringify({
+        contents: [{ parts: [{ text: підказка }] }],
+        generationConfig: {
+          temperature: 0,
+          responseMimeType: 'application/json',
+          responseSchema: схема
+        }
+      })
+    });
+  }
+
+  function розібратиВідповідь(текстВідповіді) {
+    var дані = JSON.parse(текстВідповіді);
+    var текст = дані &amp;&amp;
+                дані.candidates &amp;&amp;
+                дані.candidates[0] &amp;&amp;
+                дані.candidates[0].content &amp;&amp;
+                дані.candidates[0].content.parts &amp;&amp;
+                дані.candidates[0].content.parts[0] &amp;&amp;
+                дані.candidates[0].content.parts[0].text;
+
+    if (!текст) throw new Error('Gemini повернув порожню відповідь');
+    return JSON.parse(текст);
+  }
+
+  /**
+   * Звертання до Gemini з терпінням.
+   *
+   * 503 «модель перевантажена» — це не наша помилка, а черга на боці Google,
+   * і за хвилину-другу вона зазвичай розсмоктується. Тому не падаємо, а чекаємо.
+   * 429 — або забагато запитів за хвилину (мине), або вичерпана денна норма
+   * (не мине); розрізняємо це двома спробами.
+   */
+  async function доGemini(підказка, схема) {
+    var н = налаштування();
+    if (!н.ключGemini) throw new Error('Не вказано ключ Gemini в налаштуваннях');
+
+    var моделі = [н.модель];
+    if (н.модельЗапасна &amp;&amp; н.модельЗапасна !== н.модель) моделі.push(н.модельЗапасна);
+
+    var паузаСек = Number(н.паузаGeminiСек) || 13;
+    var остання = '';
+
+    for (var м = 0; м &lt; моделі.length; м++) {
+      var модель = моделі[м];
+      if (м &gt; 0) журнал('↻ Переходжу на запасну модель: ' + модель);
+
+      var перевантажень = 0;
+      var лімітів = 0;
+
+      while (true) {
+        var в = await однаСпроба(модель, н.ключGemini, підказка, схема, паузаСек);
+
+        if (в.код === 200) {
+          if (м &gt; 0) журнал('✓ Запасна модель відповіла.');
+          return розібратиВідповідь(в.текст);
+        }
+
+        // Модель зайнята — це минуще, чекаємо й пробуємо ще
+        if (в.код &gt;= 500 &amp;&amp; в.код &lt;= 504) {
+          if (перевантажень &lt; ЧЕКАННЯ_ПЕРЕВАНТАЖЕННЯ.length) {
+            var скільки = ЧЕКАННЯ_ПЕРЕВАНТАЖЕННЯ[перевантажень++];
+            журнал('⏳ Модель ' + модель + ' перевантажена. Чекаю ' + скільки + ' с…');
+            статус('Модель зайнята, чекаю ' + скільки + ' с (спроба ' + перевантажень + ' з 4)');
+            await пауза(скільки * 1000);
+            continue;
+          }
+          остання = 'Модель «' + модель + '» перевантажена на боці Google і не відповіла ' +
+                    'після чотирьох спроб';
+          break;   // спробуємо запасну, якщо вона є
+        }
+
+        // Забагато запитів. Перший раз — можливо, просто за хвилину; далі — денна норма
+        if (в.код === 429) {
+          if (лімітів &lt; ЧЕКАННЯ_ЛІМІТУ.length) {
+            var пауза429 = ЧЕКАННЯ_ЛІМІТУ[лімітів++];
+            журнал('⏳ Забагато запитів. Чекаю ' + пауза429 + ' с…');
+            статус('Ліміт запитів, чекаю ' + пауза429 + ' с…');
+            await пауза(пауза429 * 1000);
+            continue;
+          }
+          throw new Error('ЛІМІТ: безкоштовна норма запитів до Gemini вичерпана. ' +
+                          'Прогрес збережено — запусти пізніше, агент продовжить ' +
+                          'з тієї ж сторінки. Норма поновлюється о 10:00 за Києвом.');
+        }
+
+        // Решта кодів — справжні помилки, повторювати немає сенсу
+        throw new Error('Gemini відповів кодом ' + в.код + ': ' + в.текст.slice(0, 200));
+      }
+    }
+
+    throw new Error(остання + '. Спробуй пізніше або обери в налаштуваннях іншу модель — ' +
+                    'старіші зазвичай вільніші.');
+  }
+
+  function пауза(мс) {
+    return new Promise(function (r) { setTimeout(r, мс); });
+  }
+
+  /**
+   * Питає в самого Google, які моделі доступні цьому ключу.
+   * Так список ніколи не застаріє — Google міняє назви моделей часто.
+   */
+  async function списокМоделей() {
+    var н = налаштування();
+    if (!н.ключGemini) throw new Error('Спершу впиши ключ Gemini');
+
+    var в = await запит({
+      метод: 'GET',
+      адреса: 'https://generativelanguage.googleapis.com/v1beta/models?pageSize=200&amp;key=' +
+              encodeURIComponent(н.ключGemini)
+    });
+
+    if (в.код !== 200) throw new Error('Google відповів кодом ' + в.код);
+
+    var моделі = (JSON.parse(в.текст).models || [])
+      .filter(function (м) {
+        return (м.supportedGenerationMethods || []).indexOf('generateContent') &gt; -1;
+      })
+      .map(function (м) { return String(м.name).replace(/^models\//, ''); })
+      .filter(function (і) { return і.indexOf('gemini') === 0 &amp;&amp; і.indexOf('-tts') === -1; });
+
+    // Легкі моделі вгору: у них щедріші безкоштовні ліміти
+    моделі.sort(function (a, b) {
+      var вагаA = (a.indexOf('lite') &gt; -1 ? 0 : a.indexOf('flash') &gt; -1 ? 1 : 2);
+      var вагаB = (b.indexOf('lite') &gt; -1 ? 0 : b.indexOf('flash') &gt; -1 ? 1 : 2);
+      return вагаA - вагаB || a.localeCompare(b);
+    });
+
+    return моделі;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // Читання work.ua
+  // ═══════════════════════════════════════════════════════════════════
+
+  var ПЕРЕВІРКА_CLOUDFLARE = /Перевірка надійності підключення|Enable JavaScript and cookies/;
+
+  async function сторінка(адреса) {
+    var в = await fetch(адреса, { credentials: 'include' });
+    var html = await в.text();
+
+    if (ПЕРЕВІРКА_CLOUDFLARE.test(html)) {
+      throw new Error('work.ua попросив перевірку безпеки. Відкрий сайт у вкладці, ' +
+                      'дочекайся, поки сторінка завантажиться, і запусти ще раз.');
+    }
+    return new DOMParser().parseFromString(html, 'text/html');
+  }
+
+  function адресаСторінки(базова, номер) {
+    var u = new URL(базова, 'https://www.work.ua');
+    u.searchParams.set('page', номер);
+    return u.toString();
+  }
+
+  function скількиСторінок(doc) {
+    var найбільша = 1;
+    var посилання = doc.querySelectorAll('a[href*="page="]');
+    for (var i = 0; i &lt; посилання.length; i++) {
+      var m = (посилання[i].getAttribute('href') || '').match(/[?&amp;]page=(\d+)/);
+      if (m) найбільша = Math.max(найбільша, parseInt(m[1], 10));
+    }
+    return найбільша;
+  }
+
+  function карткиЗіСторінки(doc) {
+    var знайдені = [];
+    var вжеБули = {};
+    var посилання = doc.querySelectorAll('a[href*="/resumes/"]');
+
+    for (var i = 0; i &lt; посилання.length; i++) {
+      var m = (посилання[i].getAttribute('href') || '').match(/\/resumes\/(\d+)/);
+      if (!m) continue;
+
+      var номер = m[1];
+      if (вжеБули[номер]) continue;
+      вжеБули[номер] = true;
+
+      var el = посилання[i];
+      for (var k = 0; k &lt; 6 &amp;&amp; el.parentElement; k++) {
+        el = el.parentElement;
+        if (el.textContent &amp;&amp; el.textContent.trim().length &gt; 120) break;
+      }
+
+      знайдені.push({
+        номер: номер,
+        посилання: 'https://www.work.ua/resumes/' + номер + '/',
+        картка: прибратиОсобисте((el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 700))
+      });
+    }
+    return знайдені;
+  }
+
+  async function текстРезюме(посилання) {
+    var doc = await сторінка(посилання);
+    var текст = (doc.body.textContent || '').replace(/[ \t]+/g, ' ').replace(/\s*\n\s*/g, '\n').trim();
+
+    // Відрізаємо шапку сайту й хвіст зі схожими резюме
+    var початок = текст.indexOf('Резюме від');
+    if (початок &gt; 0) текст = текст.slice(початок);
+
+    ['Схожі резюме', 'Ще резюме', 'Порівняти з іншими'].forEach(function (мітка) {
+      var і = текст.indexOf(мітка);
+      if (і &gt; 500) текст = текст.slice(0, і);
+    });
+
+    return прибратиОсобисте(текст).slice(0, 4000);
+  }
+
+  /**
+   * Страхувальна сітка: у Gemini не має потрапити нічого контактного,
+   * навіть якщо work.ua колись почне це показувати.
+   */
+  function прибратиОсобисте(текст) {
+    return String(текст)
+      .replace(/[\w.+-]+@[\w-]+\.[\w.]+/g, '[пошта прихована]')
+      .replace(/(?:\+?38)?[\s(-]*0\d{2}[\s)-]*\d{3}[\s-]*\d{2}[\s-]*\d{2}/g, '[телефон прихований]')
+      .replace(/Прізвище, контакти та світлина[^.]*\./g, '');
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // Оцінювання
+  // ═══════════════════════════════════════════════════════════════════
+
+  var СХЕМА = {
+    type: 'ARRAY',
+    items: {
+      type: 'OBJECT',
+      properties: {
+        id:         { type: 'STRING'  },
+        score:      { type: 'INTEGER' },
+        why:        { type: 'STRING'  },
+        position:   { type: 'STRING'  },
+        city:       { type: 'STRING'  },
+        age:        { type: 'STRING'  },
+        experience: { type: 'STRING'  },
+        salary:     { type: 'STRING'  }
+      },
+      required: ['id', 'score', 'why']
+    }
+  };
+
+  function підказка(пошук, люди, повніРезюме) {
+    var шапка =
+      'Ти досвідчений рекрутер. Оцінюєш, наскільки кандидат підходить під вакансію.\n\n' +
+      'ЯКОГО КАНДИДАТА ШУКАЄМО:\n' + (пошук.ідеальний || '(опис не заданий)') + '\n\n';
+
+    if (пошук.стопСигнали) {
+      шапка += 'СТОП-СИГНАЛИ (що дискваліфікує):\n' + пошук.стопСигнали + '\n' +
+               'Якщо спрацював стоп-сигнал — бал не вище 30.\n\n';
+    }
+
+    шапка +=
+      'ШКАЛА БАЛІВ:\n' +
+      '80–100 — збігається все головне\n' +
+      '60–79 — основне збігається, але є питання\n' +
+      '40–59 — частковий збіг\n' +
+      '0–39 — не той профіль\n\n' +
+      'ПРАВИЛА:\n' +
+      '• У полі why — одне-два речення, конкретно за фактами з тексту. ' +
+      'Без загальних слів на кшталт «хороший кандидат».\n' +
+      '• Поля position, city, age, experience, salary витягни з тексту як є. ' +
+      'Чого в тексті немає — лишай порожнім, не вигадуй.\n' +
+      '• experience — стисло: скільки років і в чому.\n' +
+      '• Поверни рівно стільки обʼєктів, скільки кандидатів нижче, ' +
+      'і збережи їхні id без змін.\n\n' +
+      (повніРезюме
+        ? 'Нижче — ПОВНІ тексти резюме.\n\n'
+        : 'Нижче — КОРОТКІ картки зі списку пошуку. Оцінюй за тим, що є.\n\n') +
+      'КАНДИДАТИ:\n';
+
+    var тіло = люди.map(function (л) {
+      return '=== id: ' + л.номер + ' ===\n' + (повніРезюме ? л.повне : л.картка);
+    }).join('\n\n');
+
+    return шапка + тіло;
+  }
+
+  async function оцінити(пошук, люди, повніРезюме) {
+    var результат = await доGemini(підказка(пошук, люди, повніРезюме), СХЕМА);
+    var заНомером = {};
+
+    (результат || []).forEach(function (р) {
+      if (р &amp;&amp; р.id) заНомером[String(р.id).trim()] = р;
+    });
+
+    return люди.map(function (л) {
+      var о = заНомером[л.номер];
+      if (!о) return null;
+      return {
+        номер:      л.номер,
+        посилання:  л.посилання,
+        картка:     л.картка || '',
+        бал:        Math.max(0, Math.min(100, Number(о.score) || 0)),
+        чому:       о.why || '',
+        посада:     о.position || '',
+        місто:      о.city || '',
+        вік:        о.age || '',
+        досвід:     о.experience || '',
+        зарплата:   о.salary || ''
+      };
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // Головний цикл
+  // ═══════════════════════════════════════════════════════════════════
+
+  var зупинити = false;
+
+  /**
+   * Обхід ведеться не «до сторінки N», а «поки не набереться N НОВИХ людей».
+   *
+   * Чому не по сторінках: work.ua сортує резюме за свіжістю, і люди додають
+   * їх щогодини. За ніч список сповзає вниз на цілу сторінку, тож учорашня
+   * закладка «сторінка 3» сьогодні вказує вже на інших людей — а найсвіжіші,
+   * що з'явились уночі вгорі, агент не побачив би взагалі.
+   *
+   * Тому агент завжди починає з першої сторінки. Тих, хто вже в «Історії»,
+   * він упізнає і пропускає — це не коштує ні запиту до Gemini, ні відкриття
+   * резюме, тільки читання сторінки. Гортає доти, доки не набере потрібну
+   * кількість справді нових.
+   */
+  async function запустити(пошук, скількиНових) {
+    var н = налаштування();
+    зупинити = false;
+
+    var лічильники = {
+      сторінок: 0,
+      переглянуто: 0,   // усе, що трапилось на сторінках
+      пропущено: 0,     // з них — уже в «Історії»
+      нових: 0,         // з них — узяті в роботу
+      оцінено: 0,       // з них — дійшли до оцінки
+      записано: 0       // з них — пройшли за мінімальним балом
+    };
+    var помилки = [];
+
+    журнал('Пошук: ' + пошук.назва);
+    статус('Питаю таблицю, кого вже бачили…');
+
+    var історія = (await доТаблиці('історія', { пошук: пошук.назва })).номери || [];
+    var вжеБачили = {};
+    історія.forEach(function (н) { вжеБачили[н] = true; });
+    журнал('В «Історії» вже ' + історія.length + ' кандидатів — їх пропускаємо.');
+
+    статус('Читаю першу сторінку…');
+    var перша = await сторінка(адресаСторінки(пошук.адреса, 1));
+    var всього = скількиСторінок(перша);
+
+    var стеля = Number(н.максСторінокЗаЗапуск) || 0;
+    var межа = стеля &gt; 0 ? Math.min(стеля, всього) : всього;
+
+    журнал('Усього сторінок: ' + всього + '. Шукаю ' + скількиНових + ' нових кандидатів.');
+
+    var черга = [];
+    var обірвано = false;
+
+    async function оцінитиПорцію(порція) {
+      try {
+        лічильники.записано += await обробити(пошук, порція, н, помилки, лічильники);
+        return true;
+      } catch (e) {
+        помилки.push(e.message);
+        журнал('⛔️ ' + e.message);
+        журнал('Ці ' + порція.length + ' кандидатів не втрачені: їх немає в «Історії», ' +
+               'тож наступний запуск підбере їх заново.');
+        обірвано = true;
+        return false;
+      }
+    }
+
+    for (var с = 1; с &lt;= межа; с++) {
+      if (зупинити) { журнал('Зупинено на сторінці ' + с + '.'); break; }
+
+      var doc;
+      try {
+        doc = (с === 1) ? перша : await сторінка(адресаСторінки(пошук.адреса, с));
+      } catch (e) {
+        помилки.push('Сторінка ' + с + ': ' + e.message);
+        журнал('⚠️ ' + e.message);
+        break;
+      }
+
+      var картки = карткиЗіСторінки(doc);
+      лічильники.сторінок++;
+      лічильники.переглянуто += картки.length;
+
+      if (картки.length === 0) {
+        помилки.push('Сторінка ' + с + ': жодного резюме — можливо, змінилась верстка');
+        журнал('⚠️ Сторінка ' + с + ': порожньо.');
+      }
+
+      картки.forEach(function (к) {
+        if (лічильники.нових &gt;= скількиНових) return;   // набрали скільки треба
+        if (вжеБачили[к.номер]) { лічильники.пропущено++; return; }
+        вжеБачили[к.номер] = true;
+        черга.push(к);
+        лічильники.нових++;
+      });
+
+      статус('Сторінка ' + с + ' · нових ' + лічильники.нових + ' з ' + скількиНових +
+             ' · записано ' + лічильники.записано);
+
+      // Оцінюємо по ходу, щоб результат зʼявлявся в таблиці, не чекаючи кінця
+      while (черга.length &gt;= н.пачкаКарток * 2) {
+        if (!await оцінитиПорцію(черга.splice(0, н.пачкаКарток * 2))) break;
+      }
+      if (обірвано) break;
+
+      if (лічильники.нових &gt;= скількиНових) {
+        журнал('Набрано ' + скількиНових + ' нових на сторінці ' + с + '. Далі не гортаю.');
+        break;
+      }
+
+      if (с === межа &amp;&amp; межа &lt; всього) {
+        журнал('⚠️ Дійшла до межі в ' + межа + ' сторінок за запуск, а нових набралось ' +
+               лічильники.нових + '. Підніми межу в налаштуваннях або звузь фільтр на work.ua.');
+      }
+
+      if (с &lt; межа) await пауза(н.паузаСторінки);
+    }
+
+    if (черга.length &amp;&amp; !зупинити &amp;&amp; !обірвано) {
+      await оцінитиПорцію(черга.splice(0, черга.length));
+    }
+
+    // Розкладаємо підсумок так, щоб числа сходились і не треба було гадати,
+    // куди поділась різниця між «побачив» і «записав»
+    var недоглянуті = Math.max(0,
+      лічильники.переглянуто - лічильники.пропущено - лічильники.нових);
+    var відсіяні = Math.max(0, лічильники.оцінено - лічильники.записано);
+
+    журнал('— — —');
+    журнал('Трапилось на сторінках: ' + лічильники.переглянуто);
+    if (лічильники.пропущено) {
+      журнал('  уже в «Історії», пропущені безкоштовно: ' + лічильники.пропущено);
+    }
+    if (недоглянуті) {
+      журнал('  не дивився — вже набрав потрібну кількість: ' + недоглянуті);
+    }
+    журнал('  оцінено через Gemini: ' + лічильники.оцінено);
+    if (відсіяні) {
+      журнал('    з них нижче мінімального балу ' + пошук.мінімальнийБал + ': ' + відсіяні);
+    }
+    журнал('  записано в таблицю: ' + лічильники.записано);
+
+    var підсумок = 'Готово · оцінено ' + лічильники.оцінено +
+                   ', записано ' + лічильники.записано +
+                   (лічильники.пропущено ? ', пропущено знайомих ' + лічильники.пропущено : '');
+
+    статус(підсумок);
+    журнал(підсумок);
+
+    await доТаблиці('журнал', {
+      рядок: {
+        пошук: пошук.назва,
+        сторінок: лічильники.сторінок,
+        переглянуто: лічильники.переглянуто,
+        нових: лічильники.нових,
+        записано: лічильники.записано,
+        помилки: помилки.slice(0, 5).join(' | ')
+      }
+    });
+    await доТаблиці('статус', { пошук: пошук.назва, статус: підсумок });
+  }
+
+  /** Два проходи над однією порцією кандидатів */
+  async function обробити(пошук, порція, н, помилки, лічильники) {
+    статус('Оцінюю ' + порція.length + ' кандидатів…');
+
+    // ── Прохід 1: коротко, за картками ─────────────────────────────
+    var чорнові = [];
+    for (var i = 0; i &lt; порція.length; i += н.пачкаКарток) {
+      if (зупинити) break;
+      var шматок = порція.slice(i, i + н.пачкаКарток);
+      var оцінки = await оцінити(пошук, шматок, false);
+
+      оцінки.forEach(function (о, j) {
+        if (о) чорнові.push(о);
+        else помилки.push('Gemini пропустив кандидата ' + шматок[j].номер);
+      });
+      журнал('Чорнова оцінка: ' + Math.min(i + н.пачкаКарток, порція.length) +
+             ' з ' + порція.length);
+    }
+
+    // ── Прохід 2: повні резюме тих, хто пройшов поріг ──────────────
+    var доУточнення = чорнові.filter(function (о) { return о.бал &gt;= н.відкриватиРезюмеВід; });
+    журнал('Варті повного резюме: ' + доУточнення.length + ' з ' + чорнові.length);
+
+    var уточнені = {};
+    for (var k = 0; k &lt; доУточнення.length; k += н.пачкаРезюме) {
+      if (зупинити) break;
+      var група = доУточнення.slice(k, k + н.пачкаРезюме);
+      var зТекстом = [];
+
+      for (var g = 0; g &lt; група.length; g++) {
+        try {
+          група[g].повне = await текстРезюме(група[g].посилання);
+          зТекстом.push(група[g]);
+        } catch (e) {
+          // Резюме не відкрилось — людина лишається з чорновим балом,
+          // вигадувати за неї нічого не будемо
+          помилки.push('Резюме ' + група[g].номер + ': ' + e.message);
+        }
+        await пауза(н.паузаСторінки);
+      }
+
+      if (!зТекстом.length) continue;
+
+      var точні = await оцінити(пошук, зТекстом, true);
+      точні.forEach(function (о) { if (о) уточнені[о.номер] = о; });
+      статус('Уточнено ' + Object.keys(уточнені).length + ' з ' + доУточнення.length);
+    }
+
+    // ── Складаємо в таблицю ────────────────────────────────────────
+    var доЗапису = чорнові.map(function (о) {
+      var фінальний = уточнені[о.номер] || о;
+      return {
+        номер:      фінальний.номер,
+        посилання:  фінальний.посилання,
+        бал:        фінальний.бал,
+        чому:       фінальний.чому,
+        посада:     фінальний.посада,
+        місто:      фінальний.місто,
+        вік:        фінальний.вік,
+        досвід:     фінальний.досвід,
+        зарплата:   фінальний.зарплата,
+        записати:   фінальний.бал &gt;= пошук.мінімальнийБал
+      };
+    });
+
+    if (!доЗапису.length) return 0;
+
+    лічильники.оцінено += доЗапису.length;
+
+    var в = await доТаблиці('зберегти', { пошук: пошук.назва, кандидати: доЗапису });
+    var відсіяно = доЗапису.length - в.записано;
+
+    журнал('Записано ' + в.записано + (в.аркуш ? ' → аркуш «' + в.аркуш + '»' : '') +
+           (відсіяно ? '; ' + відсіяно + ' не дотягнули до балу ' + пошук.мінімальнийБал : ''));
+    return в.записано;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
+  // Панель
+  // ═══════════════════════════════════════════════════════════════════
+
+  // work.ua має власні стилі для полів і галочок — вони перебивають наші
+  // й роблять галочку невидимою. Ставимо захист саме для нашої панелі.
+  var стилі = document.createElement('style');
+  стилі.textContent =
+    '#ар-панель, #ар-панель * { box-sizing:border-box; font-family:inherit; }' +
+    '#ар-панель label { font-weight:400 !important; margin:0 !important; ' +
+      'text-transform:none !important; letter-spacing:normal !important; }' +
+    '#ар-панель input[type=checkbox] {' +
+      '-webkit-appearance:checkbox !important; appearance:checkbox !important;' +
+      'width:14px !important; height:14px !important; min-width:14px !important;' +
+      'opacity:1 !important; position:static !important; display:inline-block !important;' +
+      'margin:3px 0 0 0 !important; padding:0 !important; visibility:visible !important;' +
+      'clip:auto !important; pointer-events:auto !important; }' +
+    '#ар-панель button { font-family:inherit; line-height:normal; }';
+  document.head.appendChild(стилі);
+
+  var П = document.createElement('div');
+  П.id = 'ар-панель';
+  П.style.cssText =
+    'position:fixed;right:16px;bottom:16px;z-index:2147483000;width:340px;' +
+    // Панель ніколи не має перерости екран: інакше шапку з кнопками
+    // обрізає вгорі й повернутись до роботи стає нічим
+    'max-height:calc(100vh - 32px);display:flex;flex-direction:column;' +
+    'background:#111827;color:#f9fafb;border-radius:12px;padding:16px;' +
+    'font:13px/1.55 -apple-system,Segoe UI,Roboto,sans-serif;' +
+    'box-shadow:0 10px 40px rgba(0,0,0,.45)';
+
+  П.innerHTML =
+    '&lt;div style="display:flex;align-items:center;gap:10px;flex:0 0 auto"&gt;' +
+      '&lt;b style="font-size:15px;flex:1"&gt;Агент-рекрутер&lt;/b&gt;' +
+      '&lt;span id="ар-шестерня" style="cursor:pointer;opacity:.6" title="Налаштування"&gt;⚙︎&lt;/span&gt;' +
+      '&lt;span id="ар-згорнути" style="cursor:pointer;opacity:.6;font-size:17px;' +
+        'line-height:1;user-select:none" title="Згорнути"&gt;–&lt;/span&gt;' +
+    '&lt;/div&gt;' +
+    '&lt;div id="ар-міні" style="display:none;font-size:12px;opacity:.75;margin-top:6px"&gt;&lt;/div&gt;' +
+    '&lt;div id="ар-тіло" style="margin-top:10px;flex:1 1 auto;overflow-y:auto;min-height:0"&gt;' +
+    '&lt;div id="ар-робота"&gt;' +
+      '&lt;select id="ар-пошук" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff;margin-bottom:8px"&gt;&lt;/select&gt;' +
+      '&lt;label style="display:block;opacity:.7;font-size:12px"&gt;Скільки нових кандидатів зібрати&lt;/label&gt;' +
+      '&lt;input id="ар-скільки" type="number" min="1" value="30" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff;margin:4px 0 6px"&gt;' +
+      '&lt;div style="font-size:11px;opacity:.6;margin-bottom:10px;line-height:1.4"&gt;' +
+        'Агент завжди починає з першої сторінки, щоб не проґавити свіжі резюме. ' +
+        'Тих, хто вже в «Історії», пропускає без витрат — і гортає стільки ' +
+        'сторінок, скільки треба, щоб набрати цю кількість нових.' +
+      '&lt;/div&gt;' +
+      '&lt;button id="ар-старт" style="width:100%;padding:10px;border:0;border-radius:8px;background:#2563eb;color:#fff;font-size:14px;font-weight:600;cursor:pointer"&gt;Старт&lt;/button&gt;' +
+      '&lt;button id="ар-стоп" style="width:100%;padding:7px;margin-top:6px;border:0;border-radius:8px;background:#374151;color:#fff;cursor:pointer;display:none"&gt;Зупинити&lt;/button&gt;' +
+      '&lt;button id="ар-очистити" style="width:100%;padding:6px;margin-top:6px;border:1px solid #7f1d1d;border-radius:8px;background:transparent;color:#fca5a5;font-size:12px;cursor:pointer"&gt;Очистити історію по вакансії&lt;/button&gt;' +
+      '&lt;div id="ар-статус" style="margin-top:10px;font-weight:600"&gt;&lt;/div&gt;' +
+      '&lt;div id="ар-журнал" style="margin-top:8px;max-height:150px;overflow-y:auto;font-size:12px;opacity:.75;border-top:1px solid #374151;padding-top:8px"&gt;&lt;/div&gt;' +
+    '&lt;/div&gt;' +
+    '&lt;div id="ар-налаштування" style="display:none"&gt;&lt;/div&gt;' +
+    '&lt;/div&gt;';
+
+  document.body.appendChild(П);
+
+  var $ = function (id) { return П.querySelector('#' + id); };
+
+  function статус(т) {
+    $('ар-статус').textContent = т;
+    $('ар-міні').textContent = т;   // щоб було видно й у згорнутому вигляді
+  }
+
+  function журнал(т) {
+    var р = document.createElement('div');
+    р.textContent = т;
+    $('ар-журнал').appendChild(р);
+    $('ар-журнал').scrollTop = $('ар-журнал').scrollHeight;
+  }
+
+  // ── Налаштування ─────────────────────────────────────────────────
+  var ПОЛЯ = [
+    ['адресаТаблиці',       'Адреса веб-застосунку таблиці', 'text'],
+    ['ключТаблиці',         'Таємний ключ (як у Код.gs)',    'text'],
+    ['ключGemini',          'Ключ Gemini з AI Studio',       'password'],
+    ['відкриватиРезюмеВід', 'Відкривати повне резюме від балу', 'number'],
+    ['пачкаКарток',         'Карток в одному запиті (чорнова оцінка)', 'number'],
+    ['пачкаРезюме',         'Резюме в одному запиті (точна оцінка)',   'number'],
+    ['паузаGeminiСек',      'Пауза між запитами до Gemini, секунд',    'number']
+  ];
+
+  var ПІДКАЗКИ_МОДЕЛЕЙ = {
+    lite:  'найдешевша, найщедріші безкоштовні ліміти, оцінює грубіше',
+    flash: 'золота середина — швидка й достатньо уважна',
+    pro:   'найрозумніша, але ліміти найменші — на сотні сторінок не вистачить'
+  };
+
+  function підказкаПроМодель(назва) {
+    if (назва.indexOf('lite') &gt; -1)  return ПІДКАЗКИ_МОДЕЛЕЙ.lite;
+    if (назва.indexOf('flash') &gt; -1) return ПІДКАЗКИ_МОДЕЛЕЙ.flash;
+    if (назва.indexOf('pro') &gt; -1)   return ПІДКАЗКИ_МОДЕЛЕЙ.pro;
+    return '';
+  }
+
+  var КНОПКА_НАЗАД =
+    '&lt;button class="ар-назад" style="width:100%;padding:8px;border:1px solid #4b5563;' +
+    'border-radius:8px;background:transparent;color:#d1d5db;font-size:13px;' +
+    'cursor:pointer"&gt;← Назад до роботи&lt;/button&gt;';
+
+  function намалюватиНалаштування() {
+    var н = налаштування();
+    var html = КНОПКА_НАЗАД;
+
+    ПОЛЯ.forEach(function (п) {
+      html += '&lt;label style="display:block;opacity:.7;font-size:12px;margin-top:8px"&gt;' + п[1] + '&lt;/label&gt;' +
+              '&lt;input data-поле="' + п[0] + '" type="' + п[2] + '" value="' +
+              String(н[п[0]]).replace(/"/g, '&amp;quot;') +
+              '" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff"&gt;';
+    });
+
+    html += '&lt;label style="display:block;opacity:.7;font-size:12px;margin-top:8px"&gt;Модель Gemini&lt;/label&gt;' +
+            '&lt;select id="ар-модель" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff"&gt;' +
+              '&lt;option value="' + String(н.модель).replace(/"/g, '&amp;quot;') + '"&gt;' + н.модель + '&lt;/option&gt;' +
+            '&lt;/select&gt;' +
+            '&lt;div id="ар-про-модель" style="font-size:11px;opacity:.6;margin-top:3px"&gt;' +
+              підказкаПроМодель(н.модель) +
+            '&lt;/div&gt;' +
+            '&lt;button id="ар-моделі" style="width:100%;padding:6px;margin-top:6px;border:0;border-radius:6px;background:#374151;color:#fff;font-size:12px;cursor:pointer"&gt;Оновити список моделей&lt;/button&gt;' +
+            '&lt;label style="display:block;opacity:.7;font-size:12px;margin-top:8px"&gt;' +
+              'Запасна модель (якщо основна перевантажена)&lt;/label&gt;' +
+            '&lt;select id="ар-модель-запасна" style="width:100%;padding:7px;border-radius:6px;border:1px solid #374151;background:#1f2937;color:#fff"&gt;' +
+              '&lt;option value=""' + (н.модельЗапасна ? '' : ' selected') + '&gt;— без запасної —&lt;/option&gt;' +
+              (н.модельЗапасна
+                ? '&lt;option value="' + String(н.модельЗапасна).replace(/"/g, '&amp;quot;') +
+                  '" selected&gt;' + н.модельЗапасна + '&lt;/option&gt;'
+                : '') +
+            '&lt;/select&gt;' +
+            '&lt;div id="ар-розрахунок" style="font-size:11px;opacity:.65;margin-top:10px;' +
+              'line-height:1.45;border-top:1px solid #374151;padding-top:8px"&gt;&lt;/div&gt;' +
+            '&lt;button id="ар-зберегти" style="width:100%;padding:9px;margin-top:12px;border:0;border-radius:8px;background:#10b981;color:#fff;font-weight:600;cursor:pointer"&gt;Зберегти&lt;/button&gt;' +
+            '&lt;button id="ар-перевірити" style="width:100%;padding:7px;margin-top:6px;border:0;border-radius:8px;background:#374151;color:#fff;cursor:pointer"&gt;Перевірити звʼязок&lt;/button&gt;' +
+            '&lt;div id="ар-перевірка" style="margin-top:8px;font-size:12px;opacity:.8"&gt;&lt;/div&gt;' +
+            '&lt;div style="margin-top:10px"&gt;' + КНОПКА_НАЗАД + '&lt;/div&gt;';
+
+    $('ар-налаштування').innerHTML = html;
+
+    $('ар-налаштування').querySelectorAll('.ар-назад').forEach(function (к) {
+      к.onclick = function () { показатиНалаштування(false); };
+    });
+
+    $('ар-модель').onchange = function () {
+      $('ар-про-модель').textContent = підказкаПроМодель(this.value);
+    };
+
+    // Показує, у що виливаються обрані розміри пачок.
+    // Безкоштовний тариф рахує запити, тож саме це визначає, скільки
+    // кандидатів вдасться переглянути за день.
+    function перерахувати() {
+      var поле = function (імʼя) {
+        var el = $('ар-налаштування').querySelector('[data-поле="' + імʼя + '"]');
+        return Math.max(1, Number(el &amp;&amp; el.value) || 1);
+      };
+
+      var карток = поле('пачкаКарток');
+      var резюме = поле('пачкаРезюме');
+
+      // приблизно 9 з 10 кандидатів проходять у другий прохід
+      var запитівНаКандидата = 1 / карток + 0.9 / резюме;
+      var наЗапит = 1 / запитівНаКандидата;
+
+      $('ар-розрахунок').innerHTML =
+        '≈ &lt;b&gt;' + наЗапит.toFixed(1) + '&lt;/b&gt; кандидата на один запит до Gemini.&lt;br&gt;' +
+        'При 20 безкоштовних запитах на добу це ≈ &lt;b&gt;' +
+        Math.round(наЗапит * 20) + ' кандидатів на день&lt;/b&gt;.';
+    }
+
+    ['пачкаКарток', 'пачкаРезюме'].forEach(function (імʼя) {
+      var el = $('ар-налаштування').querySelector('[data-поле="' + імʼя + '"]');
+      if (el) el.oninput = перерахувати;
+    });
+    перерахувати();
+
+    $('ар-моделі').onclick = async function () {
+      $('ар-перевірка').textContent = 'Питаю Google, які моделі тобі доступні…';
+      try {
+        // Ключ міг щойно змінитись і ще не бути збереженим
+        var поле = $('ар-налаштування').querySelector('[data-поле="ключGemini"]');
+        if (поле &amp;&amp; поле.value.trim()) GM_setValue('ключGemini', поле.value.trim());
+
+        var моделі = await списокМоделей();
+        var поточна = $('ар-модель').value;
+        var запасна = $('ар-модель-запасна').value;
+        if (моделі.indexOf(поточна) === -1) моделі.unshift(поточна);
+
+        $('ар-модель').innerHTML = моделі.map(function (м) {
+          return '&lt;option value="' + м + '"' + (м === поточна ? ' selected' : '') + '&gt;' + м + '&lt;/option&gt;';
+        }).join('');
+
+        $('ар-модель-запасна').innerHTML =
+          '&lt;option value=""' + (запасна ? '' : ' selected') + '&gt;— без запасної —&lt;/option&gt;' +
+          моделі.map(function (м) {
+            return '&lt;option value="' + м + '"' + (м === запасна ? ' selected' : '') + '&gt;' + м + '&lt;/option&gt;';
+          }).join('');
+
+        $('ар-про-модель').textContent = підказкаПроМодель(поточна);
+        $('ар-перевірка').textContent = '✓ Доступно моделей: ' + моделі.length;
+      } catch (e) {
+        $('ар-перевірка').textContent = '✗ ' + e.message;
+      }
+    };
+
+    $('ар-зберегти').onclick = function () {
+      $('ар-налаштування').querySelectorAll('[data-поле]').forEach(function (inp) {
+        var значення = inp.value.trim();
+        GM_setValue(inp.getAttribute('data-поле'),
+                    inp.type === 'number' ? Number(значення) : значення);
+      });
+      GM_setValue('модель', $('ар-модель').value);
+      GM_setValue('модельЗапасна', $('ар-модель-запасна').value);
+      $('ар-перевірка').textContent = 'Збережено ✓';
+      завантажитиПошуки();
+    };
+
+    $('ар-перевірити').onclick = async function () {
+      $('ар-перевірка').textContent = 'Перевіряю…';
+      try {
+        var в = await доТаблиці('пошуки', {});
+        $('ар-перевірка').textContent = '✓ Таблиця відповідає. Активних пошуків: ' + в.пошуки.length;
+      } catch (e) {
+        $('ар-перевірка').textContent = '✗ ' + e.message;
+      }
+    };
+  }
+
+  // ── Згортання панелі ─────────────────────────────────────────────
+  function застосуватиЗгортання(згорнуто) {
+    $('ар-тіло').style.display    = згорнуто ? 'none'  : 'block';
+    $('ар-міні').style.display    = згорнуто ? 'block' : 'none';
+    $('ар-шестерня').style.display = згорнуто ? 'none' : 'inline';
+    $('ар-згорнути').textContent  = згорнуто ? '+' : '–';
+    $('ар-згорнути').title        = згорнуто ? 'Розгорнути' : 'Згорнути';
+    П.style.width   = згорнуто ? '210px' : '340px';
+    П.style.padding = згорнуто ? '12px 14px' : '16px';
+    GM_setValue('згорнуто', згорнуто);
+  }
+
+  $('ар-згорнути').onclick = function () {
+    застосуватиЗгортання($('ар-тіло').style.display !== 'none');
+  };
+
+  function показатиНалаштування(показати) {
+    $('ар-налаштування').style.display = показати ? 'block' : 'none';
+    $('ар-робота').style.display       = показати ? 'none'  : 'block';
+    $('ар-шестерня').style.opacity     = показати ? '1' : '.6';
+    if (показати) намалюватиНалаштування();
+    $('ар-тіло').scrollTop = 0;
+  }
+
+  $('ар-шестерня').onclick = function () {
+    показатиНалаштування($('ар-налаштування').style.display === 'none');
+  };
+
+  // Escape — універсальна кнопка «назад»
+  document.addEventListener('keydown', function (е) {
+    if (е.key === 'Escape' &amp;&amp; $('ар-налаштування').style.display !== 'none') {
+      показатиНалаштування(false);
+    }
+  });
+
+  // ── Список пошуків ───────────────────────────────────────────────
+  var пошуки = [];
+
+  async function завантажитиПошуки() {
+    var н = налаштування();
+    if (!н.адресаТаблиці) {
+      статус('Спершу відкрий налаштування ⚙︎');
+      return;
+    }
+    try {
+      статус('Читаю завдання з таблиці…');
+      пошуки = (await доТаблиці('пошуки', {})).пошуки || [];
+
+      $('ар-пошук').innerHTML = пошуки.map(function (п, i) {
+        return '&lt;option value="' + i + '"&gt;' + п.назва + '&lt;/option&gt;';
+      }).join('');
+
+      статус(пошуки.length
+        ? 'Готова. Активних пошуків: ' + пошуки.length
+        : 'В аркуші «Пошуки» немає рядків із «Активний = так»');
+    } catch (e) {
+      статус('✗ ' + e.message);
+    }
+  }
+
+  // ── Кнопки ───────────────────────────────────────────────────────
+  $('ар-старт').onclick = function () {
+    var пошук = пошуки[Number($('ар-пошук').value)];
+    if (!пошук) { статус('Немає активного пошуку в таблиці'); return; }
+
+    $('ар-старт').style.display = 'none';
+    $('ар-стоп').style.display = 'block';
+    $('ар-журнал').innerHTML = '';
+
+    запустити(пошук, Math.max(1, Number($('ар-скільки').value) || 30))
+      .catch(function (e) {
+        статус('✗ ' + e.message);
+        журнал('✗ ' + e.message);
+        доТаблиці('журнал', {
+          рядок: { пошук: пошук.назва, помилки: e.message }
+        }).catch(function () {});
+      })
+      .then(function () {
+        $('ар-старт').style.display = 'block';
+        $('ар-стоп').style.display = 'none';
+      });
+  };
+
+  $('ар-стоп').onclick = function () {
+    зупинити = true;
+    статус('Зупиняюсь після поточної сторінки…');
+  };
+
+  $('ар-очистити').onclick = async function () {
+    var пошук = пошуки[Number($('ар-пошук').value)];
+    if (!пошук) { статус('Спершу обери вакансію'); return; }
+
+    var згода = confirm(
+      'Очистити історію по вакансії «' + пошук.назва + '»?\n\n' +
+      'Агент забуде, кого вже показував, і зможе оцінити цих людей заново — ' +
+      'наприклад, за новим описом ідеального кандидата.\n\n' +
+      'Закладка на сторінці теж скинеться: наступний запуск почнеться з першої.\n\n' +
+      'Історія інших вакансій не постраждає.\n' +
+      'Аркуш «Кандидати» НЕ чіпається — старі рядки з твоїми нотатками ' +
+      'лишаться на місці, а нові додадуться поруч.'
+    );
+    if (!згода) return;
+
+    this.disabled = true;
+    статус('Чищу історію…');
+
+    try {
+      var в = await доТаблиці('очистити', { пошук: пошук.назва });
+
+      var скільки = в.видалено;
+      статус(скільки
+        ? 'Історію очищено: забуто ' + скільки + ' кандидатів.'
+        : 'В «Історії» по цій вакансії нічого не було.');
+      журнал('Очищено історію по «' + пошук.назва + '»: ' + скільки);
+    } catch (e) {
+      статус('✗ ' + e.message);
+    } finally {
+      this.disabled = false;
+    }
+  };
+
+  застосуватиЗгортання(GM_getValue('згорнуто', false) === true);
+  завантажитиПошуки();
+})();</pre>
+        </details>
       </div>
 
       <ol class="дії">
-        <li>Відкрий файл, виділи все (<kbd>Cmd A</kbd>) і скопіюй.</li>
         <li>Натисни <b>мавпочку</b> → <b>Створити новий скрипт…</b></li>
         <li>Відкриється редактор із заготовкою. Виділи все (<kbd>Cmd A</kbd>), видали, встав скопійоване.</li>
-        <li>Збережи: <kbd>Cmd S</kbd> або <kbd>Ctrl S</kbd>.</li>
+        <li>Збережи: <kbd>Cmd S</kbd> / <kbd>Ctrl S</kbd>.</li>
       </ol>
 
       <div class="порада">
         <p>
-          Якщо після <kbd>Cmd S</kbd> вискочило віконце «Зберегти сторінку як…» —
-          натисни Скасувати і збережи через меню самого редактора:
-          <span class="шлях">File → Save</span>.
+          Якщо після <kbd>Cmd S</kbd> вискочило «Зберегти сторінку як…» — натисни Скасувати
+          і збережи через меню самого редактора: <span class="шлях">File → Save</span>.
         </p>
       </div>
     </section>
 
-    <!-- ── КРОК 6 ─────────────────────────────────────────────── -->
-    <section class="крок" id="крок-6">
+    <!-- 7 ─────────────────────────────────────────────────── -->
+    <section class="крок" id="крок-7">
       <div class="крок-шапка">
-        <input type="checkbox" class="галка" data-крок="6" aria-label="Крок 6 виконано">
-        <h3><span class="номер">06</span>Познайомити їх</h3>
+        <input type="checkbox" class="галка" data-крок="7" aria-label="Крок 7 виконано">
+        <h3><span class="номер">07</span>Познайомити їх</h3>
         <span class="хвилини">3 хв</span>
       </div>
 
-      <p>Тепер треба сказати помічнику, де твоя таблиця і яким ключем користуватись.</p>
-
       <ol class="дії">
-        <li>Відкрий <a href="https://www.work.ua/resumes/" target="_blank" rel="noopener">work.ua</a> — будь-яку сторінку — і онови її (<kbd>Cmd R</kbd> / <kbd>F5</kbd>).</li>
+        <li>Відкрий <a href="https://www.work.ua/resumes/" target="_blank" rel="noopener">work.ua</a> і онови сторінку (<kbd>Cmd R</kbd> / <kbd>F5</kbd>).</li>
         <li>У правому нижньому куті з'явиться темна панель <b>«Агент-рекрутер»</b>.</li>
-        <li>Натисни <b>⚙︎</b> у її правому верхньому куті.</li>
-        <li>
-          Заповни три поля:
+        <li>Натисни <b>⚙︎</b> і заповни три поля:
           <ul>
-            <li><b>Адреса веб-застосунку таблиці</b> — довге посилання з кроку 3</li>
-            <li><b>Таємний ключ</b> — пароль, який ти вигадала в кроці 3</li>
-            <li><b>Ключ Gemini</b> — те, що скопіювала в кроці 2</li>
+            <li><b>Адреса веб-застосунку</b> — посилання з кроку 4</li>
+            <li><b>Таємний ключ</b> — пароль із кроку 3</li>
+            <li><b>Ключ Gemini</b> — з кроку 2</li>
           </ul>
         </li>
-        <li>Натисни <b>Зберегти</b>.</li>
-        <li>Натисни <b>Оновити список моделей</b> → обери <span class="шлях">gemini-3.5-flash-lite</span> → <b>Зберегти</b> ще раз.</li>
-        <li>Натисни <b>Перевірити зв'язок</b>.</li>
+        <li><b>Зберегти</b>.</li>
+        <li><b>Оновити список моделей</b> → обери <span class="шлях">gemini-3.5-flash-lite</span> → <b>Зберегти</b>.</li>
+        <li><b>Перевірити зв'язок</b>.</li>
       </ol>
 
       <div class="екран">
@@ -921,167 +2130,116 @@
         <pre>✓ Таблиця відповідає. Активних пошуків: 0</pre>
       </div>
 
-      <p>
-        Нуль — це нормально, ми ще не поставили жодного завдання. Головне, що зв'язок є.
-        Тисни <b>← Назад до роботи</b>.
-      </p>
+      <p>Нуль — нормально, завдання ще не поставлене. Тисни <b>← Назад до роботи</b>.</p>
     </section>
 
-    <!-- ── КРОК 7 ─────────────────────────────────────────────── -->
-    <section class="крок" id="крок-7">
+    <!-- 8 ─────────────────────────────────────────────────── -->
+    <section class="крок" id="крок-8">
       <div class="крок-шапка">
-        <input type="checkbox" class="галка" data-крок="7" aria-label="Крок 7 виконано">
-        <h3><span class="номер">07</span>Поставити завдання</h3>
-        <span class="хвилини">10 хв</span>
+        <input type="checkbox" class="галка" data-крок="8" aria-label="Крок 8 виконано">
+        <h3><span class="номер">08</span>Завдання і перший запуск</h3>
+        <span class="хвилини">12 хв</span>
       </div>
 
       <p>
-        Технічна частина позаду. Далі — <strong>найважливіше й найцікавіше</strong>:
-        від того, як ти опишеш ідеального кандидата, залежить усе.
+        Технічна частина позаду. Далі — <strong>найважливіше</strong>: від опису
+        ідеального кандидата залежить усе.
       </p>
 
       <ol class="дії">
-        <li>Зайди на work.ua у пошук резюме і <b>виставь фільтри руками</b>, як звикла:
-          посада, місто, досвід, період.</li>
-        <li>Скопіюй посилання з адресного рядка браузера.</li>
-        <li>
-          Відкрий свою таблицю, аркуш <b>Пошуки</b>, і заповни перший порожній рядок.
-        </li>
+        <li>На work.ua виставь фільтри руками, як звикла: посада, місто, досвід, період.</li>
+        <li>Скопіюй посилання з адресного рядка.</li>
+        <li>У таблиці, аркуш <b>Пошуки</b>, заповни перший порожній рядок.</li>
       </ol>
 
-      <div class="таблиця-обгортка широке">
+      <div class="таблиця-обгортка">
         <table>
-          <thead>
-            <tr><th>Колонка</th><th>Що вписати</th></tr>
-          </thead>
+          <thead><tr><th>Колонка</th><th>Що вписати</th></tr></thead>
           <tbody>
-            <tr><td><b>Назва пошуку</b></td><td>Як тобі зручно: «Менеджер з продажу, Дніпро». Ця назва стане назвою аркуша з результатами</td></tr>
-            <tr><td><b>Посилання на пошук</b></td><td>Те, що скопіювала з адресного рядка</td></tr>
-            <tr><td><b>Ідеальний кандидат</b></td><td>Своїми словами. Головне поле — про нього нижче</td></tr>
+            <tr><td><b>Назва пошуку</b></td><td>«Менеджер з продажу, Дніпро». Стане назвою аркуша з результатами</td></tr>
+            <tr><td><b>Посилання на пошук</b></td><td>Те, що скопіювала</td></tr>
+            <tr><td><b>Ідеальний кандидат</b></td><td>Своїми словами. Головне поле — приклад нижче</td></tr>
             <tr><td><b>Стоп-сигнали</b></td><td>Що одразу дискваліфікує</td></tr>
-            <tr><td><b>Мінімальний бал</b></td><td><b>50</b> для початку. Хто набрав менше — у таблицю не потрапить</td></tr>
+            <tr><td><b>Мінімальний бал</b></td><td><b>50</b> для початку</td></tr>
             <tr><td><b>Активний</b></td><td><b>так</b></td></tr>
           </tbody>
         </table>
       </div>
 
-      <p><b>Як описати ідеального кандидата.</b> Різниця величезна:</p>
-
-      <div class="порівняння широке">
+      <div class="порівняння">
         <div class="погано">
           <span class="мітка">Так не варто</span>
           <p>«Хороший менеджер з продажу з досвідом, комунікабельний, відповідальний»</p>
-          <p class="чому">Під це підходить будь-хто. Помічник поставить усім по 60–70 і не допоможе.</p>
+          <p class="чому">Підходить будь-хто. Усі отримають 60–70, і список не допоможе.</p>
         </div>
         <div class="добре">
           <span class="мітка">Так працює</span>
-          <p><b>Обов'язково:</b> від 2 років у продажах B2B, досвід холодних дзвінків, робота з CRM.</p>
-          <p><b>Бажано:</b> досвід у меблях або будматеріалах, водійські права.</p>
+          <p><b>Обов'язково:</b> від 2 років у продажах B2B, холодні дзвінки, робота з CRM.</p>
+          <p><b>Бажано:</b> меблі або будматеріали, водійські права.</p>
           <p class="чому">Конкретні факти, які видно в резюме. Помічник справді розрізнить людей.</p>
         </div>
       </div>
 
       <div class="порада">
         <p>
-          <b>Стоп-сигнали</b> — окрема сила. Наприклад: «не підходить, якщо в заголовку
-          резюме вказано 6–7 різних посад» або «не підходить, якщо весь досвід —
-          тільки продавець-консультант». Такі люди отримають бал не вище 30.
+          <b>Стоп-сигнали</b> — окрема сила. «Не підходить, якщо в заголовку резюме
+          6–7 різних посад» або «якщо весь досвід — тільки продавець-консультант».
+          Такі отримають не вище 30.
         </p>
       </div>
-    </section>
 
-    <!-- ── КРОК 8 ─────────────────────────────────────────────── -->
-    <section class="крок" id="крок-8">
-      <div class="крок-шапка">
-        <input type="checkbox" class="галка" data-крок="8" aria-label="Крок 8 виконано">
-        <h3><span class="номер">08</span>Перший запуск</h3>
-        <span class="хвилини">5 хв</span>
-      </div>
-
-      <ol class="дії">
-        <li>Повернись на вкладку з work.ua і <b>онови сторінку</b> — щоб помічник перечитав завдання.</li>
-        <li>У панелі, у випадному списку, з'явиться твоя вакансія.</li>
-        <li>У полі <b>«Скільки нових кандидатів зібрати»</b> постав <b>30</b> — для першого разу достатньо.</li>
-        <li>Натисни <b>Старт</b> і нічого більше не роби.</li>
+      <ol class="дії" start="4">
+        <li>Повернись на вкладку work.ua і <b>онови сторінку</b>.</li>
+        <li>У списку панелі з'явиться твоя вакансія.</li>
+        <li>У полі <b>«Скільки нових кандидатів зібрати»</b> постав <b>10</b>.</li>
+        <li><b>Старт</b> — і далі нічого не роби.</li>
       </ol>
 
       <div class="екран">
         <span class="підпис">У журналі побіжать рядки</span>
 <pre>Пошук: Менеджер з продажу, Дніпро
 В «Історії» вже 0 кандидатів — їх пропускаємо.
-Усього сторінок: 423. Шукаю 30 нових кандидатів.
-Чорнова оцінка: 25 з 30
-Варті повного резюме: 22 з 30
-Записано 18 → аркуш «Менеджер з продажу, Дніпро»
-Готово · переглянуто 30 резюме, записано 18</pre>
+Усього сторінок: 423. Шукаю 10 нових кандидатів.
+Записано 7 → аркуш «Менеджер з продажу, Дніпро»
+— — —
+Трапилось на сторінках: 15
+  не дивився — вже набрав потрібну кількість: 5
+  оцінено через Gemini: 10
+    з них нижче мінімального балу 50: 3
+  записано в таблицю: 7
+Готово · оцінено 10, записано 7</pre>
       </div>
 
       <p>
-        У таблиці з'явиться <strong>новий аркуш із назвою твоєї вакансії</strong>.
-        У ньому — кандидати з балами, поясненнями і посиланнями на резюме.
-        Натисни на трикутник у колонці «Бал», щоб відсортувати від найкращих.
+        У таблиці з'явиться <strong>новий аркуш із назвою вакансії</strong> — з балами,
+        поясненнями і посиланнями. Клацни трикутник у колонці «Бал», щоб відсортувати.
       </p>
 
       <p>
-        Колонки <b>«Мій статус»</b> і <b>«Мої нотатки»</b> — твої. Помічник їх ніколи
-        не перезаписує, пиши там що завгодно.
+        Колонки <b>«Мій статус»</b> і <b>«Мої нотатки»</b> твої — помічник їх ніколи не чіпає.
       </p>
-
-      <div class="порада">
-        <p>
-          Панель можна <b>згорнути</b> кнопкою <b>–</b> у її шапці — робота не зупиниться,
-          а сторінка перестане бути закритою. Вкладку з work.ua при цьому треба
-          <b>тримати відкритою</b>, поки помічник працює.
-        </p>
-      </div>
     </section>
 
-    <!-- ── ЩО ЯКЩО ─────────────────────────────────────────────── -->
+    <!-- ── Помилки ───────────────────────────────────────── -->
     <h2 class="розділ">Коли щось пішло не так</h2>
 
-    <div class="таблиця-обгортка широке">
+    <div class="таблиця-обгортка">
       <table>
-        <thead>
-          <tr><th>Що бачиш</th><th>Що це означає і що робити</th></tr>
-        </thead>
+        <thead><tr><th>Що бачиш</th><th>Що робити</th></tr></thead>
         <tbody>
-          <tr>
-            <td><b>Панель не з'явилась</b></td>
-            <td>Найчастіше — не даний дозвіл на користувацькі скрипти. Поверніться до кроку 4. Ще перевір, що ти саме на сторінці <span class="шлях">work.ua</span>, і що скрипт увімкнений у меню мавпочки</td>
-          </tr>
-          <tr>
-            <td><b>«Таблиця відповіла незрозуміло»</b></td>
-            <td>У розгортку не стоїть «Хто має доступ: <b>Усі</b>». Поверніться до кроку 3 і перевір це поле</td>
-          </tr>
-          <tr>
-            <td><b>«Таблиця: Невірний ключ»</b></td>
-            <td>Пароль у <span class="шлях">Код.gs</span> і пароль у налаштуваннях панелі різні. Звір їх посимвольно</td>
-          </tr>
-          <tr>
-            <td><b>«work.ua попросив перевірку безпеки»</b></td>
-            <td>Відкрий work.ua у вкладці, дочекайся, поки сторінка завантажиться нормально, і запусти ще раз</td>
-          </tr>
-          <tr>
-            <td><b>«ЛІМІТ: безкоштовна норма вичерпана»</b></td>
-            <td>На сьогодні все. Норма поновлюється <b>близько 10:00 за Києвом</b>. Нічого не втрачено — наступний запуск підбере тих самих людей</td>
-          </tr>
-          <tr>
-            <td><b>«Модель перевантажена»</b></td>
-            <td>Черга на боці Google. Помічник почекає і спробує ще чотири рази сам, потім перейде на запасну модель. Якщо не допомогло — обери іншу модель зі списку</td>
-          </tr>
-          <tr>
-            <td><b>«Сторінка: жодного резюме»</b></td>
-            <td>work.ua змінив верстку сторінок. Сама це не полагодиш — скажи ведучій</td>
-          </tr>
-          <tr>
-            <td><b>Зміни в таблиці не діють</b></td>
-            <td>Онови сторінку work.ua. Помічник читає завдання з таблиці на старті, а не постійно</td>
-          </tr>
+          <tr><td><b>Панель не з'явилась</b></td><td>Найчастіше не даний дозвіл на користувацькі скрипти — крок 5. Ще перевір, що ти на <span class="шлях">work.ua</span> і скрипт увімкнений у меню мавпочки</td></tr>
+          <tr><td><b>«Таблиця відповіла незрозуміло»</b></td><td>У розгортку не стоїть «Хто має доступ: <b>Усі</b>» — крок 4</td></tr>
+          <tr><td><b>«Таблиця: Невірний ключ»</b></td><td>Пароль у коді таблиці й у налаштуваннях панелі різні. Звір посимвольно</td></tr>
+          <tr><td><b>Зміни в коді таблиці не діють</b></td><td>Треба опублікувати нову версію: <b>Керування розгортками → ✏️ → Нова версія</b></td></tr>
+          <tr><td><b>«work.ua попросив перевірку»</b></td><td>Відкрий work.ua у вкладці, дочекайся завантаження, запусти ще раз</td></tr>
+          <tr><td><b>«ЛІМІТ вичерпано»</b></td><td>На сьогодні все. Поновлюється <b>близько 10:00 за Києвом</b>. Нічого не втрачено</td></tr>
+          <tr><td><b>«Модель перевантажена»</b></td><td>Черга на боці Google. Помічник почекає і спробує сам, потім перейде на запасну модель</td></tr>
+          <tr><td><b>Зміни в «Пошуках» не діють</b></td><td>Онови сторінку work.ua — завдання читається на старті</td></tr>
         </tbody>
       </table>
     </div>
 
-    <!-- ── СКІЛЬКИ КОШТУЄ ──────────────────────────────────────── -->
+    <!-- ── Гроші ─────────────────────────────────────────── -->
     <h2 class="розділ">Скільки це коштує</h2>
 
     <p>
@@ -1090,51 +2248,43 @@
     </p>
 
     <p>
-      Безкоштовний тариф Gemini дає <strong>500 звернень на добу</strong>. Помічник
-      складає кандидатів у пачки, тож одне звернення — це приблизно семеро людей.
-      Виходить <strong>близько 3 400 резюме на день</strong>, і на це піде десь
-      дві години роботи.
+      Безкоштовний тариф дає <strong>500 звернень на добу</strong>. Помічник складає
+      кандидатів у пачки, тож одне звернення — приблизно семеро людей. Виходить
+      <strong>близько 3 400 резюме на день</strong>, і на це піде години дві.
     </p>
 
     <p>
-      Якщо колись цього стане замало — вмикається оплата за фактом, і 500 кандидатів
-      на день обходяться приблизно в <strong>три долари на місяць</strong>.
+      Комп'ютер при цьому має бути ввімкнений, Chrome запущений, а вкладка з work.ua
+      відкрита — помічник живе в ній.
     </p>
 
-    <!-- ── ПРО ДАНІ ────────────────────────────────────────────── -->
+    <!-- ── Дані ──────────────────────────────────────────── -->
     <h2 class="розділ">Про персональні дані</h2>
 
     <p>
-      Це наша відповідальність як рекрутерів, тому скажу прямо.
-    </p>
-
-    <p>
       <strong>Контакти помічник не збирає.</strong> Прізвище, телефон, пошта й світлина
-      на work.ua доступні тільки роботодавцю за підпискою — у таблицю потрапляє лише
-      посилання на резюме. Контакти ти відкриваєш сама, вручну, і тільки для тих,
-      кому справді збираєшся дзвонити.
+      доступні лише роботодавцю за підпискою — у таблицю йде тільки посилання на резюме.
+      Контакти відкриваєш сама, вручну, і лише для тих, кому дзвонитимеш.
     </p>
 
     <p>
       <strong>У Gemini йде тільки професійна частина</strong> — досвід, освіта, навички.
-      Перед відправкою помічник додатково вирізає з тексту все, що схоже на телефон
-      або пошту.
+      Перед відправкою помічник додатково вирізає з тексту все, що схоже на телефон або пошту.
     </p>
 
     <p>
-      <strong>Але на безкоштовному тарифі Google має право використовувати надіслане
-      для покращення своїх моделей.</strong> Це написано в їхніх умовах. На платному
-      тарифі — ні. Якщо працюєш із чутливими вакансіями, це варто врахувати.
+      <strong>Але на безкоштовному тарифі Google має право використовувати надіслане</strong>
+      для покращення своїх моделей — так написано в їхніх умовах. На платному тарифі ні.
+      Якщо працюєш із чутливими вакансіями, це варто врахувати.
     </p>
 
-    <!-- ── ФІНІШ ───────────────────────────────────────────────── -->
-    <div class="фініш широке">
+    <div class="фініш">
       <h3>Що в тебе тепер є</h3>
       <ul>
         <li>Таблиця, у якій ти ставиш завдання звичайними словами</li>
-        <li>Помічник, який гортає сотні сторінок замість тебе і не втомлюється на сороковій</li>
+        <li>Помічник, який гортає сотні сторінок і не втомлюється на сороковій</li>
         <li>Оцінка кожного кандидата з поясненням, чому саме такий бал</li>
-        <li>Пам'ять про тих, кого вже показував — повторів не буде</li>
+        <li>Пам'ять про показаних — повторів не буде</li>
         <li>Окремий аркуш під кожну вакансію</li>
       </ul>
       <p style="margin:16px 0 0">
@@ -1149,45 +2299,76 @@
   (function () {
     'use strict';
 
+    // ── Кнопки «Скопіювати код» ──────────────────────────
+    document.querySelectorAll('button.копія').forEach(function (кнопка) {
+      кнопка.addEventListener('click', function () {
+        var поле = document.getElementById(кнопка.dataset.код);
+        if (!поле) return;
+
+        var текст = поле.textContent;
+        var початковий = 'Скопіювати код';
+
+        function сказати(що, стан) {
+          кнопка.textContent = що;
+          if (стан) { кнопка.dataset.стан = стан; } else { delete кнопка.dataset.стан; }
+          setTimeout(function () { сказати(початковий, null); }, 2500);
+        }
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(текст).then(
+            function () { сказати('Скопійовано ✓', 'ok'); },
+            function () { виділити(поле, сказати); }
+          );
+        } else {
+          виділити(поле, сказати);
+        }
+      });
+    });
+
+    // Запасний шлях: розгортаємо код і виділяємо, щоб скопіювати вручну
+    function виділити(поле, сказати) {
+      var деталі = поле.closest('details');
+      if (деталі) деталі.open = true;
+
+      var діапазон = document.createRange();
+      діапазон.selectNodeContents(поле);
+      var вибір = window.getSelection();
+      вибір.removeAllRanges();
+      вибір.addRange(діапазон);
+
+      сказати('Виділено — тисни Cmd C', 'ok');
+    }
+
+    // ── Галочки кроків ───────────────────────────────────
     var КЛЮЧ = 'агент-рекрутер:кроки';
     var галки = Array.prototype.slice.call(document.querySelectorAll('.галка'));
-    var посилання = Array.prototype.slice.call(
-      document.querySelectorAll('#рейка-список a')
-    );
+    var посилання = Array.prototype.slice.call(document.querySelectorAll('.рейка a'));
     var лічильник = document.getElementById('лічильник');
 
     function прочитати() {
-      try {
-        return JSON.parse(localStorage.getItem(КЛЮЧ)) || {};
-      } catch (e) {
-        return {};
-      }
+      try { return JSON.parse(localStorage.getItem(КЛЮЧ)) || {}; }
+      catch (e) { return {}; }
     }
 
     function записати(стан) {
-      try {
-        localStorage.setItem(КЛЮЧ, JSON.stringify(стан));
-      } catch (e) { /* приватне вікно або заборонені дані сайту — не біда */ }
+      try { localStorage.setItem(КЛЮЧ, JSON.stringify(стан)); }
+      catch (e) { /* приватне вікно — не біда */ }
     }
 
     function оновити() {
       var зроблено = 0;
-
       галки.forEach(function (г, i) {
         var секція = г.closest('.крок');
         if (секція) секція.classList.toggle('виконано', г.checked);
         if (посилання[i]) посилання[i].classList.toggle('готово', г.checked);
         if (г.checked) зроблено++;
       });
-
       лічильник.textContent = 'Пройдено ' + зроблено + ' з ' + галки.length;
     }
 
     var стан = прочитати();
-
     галки.forEach(function (г) {
       г.checked = стан[г.dataset.крок] === true;
-
       г.addEventListener('change', function () {
         var поточний = прочитати();
         поточний[г.dataset.крок] = г.checked;
