@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Агент-рекрутер для work.ua
 // @namespace    workua-helper
-// @version      1.0
+// @version      2.0
 // @description  Гортає пошук резюме на work.ua, оцінює кандидатів через Gemini і складає їх у Google Таблицю
 // @match        https://www.work.ua/*
 // @match        https://work.ua/*
